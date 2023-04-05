@@ -52,7 +52,7 @@ Returns the information about the current user that is logged in.
 * Require Authentication: true
 * Request
   * Method: GET
-  * URL: /user/currentUser
+  * URL: /user/:userId
   * Body: none
 
 * Successful Response when there is a logged in user
@@ -93,7 +93,7 @@ information.
 * Require Authentication: false
 * Request
   * Method: POST
-  * URL: /login/currentUser
+  * URL: /user/login/:userId
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -162,7 +162,7 @@ user's information.
 * Require Authentication: false
 * Request
   * Method: POST
-  * URL: /users/currentUser
+  * URL: /users
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -275,7 +275,7 @@ Returns all the groups.
 * Require Authentication: true
 * Request
   * Method: GET
-  * URL: /groups/:currentUser
+  * URL: /groups/:userId
   * Body: none
 
 * Successful Response
@@ -451,7 +451,7 @@ Create and return a new image for a group specified by id.
 * Require proper authorization: Current User must be the organizer for the group
 * Request
   * Method: POST
-  * URL: /groups/image/:groupId
+  * URL: /image/:groupId
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -642,7 +642,7 @@ Returns all venues for a group specified by its id
       }
     ]
   }
-  
+
   ```
 
 * Error response: Couldn't find a Group with the specified id
@@ -742,7 +742,7 @@ Edit a new venue specified by its id
   the group with a status of "co-host"
 * Request
   * Method: PUT/PATCH
-  * URL: /venues/:id
+  * URL: /venues/:venueId
   * Headers:
     * Content-Type: application/json
   * Body:
