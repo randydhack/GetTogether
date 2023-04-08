@@ -1,7 +1,7 @@
 # `GetTogether`
 
 ## Database Schema Design
-<img width="884" alt="image" src="https://user-images.githubusercontent.com/113399691/230733549-7e391254-01e7-4909-bce6-5b22dfa473b7.png">
+<img width="883" alt="image" src="https://user-images.githubusercontent.com/113399691/230745183-2b66ab1b-ca51-4367-88c6-ab2b798a3488.png">
 
 ## API Documentation
 
@@ -450,7 +450,7 @@ Create and return a new image for a group specified by id.
 * Require proper authorization: Current User must be the organizer for the group
 * Request
   * Method: POST
-  * URL: /images/:groupId
+  * URL: /groups/:groupId/images
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -741,7 +741,7 @@ Edit a new venue specified by its id
   the group with a status of "co-host"
 * Request
   * Method: PUT
-  * URL: /groups/:groupId/venues
+  * URL: /venues/:venuesId
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -1112,7 +1112,7 @@ Create and return a new image for an event specified by id.
 * Require proper authorization: Current User must be an attendee of the event
 * Request
   * Method: POST
-  * URL: /images/:eventId
+  * URL: /events/:eventId/images
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -1935,7 +1935,7 @@ Delete an existing image for a Group.
   of the Group
 * Request
   * Method: DELETE
-  * URL: /images/currentGroup
+  * URL: /images/:imageId
   * Body: none
 
 * Successful Response
@@ -1974,7 +1974,7 @@ Delete an existing image for an Event.
   of the Group that the Event belongs to
 * Request
   * Method: DELETE
-  * URL: /images/currentEvent
+  * URL: /images/:imageId
   * Body: none
 
 * Successful Response
