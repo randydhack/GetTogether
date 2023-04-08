@@ -1,7 +1,8 @@
 # `GetTogether`
 
 ## Database Schema Design
-<img width="883" alt="image" src="https://user-images.githubusercontent.com/113399691/230745183-2b66ab1b-ca51-4367-88c6-ab2b798a3488.png">
+<img width="762" alt="image" src="https://user-images.githubusercontent.com/113399691/230745464-13dae217-8ebf-4657-9a73-50096371258b.png">
+
 
 ## API Documentation
 
@@ -1719,7 +1720,7 @@ Request attendance for an event specified by id.
 * Require Authorization: Current User must be a member of the group
 * Request
   * Method: POST
-  * URL: /events/:eventId
+  * URL: /attendees/:eventId
   * Headers:
     * Content-Type: application/json
   * Body: none
