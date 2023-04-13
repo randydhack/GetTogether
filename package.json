@@ -1,0 +1,25 @@
+{
+  "name": "gettogether",
+  "version": "1.0.0",
+  "description": "## Database Schema Design <img width=\"723\" alt=\"image\" src=\"https://user-images.githubusercontent.com/113399691/231335927-610e275b-30cf-4ff1-b03c-0690d40f84ab.png\">",
+  "main": "index.js",
+  "scripts": {
+    "install": "npm --prefix backend install backend",
+    "dev:backend": "npm install --prefix backend start",
+    "sequelize": "npm run --prefix backend sequelize",
+    "sequelize-cli": "npm run --prefix backend sequelize-cli",
+    "start": "npm start --prefix backend",
+    "build": "npm run --prefix backend build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/randydhack/GetTogether.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/randydhack/GetTogether/issues"
+  },
+  "homepage": "https://github.com/randydhack/GetTogether#readme"
+}
