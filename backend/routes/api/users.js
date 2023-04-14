@@ -1,19 +1,21 @@
 const express = require("express");
 const bcrypt = require("bcryptjs");
+const router = express.Router();
+
+const { Op } = require("sequelize");
+
+const { setTokenCookie, restoreUser, } = require("../../utils/auth");
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
-
-const { setTokenCookie, requireAuth } = require("../../utils/auth");
 const { User } = require("../../db/models");
 
-const router = express.Router();
 
 // Validate Signup
 const validateSignup = [
     check('email')
       .exists({ checkFalsy: true })
       .isEmail()
-      .withMessage('Please provide a valid email.'),
+      .withMessage("User with that email already exists."),
     check('username')
       .exists({ checkFalsy: true })
       .isLength({ min: 4 })
@@ -29,6 +31,18 @@ const validateSignup = [
     handleValidationErrors
   ];
 
+// Validate Login
+const validateLogin = [
+  check('credential')
+    .exists({ checkFalsy: true })
+    .notEmpty()
+    .withMessage('Please provide a valid email or username.'),
+  check('password')
+    .exists({ checkFalsy: true })
+    .withMessage('Please provide a password.'),
+  handleValidationErrors
+];
+
 // Sign up
 router.post("", validateSignup, async (req, res) => {
   const { email, password, username, firstName, lastName } = req.body;
@@ -40,14 +54,78 @@ router.post("", validateSignup, async (req, res) => {
     email: user.email,
     username: user.username,
     firstName: user.firstName,
-    lastName: user.lastName
+    lastName: user.lastName,
   };
 
-  await setTokenCookie(res, safeUser);
+  const token = await setTokenCookie(res, safeUser);
+
+  safeUser.token = token;
 
   return res.json({
     user: safeUser,
   });
+});
+
+// Log in
+router.post("/login", validateLogin, async (req, res, next) => {
+  const { credential, password } = req.body;
+
+  const user = await User.unscoped().findOne({
+    where: {
+      [Op.or]: {
+        username: credential,
+        email: credential,
+      },
+    },
+  });
+
+  if (!user || !bcrypt.compareSync(password, user.hashedPassword.toString())) {
+    const err = new Error("Login failed");
+    err.messages = "Invalid credentials";
+    err.statusCode = 401;
+    return next(err);
+  }
+
+  const safeUser = {
+    id: user.id,
+    firstName: user.firstName,
+    lastName: user.lastName,
+    email: user.email,
+    username: user.username,
+  };
+
+  const token = await setTokenCookie(res, safeUser);
+
+  safeUser.token = token
+
+  console.log(safeUser)
+  return res.json({
+    user: safeUser,
+  });
+});
+
+
+// Delete token
+router.delete("/", (_req, res) => {
+  res.clearCookie("token");
+  return res.json({ message: "success" });
+});
+
+// Restore session user / get current user
+router.get("/", restoreUser, (req, res) => {
+  const { user } = req;
+  if (user) {
+    const safeUser = {
+      id: user.id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      username: user.username,
+    };
+    return res.json({
+      user: safeUser,
+    });
+  } else return res.json({ user: null });
 });
 
 module.exports = router;
