@@ -1,15 +1,11 @@
 const router = require('express').Router();
 
-const sessionRouter = require('./session.js');
 const usersRouter = require('./users.js');
 const { restoreUser, requireAuth, setTokenCookie } = require("../../utils/auth.js");
 
 router.get('/test', requireAuth, (req, res, next) => {
   res.json({message: 'Success'})
 })
-
-// // login/logout
-router.use('/session', sessionRouter);
 
 // signup / login / logout
 router.use('/users', usersRouter);

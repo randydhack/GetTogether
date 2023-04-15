@@ -4,7 +4,7 @@ const { validationResult } = require('express-validator');
 // (to customize, see express-validator's documentation)
 const handleValidationErrors = (req, _res, next) => {
   const validationErrors = validationResult(req);
-
+  console.log(validationErrors)
   if (!validationErrors.isEmpty()) {
     const errors = [];
     validationErrors
@@ -12,7 +12,7 @@ const handleValidationErrors = (req, _res, next) => {
       .forEach(error => errors.push(error.msg));
 
     const err = Error("Validation Error");
-    err.statusCode = 400;
+    err.status = 400;
     err.messages = "Validation Error";
     err.errors = errors;
     next(err);
