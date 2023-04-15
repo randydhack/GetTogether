@@ -9,7 +9,7 @@ router.get('/test', requireAuth, (req, res, next) => {
 })
 
 // // login/logout
-// router.use('/session', sessionRouter);
+router.use('/session', sessionRouter);
 
 // signup / login / logout
 router.use('/users', usersRouter);
