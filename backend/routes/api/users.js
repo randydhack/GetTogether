@@ -5,48 +5,8 @@ const router = express.Router();
 const { Op } = require("sequelize");
 
 const { setTokenCookie, restoreUser, } = require("../../utils/auth");
-const { check } = require('express-validator');
-const { handleValidationErrors } = require('../../utils/validation');
+const { validateLogin, validateSignup } = require('../../utils/validation');
 const { User } = require("../../db/models");
-
-// Validate Signup
-const validateSignup = [
-    check('email')
-      .exists({ checkFalsy: true })
-      .isEmail()
-      .withMessage("Invalid email"),
-    check('username')
-      .exists({ checkFalsy: true })
-      .isLength({ min: 4 })
-      .withMessage('Please provide a username with at least 4 characters.'),
-    check('username')
-      .not()
-      .isEmail()
-      .withMessage('Username cannot be an email.'),
-    check('password')
-      .exists({ checkFalsy: true })
-      .isLength({ min: 6 })
-      .withMessage('Password must be 6 characters or more.'),
-    check('firstName')
-      .exists({ checkFalsy: true })
-      .withMessage('First Name is required'),
-    check('lastName')
-      .exists({ checkFalsy: true })
-      .withMessage('Last Name is required'),
-    handleValidationErrors
-  ];
-
-// Validate Login
-const validateLogin = [
-  check('credential')
-    .exists({ checkFalsy: true })
-    .notEmpty()
-    .withMessage('Please provide a valid email or username.'),
-  check('password')
-    .exists({ checkFalsy: true })
-    .withMessage('Please provide a password.'),
-  handleValidationErrors
-];
 
 // Sign up
 router.post("/", validateSignup, async (req, res, next) => {
