@@ -5,43 +5,8 @@ const router = express.Router();
 const { Op } = require("sequelize");
 
 const { setTokenCookie, restoreUser, } = require("../../utils/auth");
-const { check } = require('express-validator');
-const { handleValidationErrors } = require('../../utils/validation');
+const { validateLogin, validateSignup } = require('../../utils/validation');
 const { User } = require("../../db/models");
-
-
-// Validate Signup
-const validateSignup = [
-    check('email')
-      .exists({ checkFalsy: true })
-      .isEmail()
-      .withMessage("User with that email already exists."),
-    check('username')
-      .exists({ checkFalsy: true })
-      .isLength({ min: 4 })
-      .withMessage('Please provide a username with at least 4 characters.'),
-    check('username')
-      .not()
-      .isEmail()
-      .withMessage('Username cannot be an email.'),
-    check('password')
-      .exists({ checkFalsy: true })
-      .isLength({ min: 6 })
-      .withMessage('Password must be 6 characters or more.'),
-    handleValidationErrors
-  ];
-
-// Validate Login
-const validateLogin = [
-  check('credential')
-    .exists({ checkFalsy: true })
-    .notEmpty()
-    .withMessage('Please provide a valid email or username.'),
-  check('password')
-    .exists({ checkFalsy: true })
-    .withMessage('Please provide a password.'),
-  handleValidationErrors
-];
 
 // Sign up
 router.post("/", validateSignup, async (req, res, next) => {
@@ -54,7 +19,7 @@ router.post("/", validateSignup, async (req, res, next) => {
     const err = new Error("User already exists");
     err.status = 403;
     err.title = "User already exists";
-    err.errors = { credential: "User with that email already exists" };
+    err.errors = "User with that email already exists";
     return next(err);
   }
 
@@ -72,7 +37,7 @@ router.post("/", validateSignup, async (req, res, next) => {
 
   safeUser.token = token;
 
-  return res.json({
+  return res.status(200).json({
     user: safeUser,
   });
 });
@@ -92,8 +57,8 @@ router.post("/login", validateLogin, async (req, res, next) => {
 
   if (!user || !bcrypt.compareSync(password, user.hashedPassword.toString())) {
     const err = new Error("Login failed");
-    err.messages = "Invalid credentials";
-    err.statusCode = 401;
+    err.status = 401;
+    err.title = "Invalid credentials";
     return next(err);
   }
 
@@ -106,11 +71,9 @@ router.post("/login", validateLogin, async (req, res, next) => {
   };
 
   const token = await setTokenCookie(res, safeUser);
+  safeUser.token = token;
 
-  safeUser.token = token
-
-  console.log(safeUser)
-  return res.json({
+  return res.status(200).json({
     user: safeUser,
   });
 });

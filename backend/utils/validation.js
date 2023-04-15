@@ -1,4 +1,5 @@
 const { validationResult } = require('express-validator');
+const { check } = require('express-validator');
 
 // middleware for formatting errors from express-validator middleware
 // (to customize, see express-validator's documentation)
@@ -12,7 +13,7 @@ const handleValidationErrors = (req, _res, next) => {
       .forEach(error => errors.push(error.msg));
 
     const err = Error("Validation Error");
-    err.statusCode = 400;
+    err.status = 400;
     err.messages = "Validation Error";
     err.errors = errors;
     next(err);
@@ -20,6 +21,45 @@ const handleValidationErrors = (req, _res, next) => {
   next();
 };
 
-module.exports = {
+// Validate Signup
+const validateSignup = [
+  check('email')
+    .exists({ checkFalsy: true })
+    .isEmail()
+    .withMessage("Invalid email"),
+  check('username')
+    .exists({ checkFalsy: true })
+    .isLength({ min: 4 })
+    .withMessage('Please provide a username with at least 4 characters.'),
+  check('username')
+    .not()
+    .isEmail()
+    .withMessage('Username cannot be an email.'),
+  check('password')
+    .exists({ checkFalsy: true })
+    .isLength({ min: 6 })
+    .withMessage('Password must be 6 characters or more.'),
+  check('firstName')
+    .exists({ checkFalsy: true })
+    .withMessage('First Name is required'),
+  check('lastName')
+    .exists({ checkFalsy: true })
+    .withMessage('Last Name is required'),
   handleValidationErrors
+];
+
+// Validate Login
+const validateLogin = [
+  check('credential')
+    .exists({ checkFalsy: true })
+    .notEmpty()
+    .withMessage('Please provide a valid email or username.'),
+  check('password')
+    .exists({ checkFalsy: true })
+    .withMessage('Please provide a password.'),
+  handleValidationErrors
+];
+
+module.exports = {
+  handleValidationErrors, validateLogin, validateSignup
 };

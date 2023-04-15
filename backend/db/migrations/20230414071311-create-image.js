@@ -21,7 +21,8 @@ module.exports = {
         type: Sequelize.ENUM('Group', 'Event')
       },
       imageableId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false
       },
       createdAt: {
         allowNull: false,
