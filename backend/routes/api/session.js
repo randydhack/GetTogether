@@ -23,7 +23,7 @@ const validateLogin = [
 
 
 router.get("/currentUser", async (req, res, next) => {
-
+  console.log(req)
 })
 
 // Log in
