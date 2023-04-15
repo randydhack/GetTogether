@@ -18,18 +18,20 @@ module.exports = {
         type: Sequelize.STRING
       },
       imageableType: {
-        type: Sequelize.ENUM
+        type: Sequelize.ENUM('Group', 'Event')
       },
       imageableId: {
         type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       }
     }, options);
   },
