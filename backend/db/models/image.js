@@ -23,32 +23,33 @@ module.exports = (sequelize, DataTypes) => {
         if (!Array.isArray(result)) result = [result];
         for (const instance of result) {
           if (
-            instance.imageableType === "image" &&
+            instance.imageableType === "Image" &&
             instance.image !== undefined
           ) {
-            instance.imageable = instance.image;
+            instance.imageable = instance.Image;
           } else if (
-            instance.imageableType === "UserProfile" &&
-            instance.UserProfile !== undefined
+            instance.imageableType === "Group" &&
+            instance.Group !== undefined
           ) {
-            instance.imageable = instance.UserProfile;
+            instance.imageable = instance.Group;
           } else if (
-            instance.imageableType === "BlogPost" &&
-            instance.BlogPost !== undefined
+            instance.imageableType === "Event" &&
+            instance.Event !== undefined
           ) {
-            instance.imageable = instance.BlogPost;
+            instance.imageable = instance.Event;
           } else {
             instance.imageable = null;
           }
           // To prevent mistakes:
-          delete instance.UserProfile;
-          delete instance.dataValues.UserProfile;
-          delete instance.BlogPost;
-          delete instance.dataValues.BlogPost;
+          delete instance.Group;
+          delete instance.dataValues.Group;
+          delete instance.Event;
+          delete instance.dataValues.Event;
         }
       });
     }
   }
+
   Image.init(
     {
       url: DataTypes.STRING,

@@ -14,7 +14,7 @@ const handleValidationErrors = (req, _res, next) => {
 
     const err = Error("Validation Error");
     err.status = 400;
-    err.messages = "Validation Error";
+    err.title = "Validation Error";
     err.errors = errors;
     next(err);
   }
@@ -60,6 +60,34 @@ const validateLogin = [
   handleValidationErrors
 ];
 
+// Validate Create Group
+const validateGroupCreate = [
+  check('name')
+    .exists({ checkFalsy: true })
+    .isLength({ max: 60 })
+    .withMessage('Name must be 60 characters or less'),
+  check('about')
+    .exists({ checkFalsy: true })
+    .notEmpty()
+    .isLength({ min: 50 })
+    .withMessage("About must be 50 characters or more"),
+  check('private')
+    .exists({ checkFalsy: true })
+    .isBoolean(true)
+    .withMessage('Private must be a boolean'),
+  check('type')
+    .exists({checkFalsy: true})
+    .isIn(['Online', 'In Person'])
+    .withMessage("Type must be 'Online' or 'In Person'"),
+  check('city')
+    .exists( {checkFalsy: true})
+    .withMessage("City is required"),
+  check('state')
+    .exists( {checkFalsy: true})
+    .withMessage("State is required"),
+  handleValidationErrors
+];
+
 module.exports = {
-  handleValidationErrors, validateLogin, validateSignup
+  handleValidationErrors, validateLogin, validateSignup, validateGroupCreate
 };

@@ -9,13 +9,20 @@ module.exports = (sequelize, DataTypes) => {
       Group.hasMany(models.Image, {
         foreignKey: 'imageableId',
         constraints: false,
+        as: 'GroupImages',
         scope: {
           imageableType: 'Group'
         }
       });
 
+      Group.belongsTo(models.User, {
+        foreignKey: 'organizerId',
+        as: 'Organizer'
+      })
+
       Group.hasMany(models.Membership, {
-        foreignKey: 'groupId'
+        foreignKey: 'groupId',
+        // as: 'numMembers'
       })
 
       Group.hasMany(models.Event, {
@@ -36,7 +43,7 @@ module.exports = (sequelize, DataTypes) => {
     private: DataTypes.BOOLEAN,
     city: DataTypes.STRING,
     state: DataTypes.STRING,
-    previewImage: DataTypes.STRING
+    previewImage: DataTypes.STRING,
   }, {
     sequelize,
     modelName: 'Group',
