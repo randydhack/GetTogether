@@ -1,10 +1,16 @@
 const router = require('express').Router();
 
+const groupsRouter = require('./groups.js')
 const usersRouter = require('./users.js');
-const { restoreUser, requireAuth, setTokenCookie } = require("../../utils/auth.js");
+const { requireAuth, restoreUser } = require('../../utils/auth.js')
+
+router.use(restoreUser)
 
 // signup / login / logout
 router.use('/users', usersRouter);
+
+// groups
+router.use('/groups', groupsRouter);
 
 router.post('/test', (req, res) => {
   res.json({ requestBody: req.body });

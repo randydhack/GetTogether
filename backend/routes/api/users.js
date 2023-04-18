@@ -4,7 +4,7 @@ const router = express.Router();
 
 const { Op } = require("sequelize");
 
-const { setTokenCookie, restoreUser, } = require("../../utils/auth");
+const { setTokenCookie } = require("../../utils/auth");
 const { validateLogin, validateSignup } = require('../../utils/validation');
 const { User } = require("../../db/models");
 
@@ -18,8 +18,7 @@ router.post("/", validateSignup, async (req, res, next) => {
   if (uniqueEmail) {
     const err = new Error("User already exists");
     err.status = 403;
-    err.title = "User already exists";
-    err.errors = "User with that email already exists";
+    err.errors = ["User with that email already exists"];
     return next(err);
   }
 
@@ -56,9 +55,8 @@ router.post("/login", validateLogin, async (req, res, next) => {
   });
 
   if (!user || !bcrypt.compareSync(password, user.hashedPassword.toString())) {
-    const err = new Error("Login failed");
+    const err = new Error("Invalid credentials");
     err.status = 401;
-    err.title = "Invalid credentials";
     return next(err);
   }
 
@@ -86,7 +84,7 @@ router.delete("/", (_req, res) => {
 });
 
 // Restore session user / get current user
-router.get("/", restoreUser, (req, res) => {
+router.get("/currentUser", (req, res) => {
   const { user } = req;
   if (user) {
     const safeUser = {
