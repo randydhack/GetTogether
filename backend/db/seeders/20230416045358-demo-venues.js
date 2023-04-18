@@ -21,7 +21,7 @@ module.exports = {
           lng: -122.4730327
         },
         {
-          groupId: 1,
+          groupId: 2,
           address: "99 Orange Street",
           city: "Los Angeles",
           state: "CA",

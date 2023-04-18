@@ -117,6 +117,39 @@ router.get('/:groupId', requireAuth, async (req, res, next) => {
     res.status(200).json(groupJSON)
 })
 
+// find all venues based on groupId
+router.get('/:groupId/venues', requireAuth, async (req, res, next) => {
+    const id = +req.params.groupId
+
+    const group = await Group.findOne({
+        where: {
+            id: id
+        }
+    })
+
+    if (!group) {
+        const err = new Error("Group couldn't be found")
+        err.status = 404
+        return next(err)
+    }
+
+    const user = await Membership.findOne({ where: { userId: req.user.id, groupId: group.organizerId}})
+
+    if (user.status === 'co-owner' || user.id === group.organizerId) {
+
+        const venues = await Venue.findAll({
+            where: {
+                groupId: group.id
+            },
+            attributes: {
+                exclude: ['createdAt', 'updatedAt']
+            }
+        })
+
+        res.status(200).json({ Venues: venues })
+    }
+})
+
 // Create Group
 router.post('/', requireAuth, validateGroupCreate, async (req, res, next) => {
     const { name, about, type, private, city, state } = req.body;
@@ -141,10 +174,9 @@ router.post('/', requireAuth, validateGroupCreate, async (req, res, next) => {
 
 // Create image based on groupId
 router.post('/:groupId/images', requireAuth, async (req, res, next) => {
-    console.log('++++++++++++++++++++++++', 'WE GOT HERE!!!!!!' , '++++++')
+
     const id = req.params.groupId
 
-    console.log('++++++++++++++++++++++++', id , '++++++')
     const { url, preview } = req.body
     const group = await Group.findOne({ where: { id: id } })
 
