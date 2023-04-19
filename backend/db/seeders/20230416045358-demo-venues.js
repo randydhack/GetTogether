@@ -21,8 +21,16 @@ module.exports = {
           lng: -122.4730327
         },
         {
-          groupId: 1,
+          groupId: 2,
           address: "99 Orange Street",
+          city: "Los Angeles",
+          state: "CA",
+          lat: 100.7645358,
+          lng: -702.4730327
+        },
+        {
+          groupId: 4,
+          address: "99 Oret lane",
           city: "Los Angeles",
           state: "CA",
           lat: 100.7645358,
@@ -35,7 +43,7 @@ module.exports = {
     options.tableName = 'Venues';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      groupId: { [Op.in]: [1] }
+      groupId: { [Op.in]: [1,2,3] }
     }, {});
   }
 };

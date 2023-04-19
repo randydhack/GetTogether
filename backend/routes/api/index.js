@@ -1,7 +1,9 @@
 const router = require('express').Router();
 
-const groupsRouter = require('./groups.js')
 const usersRouter = require('./users.js');
+const groupsRouter = require('./groups.js');
+const venuesRouter = require('./venues.js')
+
 const { requireAuth, restoreUser } = require('../../utils/auth.js')
 
 router.use(restoreUser)
@@ -11,6 +13,9 @@ router.use('/users', usersRouter);
 
 // groups
 router.use('/groups', groupsRouter);
+
+// venues router
+router.use('/venues', venuesRouter)
 
 router.post('/test', (req, res) => {
   res.json({ requestBody: req.body });
