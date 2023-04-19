@@ -5,7 +5,7 @@ const router = express.Router();
 const { Op } = require("sequelize");
 
 const { setTokenCookie, restoreUser, requireAuth, } = require("../../utils/auth");
-const { validateGroupCreate } = require('../../utils/validation');
+const { validateGroupCreate, validateVenue } = require('../../utils/validation');
 const { User, Group, Membership, Venue, sequelize, Image } = require("../../db/models");
 
 // Get all groups with numMembers
@@ -32,7 +32,7 @@ router.get("/currentUser", requireAuth, async (req, res) => {
   if (user) {
     const currentUser = await User.findOne({
         where: {
-            username: user.username
+            id: user.id
         }
     })
 
@@ -42,10 +42,11 @@ router.get("/currentUser", requireAuth, async (req, res) => {
         }
     })
 
+    console.log(groupId)
     if (groupId) {
         const allGroups = await Group.findAll({
             where: {
-                organizerId: groupId.groupId
+                id: groupId.groupId
             },
             include: [{
                 model: Membership,
@@ -74,11 +75,11 @@ router.get("/currentUser", requireAuth, async (req, res) => {
 // Get Group by groupId
 // No preview boolean "GroupImages" due to different schema approach
 router.get('/:groupId', requireAuth, async (req, res, next) => {
-    const id = +req.params.groupId
+    const id = req.params.groupId
 
     const group = await Group.findOne({
         where: {
-            id: id
+            id: id,
         },
         include: [{
             model: Image,
@@ -92,16 +93,14 @@ router.get('/:groupId', requireAuth, async (req, res, next) => {
         },
         {
             model: Venue,
-            attributes: ['id', 'groupId', 'address', 'city', 'state', 'lat', 'lng']
+            attributes: ['id', 'groupId', 'address', 'city', 'state', 'lat', 'lng'],
+
         },
         {
             model: Membership,
             attributes: []
         }
-        ],
-        attributes: {
-            include: [[sequelize.fn('COUNT', sequelize.col('Memberships.groupId')), 'numMembers']]
-        },
+    ],
     })
 
     if (!group) {
@@ -111,7 +110,8 @@ router.get('/:groupId', requireAuth, async (req, res, next) => {
     }
 
     const groupJSON = group.toJSON()
-    const numMembers = await group.countMemberships()
+    const numMembers = await group.countMemberships({ where: { groupId: group.id}})
+    console.log(numMembers)
     groupJSON.numMembers = numMembers
 
     res.status(200).json(groupJSON)
@@ -143,7 +143,8 @@ router.get('/:groupId/venues', requireAuth, async (req, res, next) => {
             },
             attributes: {
                 exclude: ['createdAt', 'updatedAt']
-            }
+            },
+            group: 'id'
         })
 
         res.status(200).json({ Venues: venues })
@@ -157,6 +158,8 @@ router.post('/', requireAuth, validateGroupCreate, async (req, res, next) => {
     const group = await Group.create({
         organizerId: req.user.id, name, about, type, private, city, state
     });
+
+    await Membership.create({ userId: req.user.id, groupId: group.id, status: 'owner'})
 
     const safeGroup = {
         id: group.id,
@@ -195,6 +198,43 @@ router.post('/:groupId/images', requireAuth, async (req, res, next) => {
         }
 
         res.status(201).json(safeImage)
+    }
+})
+
+// Create venue base on groupId
+// NOTE : Need help with latitude and longitude validator
+router.post('/:groupId/venues', requireAuth, validateVenue, async (req, res, next) => {
+    const id = req.params.groupId
+    const { address, city, state, lat, lng } = req.body
+    const group = await Group.findOne({
+        where: {
+            id: id
+        }
+    })
+
+    if (!group) {
+        const err = new Error("Group couldn't be found")
+        err.status = 404
+        return next(err)
+    }
+
+    const user = await  User.findOne({ where: { id: req.user.id}})
+
+    if (user.status === 'co-owner' || user.id === group.organizerId) {
+
+        const newVenue = await Venue.create({ groupId: group.id, address, city, state, lat, lng})
+
+        const safeVenue = {
+            id: newVenue.id,
+            groupId: newVenue.groupId,
+            address: newVenue.address,
+            city: newVenue.city,
+            state: newVenue.state,
+            lat: newVenue.lat,
+            lng: newVenue.lng
+        }
+
+        res.status(200).json(safeVenue)
     }
 })
 

@@ -24,19 +24,12 @@ const handleValidationErrors = (req, _res, next) => {
 // Validate Signup
 const validateSignup = [
   check('email')
-    .exists({ checkFalsy: true })
     .isEmail()
     .withMessage("Invalid email"),
-  check('username')
-    .exists({ checkFalsy: true })
-    .isLength({ min: 4 })
+   check('username')
+    .isLength({min: 4})
     .withMessage('Please provide a username with at least 4 characters.'),
-  check('username')
-    .not()
-    .isEmail()
-    .withMessage('Username cannot be an email.'),
   check('password')
-    .exists({ checkFalsy: true })
     .isLength({ min: 6 })
     .withMessage('Password must be 6 characters or more.'),
   check('firstName')
@@ -52,7 +45,6 @@ const validateSignup = [
 const validateLogin = [
   check('credential')
     .exists({ checkFalsy: true })
-    .notEmpty()
     .withMessage('Please provide a valid email or username.'),
   check('password')
     .exists({ checkFalsy: true })
@@ -63,20 +55,15 @@ const validateLogin = [
 // Validate Create Group
 const validateGroupCreate = [
   check('name')
-    .exists({ checkFalsy: true })
     .isLength({ max: 60 })
     .withMessage('Name must be 60 characters or less'),
   check('about')
-    .exists({ checkFalsy: true })
-    .notEmpty()
     .isLength({ min: 50 })
     .withMessage("About must be 50 characters or more"),
   check('private')
-    .exists({ checkFalsy: true })
     .isBoolean(true)
     .withMessage('Private must be a boolean'),
   check('type')
-    .exists({checkFalsy: true})
     .isIn(['Online', 'In Person'])
     .withMessage("Type must be 'Online' or 'In Person'"),
   check('city')
@@ -88,6 +75,26 @@ const validateGroupCreate = [
   handleValidationErrors
 ];
 
+// validate venue
+const validateVenue = [
+  check('address')
+    .exists({checkFalsy: true})
+    .withMessage('Street address is required'),
+  check('city')
+    .exists({checkFalsy: true})
+    .withMessage('City is required'),
+  check('state')
+    .exists({checkFalsy: true})
+    .withMessage('State is required'),
+  check('lat')
+    .isFloat({min: -90, max: 90})
+    .withMessage('Latitude is not valid'),
+  check('lng')
+    .isFloat({min: -180, max: 180})
+    .withMessage('Longitude is not valid'),
+  handleValidationErrors
+]
+
 module.exports = {
-  handleValidationErrors, validateLogin, validateSignup, validateGroupCreate
+  handleValidationErrors, validateLogin, validateSignup, validateGroupCreate, validateVenue
 };
