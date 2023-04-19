@@ -135,7 +135,7 @@ router.get('/:groupId/venues', requireAuth, async (req, res, next) => {
 
     const user = await Membership.findOne({ where: { userId: req.user.id, groupId: group.organizerId}})
 
-    if (user.status === 'co-owner' || user.id === group.organizerId) {
+    if (user.status === 'co-host' || user.id === group.organizerId) {
 
         const venues = await Venue.findAll({
             where: {
@@ -220,7 +220,7 @@ router.post('/:groupId/venues', requireAuth, validateVenue, async (req, res, nex
 
     const user = await  User.findOne({ where: { id: req.user.id}})
 
-    if (user.status === 'co-owner' || user.id === group.organizerId) {
+    if (user.status === 'co-host' || user.id === group.organizerId) {
 
         const newVenue = await Venue.create({ groupId: group.id, address, city, state, lat, lng})
 
