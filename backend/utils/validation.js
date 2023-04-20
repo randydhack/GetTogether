@@ -97,12 +97,8 @@ const validateVenue = [
 
 const validateEvent = [
   check('venueId')
-    .custom(async (value, {req}) => {
-      const venue = await Venue.findOne({ where: { id: value }})
-      if (!venue) {
-        throw new Error('Venue does not exist')
-      }
-    }),
+    .exists({ checkFalsy: true})
+    .withMessage('Venue does not exist'),
   check('name')
     .isLength({ min: 5 })
     .withMessage('Name must be at least 5 characters'),
@@ -113,7 +109,7 @@ const validateEvent = [
     .isInt()
     .withMessage('Capacity must be an integer'),
   check('price')
-    .isFloat()
+    .isDecimal()
     .withMessage('Price is invalid'),
   check('description')
     .exists({checkFalsy: true})
