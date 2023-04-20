@@ -5,8 +5,10 @@ const router = express.Router();
 const { Op } = require("sequelize");
 
 const { setTokenCookie, restoreUser, requireAuth, } = require("../../utils/auth");
-const { validateGroupCreate, validateVenue } = require('../../utils/validation');
+const { validateGroupCreate, validateVenue, validateEvent } = require('../../utils/validation');
 const { User, Group, Membership, Venue, sequelize, Image, Event, Attendee} = require("../../db/models");
+
+// ---------------- GET ENDPOINTS -------------------------
 
 // Get all groups with numMembers
 router.get('/', async (req, res, next) => {
@@ -187,6 +189,8 @@ router.get('/:groupId/events', async (req, res, next) => {
     res.json({Events: event })
 })
 
+// ---------------- POST ENDPOINTS -------------------------
+
 // Create Group
 router.post('/', requireAuth, validateGroupCreate, async (req, res, next) => {
     const { name, about, type, private, city, state } = req.body;
@@ -195,7 +199,7 @@ router.post('/', requireAuth, validateGroupCreate, async (req, res, next) => {
         organizerId: req.user.id, name, about, type, private, city, state
     });
 
-    await Membership.create({ userId: req.user.id, groupId: group.id, status: 'owner'})
+    const user = await Membership.findOne({ where: { userId: req.user.id}})
 
     const safeGroup = {
         id: group.id,
@@ -207,7 +211,6 @@ router.post('/', requireAuth, validateGroupCreate, async (req, res, next) => {
         city: group.city,
         state: group.state
     }
-
     res.status(201).json(safeGroup)
 })
 
@@ -272,7 +275,46 @@ router.post('/:groupId/venues', requireAuth, validateVenue, async (req, res, nex
 
         res.status(200).json(safeVenue)
     }
+});
+
+// Created Event for a group by it's id
+router.post('/:groupId/events', requireAuth, validateEvent, async (req, res, next) => {
+    const { groupId } = req.params
+    const { venueId, name, type, capacity, price, description, startDate, endDate } = req.body
+
+    const findGroup = await Group.findOne({ where: { id: groupId }})
+    const findVenue = await Venue.findOne({where: { id: venueId}})
+    const user = await Membership.findOne({ where: { userId: req.user.id}})
+
+    if (!findGroup) {
+        const err = new Error("Group couldn't be found");
+        err.status = 404;
+        return next(err)
+    }
+
+    if (!findVenue) {
+        const err = new Error("Venue does not exist");
+        err.status = 404;
+        return next(err)
+    }
+
+
+    if (user.status === 'co-host' || req.user.id === findGroup.organizerId) {
+        await Event.create({groupId: findGroup.id, venueId, name, type, capacity, price, description, startDate, endDate})
+
+        const safeEvent = {
+            groupId: findGroup.id, venueId, name, type, capacity, price, description, startDate, endDate
+        }
+
+        res.status(200).json(safeEvent)
+    } else {
+        const err = new Error('User does not have permission');
+        err.status = 403
+        return next(err)
+    }
 })
+
+// ---------------- UPDATE ENDPOINTS -------------------------
 
 // Update groupId
 router.put('/:groupId', requireAuth, validateGroupCreate, async (req, res, next) => {
@@ -296,8 +338,14 @@ router.put('/:groupId', requireAuth, validateGroupCreate, async (req, res, next)
         if (state) group.state = state
 
         res.status(200).json(group)
+    } else {
+        const err = new Error("User does not have permission")
+        err.status = 403
+        return next(err)
     }
 })
+
+// ---------------- DELETE ENDPOINTS -------------------------
 
 // Delete by groupId
 router.delete('/:groupId', requireAuth, async (req, res, next) => {

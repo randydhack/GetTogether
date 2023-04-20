@@ -95,7 +95,7 @@ const validateVenue = [
   handleValidationErrors
 ];
 
-const validateEvents = [
+const validateEvent = [
   check('name')
     .isLength({ min: 5 })
     .withMessage('Name must be at least 5 characters'),
@@ -110,9 +110,21 @@ const validateEvents = [
     .withMessage('Price is invalid'),
   check('description')
     .exists({checkFalsy: true})
-    .withMessage
+    .withMessage('Description is required'),
+  check('startDate')
+    .custom((value, {req})=> {
+      const date = new Date()
+      return new Date(value) > date
+    })
+    .withMessage('Start date must be in the future'),
+  check('endDate')
+  .custom((value, {req})=> {
+    return value > req.body.startDate
+  })
+    .withMessage('End date is less than start date'),
+  handleValidationErrors
 ]
 
 module.exports = {
-  handleValidationErrors, validateLogin, validateSignup, validateGroupCreate, validateVenue
+  handleValidationErrors, validateLogin, validateSignup, validateGroupCreate, validateVenue, validateEvent
 };

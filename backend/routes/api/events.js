@@ -6,8 +6,11 @@ const { Op } = require("sequelize");
 
 const { setTokenCookie, restoreUser, requireAuth, } = require("../../utils/auth");
 const { validateGroupCreate, validateVenue } = require('../../utils/validation');
-const { User, Group, Membership, Venue, Image, Event, Attendee, sequelize } = require("../../db/models");
+const { Group, Venue, Image, Event, Attendee, sequelize } = require("../../db/models");
 
+// ------------------ GET ENDPOINTS -----------------------
+
+// Get all events
 router.get('/', async (req, res, next) => {
     const events = await Event.findAll({
         include: [{
@@ -67,13 +70,8 @@ router.get('/:eventId', async (req, res, next) => {
             exclude: ['description']
         },
     })
-
-    res.json(event)
+    res.status(200).json(event)
 });
-
-router.post('/:groupId/events',requireAuth, async (req, res, next) => {
-
-})
 
 
 
