@@ -73,6 +73,36 @@ router.get('/:eventId', async (req, res, next) => {
     res.status(200).json(event)
 });
 
+// ------------------ GET ENDPOINTS -----------------------
+
+// Add image to event by eventId
+// NOTE: preview will not part of the image table
+router.post('/:eventId/images', requireAuth, async (req, res, next) => {
+    const { eventId } = req.params
+    const { url } = req.body
+    const event = await Event.findOne({ where: { id: eventId }})
+    const user = await Attendee.findOne({where:{userId: req.user.id}})
+
+    if (!event) {
+        const err = new Error("Event couldn't be found")
+        err.status = 404
+        return next(err)
+    }
+    if (user.eventId === event.id) {
+        const image = await Image.create({ url, imageableType: 'Event', imageableId: event.id })
+        const safeImage = {
+            id: image.id,
+            url: image.url
+        }
+        res.status(200).json(safeImage)
+    } else {
+        const err = new Error('User is not associate with the event')
+        err.status = 403
+        return next(err)
+    }
+})
+
+
 
 
 module.exports = router
