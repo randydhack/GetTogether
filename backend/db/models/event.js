@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       Event.hasMany(models.Image, {
         foreignKey: 'imageableId',
         constraints: false,
+        as: 'EventImages',
         scope: {
           imageableType: 'Event'
         }
@@ -36,10 +37,19 @@ module.exports = (sequelize, DataTypes) => {
     venueId: DataTypes.INTEGER,
     name: DataTypes.STRING,
     type: DataTypes.STRING,
-    previewImage: DataTypes.STRING
+    capacity: DataTypes.INTEGER,
+    price: DataTypes.DECIMAL,
+    previewImage: DataTypes.STRING,
+    startDate: DataTypes.DATE,
+    endDate: DataTypes.DATE
   }, {
     sequelize,
     modelName: 'Event',
+    defaultScope: {
+      attributes: {
+        exclude: ['createdAt', 'updatedAt', 'price', 'capacity']
+      }
+    }
   });
   return Event;
 };

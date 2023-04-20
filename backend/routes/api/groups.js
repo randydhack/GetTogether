@@ -6,7 +6,7 @@ const { Op } = require("sequelize");
 
 const { setTokenCookie, restoreUser, requireAuth, } = require("../../utils/auth");
 const { validateGroupCreate, validateVenue } = require('../../utils/validation');
-const { User, Group, Membership, Venue, sequelize, Image } = require("../../db/models");
+const { User, Group, Membership, Venue, sequelize, Image, Event, Attendee} = require("../../db/models");
 
 // Get all groups with numMembers
 router.get('/', async (req, res, next) => {
@@ -42,7 +42,6 @@ router.get("/currentUser", requireAuth, async (req, res) => {
         }
     })
 
-    console.log(groupId)
     if (groupId) {
         const allGroups = await Group.findAll({
             where: {
@@ -111,7 +110,7 @@ router.get('/:groupId', requireAuth, async (req, res, next) => {
 
     const groupJSON = group.toJSON()
     const numMembers = await group.countMemberships({ where: { groupId: group.id}})
-    console.log(numMembers)
+
     groupJSON.numMembers = numMembers
 
     res.status(200).json(groupJSON)
@@ -149,6 +148,42 @@ router.get('/:groupId/venues', requireAuth, async (req, res, next) => {
 
         res.status(200).json({ Venues: venues })
     }
+})
+
+// Find all events by groupId
+router.get('/:groupId/events', async (req, res, next) => {
+    const { groupId } = req.params
+
+    const group = await Event.findOne({ where: { id: groupId } });
+
+    if (!group) {
+        const err = new Error("Group couldn't be found");
+        err.status = 404
+        return next(err)
+    }
+    const event = await Event.findAll({
+        where: {
+            groupId: group.id
+        },
+        include: [{
+            model: Attendee,
+            attributes: []
+        },
+        {
+            model: Group,
+            attributes: ['id','name','city','state']
+        },
+        {
+            model: Venue,
+            attributes: ['id', 'city', 'state']
+        }],
+        attributes: {
+            include: [[sequelize.fn('COUNT', sequelize.col('Attendees.eventId')), 'numAttendees']]
+        },
+        group: 'Event.id'
+    })
+
+    res.json({Events: event })
 })
 
 // Create Group

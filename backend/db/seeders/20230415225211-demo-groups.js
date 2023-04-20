@@ -23,6 +23,28 @@ module.exports = {
           state: "NY",
           previewImage: "image url",
         },
+        {
+          organizerId: 2,
+          name: "Watching the sunset",
+          about:
+            "Enjoy rounds of tennis with a tight-nit group of people on the water facing the Brooklyn Bridge. Singles or doubles.",
+          type: "In person",
+          private: true,
+          city: "New York",
+          state: "NY",
+          previewImage: "image url",
+        },
+        {
+          organizerId: 1,
+          name: "Walks in the Japanese Garden",
+          about:
+            "Enjoy rounds of tennis with a tight-nit group of people on the water facing the Brooklyn Bridge. Singles or doubles.",
+          type: "In person",
+          private: true,
+          city: "New York",
+          state: "NY",
+          previewImage: "image url",
+        },
       ],
       {}
     );
