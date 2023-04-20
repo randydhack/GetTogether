@@ -74,7 +74,7 @@ router.get('/:eventId', async (req, res, next) => {
     res.status(200).json(event)
 });
 
-// ------------------ GET ENDPOINTS -----------------------
+// ------------------ POST ENDPOINTS -----------------------
 
 // Add image to event by eventId
 // NOTE: preview will not part of the image table
@@ -103,7 +103,7 @@ router.post('/:eventId/images', requireAuth, async (req, res, next) => {
     }
 })
 
-// ------------------ GET ENDPOINTS -----------------------
+// ------------------ PUT ENDPOINTS -----------------------
 
 router.put('/:eventId', requireAuth, validateEvent, async (req, res, next) => {
     const { eventId } = req.params;
