@@ -134,6 +134,32 @@ router.put('/:eventId', requireAuth, validateEvent, async (req, res, next) => {
 
         res.json(safeEvent)
     }
+});
+
+router.delete('/:eventId', requireAuth, async (req, res, next) => {
+    const { eventId } = req.params
+
+    const user = await Membership.findOne({ where: { userId: req.user.id }})
+    const event = await Event.findOne({ where: { id: eventId}})
+    const group = await Group.findOne({where: { id: event.groupId }})
+
+    if (!event) {
+        const err = new Error("Event couldn't be found")
+        err.status = 404
+        return next(err)
+    }
+
+    if (user.status === 'co-host' || req.user.id === group.organizerId) {
+        await event.destroy()
+
+        res.status(200).json({
+            "message": "Successfully deleted"
+          })
+    } else {
+        const err = new Error("User does not have permission")
+        err.status = 403
+        return next(err)
+    }
 })
 
 
