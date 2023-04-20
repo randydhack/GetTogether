@@ -283,7 +283,6 @@ router.post('/:groupId/events', requireAuth, validateEvent, async (req, res, nex
     const { venueId, name, type, capacity, price, description, startDate, endDate } = req.body
 
     const findGroup = await Group.findOne({ where: { id: groupId }})
-    const findVenue = await Venue.findOne({where: { id: venueId}})
     const user = await Membership.findOne({ where: { userId: req.user.id}})
 
     if (!findGroup) {
@@ -291,13 +290,6 @@ router.post('/:groupId/events', requireAuth, validateEvent, async (req, res, nex
         err.status = 404;
         return next(err)
     }
-
-    if (!findVenue) {
-        const err = new Error("Venue does not exist");
-        err.status = 404;
-        return next(err)
-    }
-
 
     if (user.status === 'co-host' || req.user.id === findGroup.organizerId) {
         await Event.create({groupId: findGroup.id, venueId, name, type, capacity, price, description, startDate, endDate})

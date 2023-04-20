@@ -1,6 +1,6 @@
 const { validationResult } = require('express-validator');
 const { check } = require('express-validator');
-
+const { Venue } = require('../db/models')
 // middleware for formatting errors from express-validator middleware
 // (to customize, see express-validator's documentation)
 const handleValidationErrors = (req, _res, next) => {
@@ -96,6 +96,13 @@ const validateVenue = [
 ];
 
 const validateEvent = [
+  check('venueId')
+    .custom(async (value, {req}) => {
+      const venue = await Venue.findOne({ where: { id: value }})
+      if (!venue) {
+        throw new Error('Venue does not exist')
+      }
+    }),
   check('name')
     .isLength({ min: 5 })
     .withMessage('Name must be at least 5 characters'),
