@@ -1,6 +1,6 @@
 const { validationResult } = require('express-validator');
 const { check } = require('express-validator');
-
+const { Venue } = require('../db/models')
 // middleware for formatting errors from express-validator middleware
 // (to customize, see express-validator's documentation)
 const handleValidationErrors = (req, _res, next) => {
@@ -64,7 +64,7 @@ const validateGroupCreate = [
     .isBoolean(true)
     .withMessage('Private must be a boolean'),
   check('type')
-    .isIn(['Online', 'In Person'])
+    .isIn(['Online', 'In person'])
     .withMessage("Type must be 'Online' or 'In Person'"),
   check('city')
     .exists( {checkFalsy: true})
@@ -93,8 +93,41 @@ const validateVenue = [
     .isFloat({min: -180, max: 180})
     .withMessage('Longitude is not valid'),
   handleValidationErrors
+];
+
+const validateEvent = [
+  check('venueId')
+    .exists({ checkFalsy: true})
+    .withMessage('Venue does not exist'),
+  check('name')
+    .isLength({ min: 5 })
+    .withMessage('Name must be at least 5 characters'),
+  check('type')
+    .isIn(['Online', 'In person'])
+    .withMessage('Type must be Online or In person'),
+  check('capacity')
+    .isInt()
+    .withMessage('Capacity must be an integer'),
+  check('price')
+    .isDecimal()
+    .withMessage('Price is invalid'),
+  check('description')
+    .exists({checkFalsy: true})
+    .withMessage('Description is required'),
+  check('startDate')
+    .custom((value, {req})=> {
+      const date = new Date()
+      return new Date(value) > date
+    })
+    .withMessage('Start date must be in the future'),
+  check('endDate')
+  .custom((value, {req})=> {
+    return value > req.body.startDate
+  })
+    .withMessage('End date is less than start date'),
+  handleValidationErrors
 ]
 
 module.exports = {
-  handleValidationErrors, validateLogin, validateSignup, validateGroupCreate, validateVenue
+  handleValidationErrors, validateLogin, validateSignup, validateGroupCreate, validateVenue, validateEvent
 };

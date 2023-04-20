@@ -3,6 +3,8 @@ const router = require('express').Router();
 const usersRouter = require('./users.js');
 const groupsRouter = require('./groups.js');
 const venuesRouter = require('./venues.js')
+const eventsRouter = require('./events.js')
+
 
 const { requireAuth, restoreUser } = require('../../utils/auth.js')
 
@@ -15,11 +17,16 @@ router.use('/users', usersRouter);
 router.use('/groups', groupsRouter);
 
 // venues router
-router.use('/venues', venuesRouter)
+router.use('/venues', venuesRouter);
+
+// events router
+router.use('/events', eventsRouter);
 
 router.post('/test', (req, res) => {
   res.json({ requestBody: req.body });
 });
+
+
 
 // GET /api/set-token-cookie
 // const { User } = require('../../db/models');

@@ -20,7 +20,6 @@ module.exports = {
       },
       venueId: {
         type: Sequelize.INTEGER,
-        allowNull: false
       },
       name: {
         type: Sequelize.STRING,
@@ -30,8 +29,28 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
+      capacity: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      price: {
+        type: Sequelize.DECIMAL,
+        allowNull: false,
+      },
+      description: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
       previewImage: {
         type: Sequelize.STRING
+      },
+      startDate: {
+          allowNull: false,
+          type: Sequelize.DATE,
+      },
+      endDate: {
+          allowNull: false,
+          type: Sequelize.DATE,
       },
       createdAt: {
         allowNull: false,
