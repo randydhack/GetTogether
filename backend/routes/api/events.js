@@ -25,7 +25,7 @@ router.get('/', async (req, res, next) => {
     ],
     attributes: {
         include: [[sequelize.fn('COUNT', sequelize.col('Attendees.id')), 'numAttendees']],
-        exclude: [['price'], ['capacity']],
+        exclude: ['price','capacity', 'description'],
     },
     group: 'Event.id'
     });
@@ -33,8 +33,6 @@ router.get('/', async (req, res, next) => {
 })
 
 // get event by eventID
-//Come back and add more features as some are missing atm
-// event needs to have capacity and price
 router.get('/:eventId', async (req, res, next) => {
     const { eventId } = req.params
     const eventCheck = await Event.findOne({where: { id: eventId}});
@@ -58,18 +56,23 @@ router.get('/:eventId', async (req, res, next) => {
             }
         }, {
             model: Image,
-            as: 'EventImages'
+            as: 'EventImages',
+            attributes: ['id', 'url']
         },{
             model: Attendee,
             attributes: []
         }],
         attributes: {
             include: [[sequelize.fn('COUNT', sequelize.col('Attendees.id')), 'numAttendees']],
-            exclude: ['price', 'capacity']
+            exclude: ['description']
         },
     })
 
     res.json(event)
+});
+
+router.post('/:groupId/events',requireAuth, async (req, res, next) => {
+
 })
 
 

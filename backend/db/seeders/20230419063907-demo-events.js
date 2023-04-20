@@ -19,6 +19,7 @@ module.exports = {
           type: 'Online',
           capacity: 10,
           price: 1.00,
+          description: 'lorem ispul 2.0',
           startDate: "2021-11-19 20:00:00",
           endDate: "2021-11-19 20:00:00",
           previewImage: 'image url'
@@ -30,6 +31,7 @@ module.exports = {
           type: 'In Person',
           capacity: 25,
           price: 0.00,
+          description: 'lorem ispul lorem ipsuuuuuul',
           startDate: "2021-11-19 20:00:00",
           endDate: "2021-11-19 20:00:00",
           previewImage: 'image url'
@@ -41,6 +43,7 @@ module.exports = {
           type: 'In Person',
           capacity: 10,
           price: 20.99,
+          description: 'copy cat in the hood',
           startDate: "2021-11-19 20:00:00",
           endDate: "2021-11-19 20:00:00",
           previewImage: 'image url'
@@ -52,6 +55,7 @@ module.exports = {
           type: 'ONLINE',
           capacity: 80,
           price: 0.00,
+          description: 'saw u playing in a bin',
           startDate: "2021-11-19 20:00:00",
           endDate: "2021-11-19 20:00:00",
           previewImage: 'image url'

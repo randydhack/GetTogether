@@ -64,7 +64,7 @@ const validateGroupCreate = [
     .isBoolean(true)
     .withMessage('Private must be a boolean'),
   check('type')
-    .isIn(['Online', 'In Person'])
+    .isIn(['Online', 'In person'])
     .withMessage("Type must be 'Online' or 'In Person'"),
   check('city')
     .exists( {checkFalsy: true})
@@ -93,6 +93,24 @@ const validateVenue = [
     .isFloat({min: -180, max: 180})
     .withMessage('Longitude is not valid'),
   handleValidationErrors
+];
+
+const validateEvents = [
+  check('name')
+    .isLength({ min: 5 })
+    .withMessage('Name must be at least 5 characters'),
+  check('type')
+    .isIn(['Online', 'In person'])
+    .withMessage('Type must be Online or In person'),
+  check('capacity')
+    .isInt()
+    .withMessage('Capacity must be an integer'),
+  check('price')
+    .isFloat()
+    .withMessage('Price is invalid'),
+  check('description')
+    .exists({checkFalsy: true})
+    .withMessage
 ]
 
 module.exports = {

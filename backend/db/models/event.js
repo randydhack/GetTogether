@@ -39,6 +39,7 @@ module.exports = (sequelize, DataTypes) => {
     type: DataTypes.STRING,
     capacity: DataTypes.INTEGER,
     price: DataTypes.DECIMAL,
+    description: DataTypes.STRING,
     previewImage: DataTypes.STRING,
     startDate: DataTypes.DATE,
     endDate: DataTypes.DATE
@@ -47,7 +48,7 @@ module.exports = (sequelize, DataTypes) => {
     modelName: 'Event',
     defaultScope: {
       attributes: {
-        exclude: ['createdAt', 'updatedAt', 'price', 'capacity']
+        exclude: ['createdAt', 'updatedAt']
       }
     }
   });
