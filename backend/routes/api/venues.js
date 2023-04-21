@@ -20,7 +20,7 @@ router.put("/:venueId", requireAuth, validateVenue, async (req, res, next) => {
     return next(err)
   }
 
-  const user = await Membership.findOne({ where: { userId: req.user.id }})
+  const user = await Membership.findOne({ where: { memberId: req.user.id }})
 
   const group = await Group.findOne({where: { id: venue.groupId }})
 

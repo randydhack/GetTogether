@@ -40,7 +40,7 @@ router.get("/currentUser", requireAuth, async (req, res) => {
 
     const groupId = await Membership.findOne({
         where: {
-            userId: currentUser.id
+            memberId: currentUser.id
         }
     })
 
@@ -134,7 +134,7 @@ router.get('/:groupId/venues', requireAuth, async (req, res, next) => {
         return next(err)
     }
 
-    const user = await Membership.findOne({ where: { userId: req.user.id, groupId: group.organizerId}})
+    const user = await Membership.findOne({ where: { memberId: req.user.id, groupId: group.organizerId}})
 
     if (user.status === 'co-host' || user.id === group.organizerId) {
 
@@ -199,7 +199,7 @@ router.post('/', requireAuth, validateGroupCreate, async (req, res, next) => {
         organizerId: req.user.id, name, about, type, private, city, state
     });
 
-    const user = await Membership.findOne({ where: { userId: req.user.id}})
+    const user = await Membership.findOne({ where: { memberId: req.user.id}})
 
     const safeGroup = {
         id: group.id,
@@ -283,7 +283,7 @@ router.post('/:groupId/events', requireAuth, validateEvent, async (req, res, nex
     const { venueId, name, type, capacity, price, description, startDate, endDate } = req.body
 
     const findGroup = await Group.findOne({ where: { id: groupId }})
-    const user = await Membership.findOne({ where: { userId: req.user.id}})
+    const user = await Membership.findOne({ where: { memberId: req.user.id}})
 
     if (!findGroup) {
         const err = new Error("Group couldn't be found");

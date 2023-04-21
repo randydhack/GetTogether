@@ -14,17 +14,14 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      userId: {
+      memberId: {
         type: Sequelize.INTEGER,
-        allowNull: false
       },
       groupId: {
         type: Sequelize.INTEGER,
-        allowNull: false
       },
       status: {
         type: Sequelize.STRING,
-        allowNull: false
       },
       createdAt: {
         allowNull: false,
