@@ -20,7 +20,7 @@ router.get('/:groupId', async (req, res, next) => {
     }
 
     const coHost = await Membership.findOne({ where: { userId: req.user.id }})
-    console.log(req.user.id, group.organizerId)
+
     if (req.user.id === group.organizerId || coHost.status === 'co-host') {
 
         const members = await Membership.findAll({
