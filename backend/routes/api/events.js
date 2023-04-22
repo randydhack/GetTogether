@@ -110,8 +110,6 @@ router.put('/:eventId', requireAuth, validateEvent, async (req, res, next) => {
     const { venueId, name, type, capacity, price, description, startDate, endDate } = req.body
 
     const event = await Event.findOne({ where: { id: eventId }})
-    const group = await Group.findOne({where: {id: event.groupId }})
-    const user = await Membership.findOne({where: { userId: req.user.id}})
     const venue = await Venue.findOne({where: { id: venueId }})
 
     if (!venue) {
@@ -125,21 +123,27 @@ router.put('/:eventId', requireAuth, validateEvent, async (req, res, next) => {
         return next(err)
     }
 
+    const group = await Group.findOne({where: {id: event.groupId }})
+    const user = await Membership.findOne({where: { memberId: req.user.id}})
+
     if (user.status === 'co-host' || req.user.id === group.organizerId) {
 
         await event.update({ venueId, name, type, capacity, price, description, startDate, endDate })
         const safeEvent = {
             venueId, name, type, capacity, price, description, startDate, endDate
         }
-
         res.json(safeEvent)
+    } else {
+        const err = new Error("User does not have permission")
+        err.status = 403
+        return next(err)
     }
 });
 
 router.delete('/:eventId', requireAuth, async (req, res, next) => {
     const { eventId } = req.params
 
-    const user = await Membership.findOne({ where: { userId: req.user.id }})
+    const user = await Membership.findOne({ where: { memberId: req.user.id }})
     const event = await Event.findOne({ where: { id: eventId}})
     const group = await Group.findOne({where: { id: event.groupId }})
 
