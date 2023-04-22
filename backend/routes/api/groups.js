@@ -27,7 +27,7 @@ router.get('/', async (req, res, next) => {
     res.status(200).json({ Groups: allGroups })
 })
 
-// Restore session user / get current user
+// Get all groups or organized by currentUser
 router.get("/currentUser", requireAuth, async (req, res, next) => {
     const { user } = req;
   if (user) {
@@ -37,20 +37,49 @@ router.get("/currentUser", requireAuth, async (req, res, next) => {
         }
     })
 
-    const groupId = await Membership.findOne({
+    const groupId = await Membership.findAll({
         where: {
-            memberId: currentUser.id
+            memberId: currentUser.id,
+            status: {
+                [Op.in]: ['co-host', 'member']
+            }
         }
     })
 
     if (groupId) {
-        const allGroups = await Group.findAll({
+        // find all groups owned
+        const ownedGroups = await Group.findAll({
             where: {
-                id: groupId.groupId
+                organizerId: currentUser.id
             },
             include: [{
                 model: Membership,
                 attributes: []
+            },
+        {
+            model: Image,
+            as: 'GroupImages',
+            attributes: []
+        }],
+            attributes: {
+                include: [
+                [sequelize.fn('COUNT', sequelize.col('Memberships.memberId')), 'numMembers'],
+            ]
+        },
+            group: 'Group.id'
+        })
+
+        // find all groups joined
+        const joinedGroups = await Group.findAll({
+            include: [{
+                model: Membership,
+                attributes: [],
+                where: {
+                    memberId: currentUser.id,
+                    status: {
+                        [Op.in]: ['co-host', 'member']
+                    }
+                }
             },
         {
             model: Image,
@@ -66,12 +95,8 @@ router.get("/currentUser", requireAuth, async (req, res, next) => {
         })
 
         return res.json({
-          Group: allGroups,
+          Group: [...ownedGroups,...joinedGroups]
         });
-  } else {
-    const err = new Error('User does not organize any groups')
-    err.status = 400
-    return next(err)
   }
 } return res.json({ user: null });
 });

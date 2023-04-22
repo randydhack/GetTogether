@@ -191,7 +191,7 @@ router.put('/:groupId', requireAuth, async (req, res, next) => {
             res.status(200).json(safeStatus)
         }
 
-        if (req.user.id === group.organizerId && member.status === 'member') {
+        if (req.user.id === group.organizerId && member.status === 'member' && status === 'co-host') {
             await member.update({ memberId, groupId, status })
             const safeStatus = { id: member.id, groupId, memberId, status }
             res.status(200).json(safeStatus)
@@ -235,8 +235,8 @@ router.delete('/:groupId', requireAuth, async (req, res, next) => {
         return next(err)
     }
 
-    // if user is organizer, delete membership
-    if (req.user.id === group.organizerId) {
+    // if user is organizer or user, delete membership
+    if (req.user.id === group.organizerId || member.groupId === group.organizerId) {
         await member.destroy()
         res.status(200).json({ message: 'Successfully deleted membership from group' })
     } else {
