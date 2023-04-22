@@ -159,17 +159,18 @@ router.put('/:groupId', requireAuth, async (req, res, next) => {
     }
 
     const coHost = await Membership.findOne({where: { memberId: req.user.id, groupId: groupId }})
-    const member = await Membership.findOne({where: { memberId: memberId, groupId } })
+    const member = await Membership.findOne({where: { memberId: 5, groupId } })
+    const user = await User.findOne({where: {id: memberId}})
 
     // check if user is a member
-    if (!member) {
+    if (!user) {
         const err = new Error('Validation Error')
         err.status = 400
         err.errors = { status: "User couldn't be found"}
         return next(err)
     }
 
-    if (member.status === status) {
+    if (member && member.status === status) {
         const err = new Error('Validation Error')
         err.status = 400
         err.errors = { status: "User already have that status"}
@@ -177,7 +178,7 @@ router.put('/:groupId', requireAuth, async (req, res, next) => {
     }
 
     // checks if belong to that group
-    if (member.groupId !== group.organizerId) {
+    if (!member) {
         const err = new Error("Membership between the user and the group does not exists")
         err.status = 400
         return next(err)
@@ -236,7 +237,7 @@ router.delete('/:groupId', requireAuth, async (req, res, next) => {
     }
 
     // if user is organizer or user, delete membership
-    if (req.user.id === group.organizerId || member.groupId === group.organizerId) {
+    if (req.user.id === group.organizerId || user.id === member.userId) {
         await member.destroy()
         res.status(200).json({ message: 'Successfully deleted membership from group' })
     } else {

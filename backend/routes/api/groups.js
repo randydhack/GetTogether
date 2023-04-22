@@ -37,16 +37,6 @@ router.get("/currentUser", requireAuth, async (req, res, next) => {
         }
     })
 
-    const groupId = await Membership.findAll({
-        where: {
-            memberId: currentUser.id,
-            status: {
-                [Op.in]: ['co-host', 'member']
-            }
-        }
-    })
-
-    if (groupId) {
         // find all groups owned
         const ownedGroups = await Group.findAll({
             where: {
@@ -97,8 +87,9 @@ router.get("/currentUser", requireAuth, async (req, res, next) => {
         return res.json({
           Group: [...ownedGroups,...joinedGroups]
         });
-  }
-} return res.json({ user: null });
+    }
+
+    return res.json({ user: null });
 });
 
 // Get Group by groupId
