@@ -13,6 +13,11 @@ module.exports = {
       options,
       [
         {
+          memberId: 1,
+          groupId: 2,
+          status: 'pending'
+        },
+        {
           memberId: 2,
           groupId: 1,
           status: 'member'
@@ -34,7 +39,7 @@ module.exports = {
     options.tableName = 'Memberships';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      memberId: { [Op.in]: [1, 2, 3] }
+      memberId: { [Op.in]: [1, 2, 3, 4] }
     }, {});
   }
 };

@@ -1,10 +1,9 @@
 const express = require("express");
-const bcrypt = require("bcryptjs");
 const router = express.Router();
 
 const { Op } = require("sequelize");
 
-const { setTokenCookie, restoreUser, requireAuth, } = require("../../utils/auth");
+const { requireAuth, } = require("../../utils/auth");
 const { validateGroupCreate, validateVenue, validateEvent } = require('../../utils/validation');
 const { User, Group, Membership, Venue, sequelize, Image, Event, Attendee} = require("../../db/models");
 
@@ -29,7 +28,7 @@ router.get('/', async (req, res, next) => {
 })
 
 // Restore session user / get current user
-router.get("/currentUser", requireAuth, async (req, res) => {
+router.get("/currentUser", requireAuth, async (req, res, next) => {
     const { user } = req;
   if (user) {
     const currentUser = await User.findOne({
@@ -69,8 +68,12 @@ router.get("/currentUser", requireAuth, async (req, res) => {
         return res.json({
           Group: allGroups,
         });
-    }
-  } else return res.json({ user: null });
+  } else {
+    const err = new Error('User does not organize any groups')
+    err.status = 400
+    return next(err)
+  }
+} return res.json({ user: null });
 });
 
 // Get Group by groupId
@@ -291,7 +294,7 @@ router.post('/:groupId/events', requireAuth, validateEvent, async (req, res, nex
         return next(err)
     }
 
-    if (user.status === 'co-host' || req.user.id === findGroup.organizerId) {
+    if ((user && user.status === 'co-host') || (req.user.id === findGroup.organizerId)) {
         await Event.create({groupId: findGroup.id, venueId, name, type, capacity, price, description, startDate, endDate})
 
         const safeEvent = {

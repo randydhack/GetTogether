@@ -1,13 +1,12 @@
 const express = require("express");
-const bcrypt = require("bcryptjs");
 const router = express.Router();
 
 const { Op } = require("sequelize");
 
-const { setTokenCookie, restoreUser, requireAuth, } = require("../../utils/auth");
+const { requireAuth, } = require("../../utils/auth");
 const { validateEvent } = require('../../utils/validation');
 const { Group, Venue, Image, Event, Attendee, Membership, sequelize } = require("../../db/models");
-const e = require("express");
+
 
 // ------------------ GET ENDPOINTS -----------------------
 
@@ -126,7 +125,7 @@ router.put('/:eventId', requireAuth, validateEvent, async (req, res, next) => {
     const group = await Group.findOne({where: {id: event.groupId }})
     const user = await Membership.findOne({where: { memberId: req.user.id}})
 
-    if (user.status === 'co-host' || req.user.id === group.organizerId) {
+    if ((user && user.status === 'co-host') || (req.user.id === group.organizerId)) {
 
         await event.update({ venueId, name, type, capacity, price, description, startDate, endDate })
         const safeEvent = {
@@ -153,7 +152,7 @@ router.delete('/:eventId', requireAuth, async (req, res, next) => {
         return next(err)
     }
 
-    if (user.status === 'co-host' || req.user.id === group.organizerId) {
+    if ((user && user.status === 'co-host') || (req.user.id === group.organizerId)) {
         await event.destroy()
 
         res.status(200).json({

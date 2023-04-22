@@ -1,12 +1,11 @@
 const express = require("express");
-const bcrypt = require("bcryptjs");
 const router = express.Router();
 
 const { Op } = require("sequelize");
 
 const { requireAuth } = require("../../utils/auth");
 const { validateVenue } = require("../../utils/validation");
-const { Venue, User, Membership, Group } = require("../../db/models");
+const { Venue, Membership, Group } = require("../../db/models");
 
 router.put("/:venueId", requireAuth, validateVenue, async (req, res, next) => {
   const id = req.params.venueId;
@@ -25,7 +24,7 @@ router.put("/:venueId", requireAuth, validateVenue, async (req, res, next) => {
   const group = await Group.findOne({where: { id: venue.groupId }})
 
 
-  if (user.status === 'co-owner' || req.user.id === group.organizerId) {
+  if ((user && user.status === 'co-host') || (req.user.id === group.organizerId)) {
     await venue.update({
       address,
       city,
