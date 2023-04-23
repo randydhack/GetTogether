@@ -5,6 +5,7 @@ const groupsRouter = require('./groups.js');
 const venuesRouter = require('./venues.js')
 const eventsRouter = require('./events.js')
 const membershipsRouter = require('./memberships.js')
+const attendeesRouter = require('./attendees.js')
 
 
 const { restoreUser } = require('../../utils/auth.js')
@@ -25,6 +26,9 @@ router.use('/events', eventsRouter);
 
 // groups
 router.use('/memberships', membershipsRouter)
+
+// attendees
+router.use('/attendees', attendeesRouter)
 
 router.post('/test', (req, res) => {
   res.json({ requestBody: req.body });
