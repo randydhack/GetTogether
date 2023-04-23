@@ -14,7 +14,7 @@ module.exports = {
       [
         {
           groupId: 1,
-          venueId: null,
+          venueId: 3,
           name: "Tennis Group First Meet and Greet",
           type: 'Online',
           capacity: 10,
