@@ -23,7 +23,7 @@ module.exports = {
         allowNull: false
       },
       status: {
-        type: Sequelize.ENUM('User', 'Event')
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
