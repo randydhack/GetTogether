@@ -1,8 +1,7 @@
 # `GetTogether`
 
 ## Database Schema Design
-<img width="723" alt="image" src="https://user-images.githubusercontent.com/113399691/231335927-610e275b-30cf-4ff1-b03c-0690d40f84ab.png">
-
+<img width="738" alt="image" src="https://user-images.githubusercontent.com/113399691/234166277-b432707b-8f9d-4fc5-a7f7-ddf4513fd8ed.png">
 
 ## API Documentation
 
