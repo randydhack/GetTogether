@@ -67,7 +67,7 @@ module.exports = {
     options.tableName = 'Events';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      id: { [Op.in]: [1,2,3] }
+      groupId: { [Op.in]: [1,2,3] }
     }, {});
   }
 };

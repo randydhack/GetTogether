@@ -1,10 +1,9 @@
 const express = require("express");
-const bcrypt = require("bcryptjs");
 const router = express.Router();
 
 const { Op } = require("sequelize");
 
-const { setTokenCookie, restoreUser, requireAuth, } = require("../../utils/auth");
+const { requireAuth, } = require("../../utils/auth");
 const { validateGroupCreate, validateVenue, validateEvent } = require('../../utils/validation');
 const { User, Group, Membership, Venue, sequelize, Image, Event, Attendee} = require("../../db/models");
 
@@ -28,8 +27,8 @@ router.get('/', async (req, res, next) => {
     res.status(200).json({ Groups: allGroups })
 })
 
-// Restore session user / get current user
-router.get("/currentUser", requireAuth, async (req, res) => {
+// Get all groups or organized by currentUser
+router.get("/currentUser", requireAuth, async (req, res, next) => {
     const { user } = req;
   if (user) {
     const currentUser = await User.findOne({
@@ -38,20 +37,39 @@ router.get("/currentUser", requireAuth, async (req, res) => {
         }
     })
 
-    const groupId = await Membership.findOne({
-        where: {
-            memberId: currentUser.id
-        }
-    })
-
-    if (groupId) {
-        const allGroups = await Group.findAll({
+        // find all groups owned
+        const ownedGroups = await Group.findAll({
             where: {
-                id: groupId.groupId
+                organizerId: currentUser.id
             },
             include: [{
                 model: Membership,
                 attributes: []
+            },
+        {
+            model: Image,
+            as: 'GroupImages',
+            attributes: []
+        }],
+            attributes: {
+                include: [
+                [sequelize.fn('COUNT', sequelize.col('Memberships.memberId')), 'numMembers'],
+            ]
+        },
+            group: 'Group.id'
+        })
+
+        // find all groups joined
+        const joinedGroups = await Group.findAll({
+            include: [{
+                model: Membership,
+                attributes: [],
+                where: {
+                    memberId: currentUser.id,
+                    status: {
+                        [Op.in]: ['co-host', 'member']
+                    }
+                }
             },
         {
             model: Image,
@@ -67,10 +85,11 @@ router.get("/currentUser", requireAuth, async (req, res) => {
         })
 
         return res.json({
-          Group: allGroups,
+          Group: [...ownedGroups,...joinedGroups]
         });
     }
-  } else return res.json({ user: null });
+
+    return res.json({ user: null });
 });
 
 // Get Group by groupId
@@ -291,7 +310,7 @@ router.post('/:groupId/events', requireAuth, validateEvent, async (req, res, nex
         return next(err)
     }
 
-    if (user.status === 'co-host' || req.user.id === findGroup.organizerId) {
+    if ((user && user.status === 'co-host') || (req.user.id === findGroup.organizerId)) {
         await Event.create({groupId: findGroup.id, venueId, name, type, capacity, price, description, startDate, endDate})
 
         const safeEvent = {

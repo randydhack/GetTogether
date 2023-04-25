@@ -7,7 +7,7 @@ const eventsRouter = require('./events.js')
 const membershipsRouter = require('./memberships.js')
 
 
-const { requireAuth, restoreUser } = require('../../utils/auth.js')
+const { restoreUser } = require('../../utils/auth.js')
 
 router.use(restoreUser)
 

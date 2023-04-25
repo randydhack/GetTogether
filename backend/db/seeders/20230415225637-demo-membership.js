@@ -12,20 +12,69 @@ module.exports = {
     return queryInterface.bulkInsert(
       options,
       [
+        // member 1
         {
-          memberId: 2,
-          groupId: 1,
+          memberId: 1,
+          groupId: 2,
           status: 'member'
         },
         {
-          memberId: 3,
+          memberId: 1,
+          groupId: 3,
+          status: 'co-host'
+        },
+        {
+          memberId: 1,
+          groupId: 4,
+          status: 'pending'
+        },
+        // member 2
+        {
+          memberId: 2,
           groupId: 1,
           status: 'co-host'
         },
         {
-          memberId: 4,
+          memberId: 2,
+          groupId: 3,
+          status: 'member'
+        },
+        {
+          memberId: 2,
+          groupId: 4,
+          status: 'pending'
+        },
+        // member 3
+        {
+          memberId: 3,
+          groupId: 4,
+          status: 'member'
+        },
+        {
+          memberId: 3,
+          groupId: 2,
+          status: 'co-host'
+        },
+        {
+          memberId: 3,
           groupId: 1,
           status: 'pending'
+        },
+        //member 4
+        {
+          memberId: 4,
+          groupId: 1,
+          status: 'member'
+        },
+        {
+          memberId: 4,
+          groupId: 2,
+          status: 'member'
+        },
+        {
+          memberId: 4,
+          groupId: 3,
+          status: 'co-host'
         },
       ], {})
   },
@@ -34,7 +83,7 @@ module.exports = {
     options.tableName = 'Memberships';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      memberId: { [Op.in]: [1, 2, 3] }
+      memberId: { [Op.in]: [1, 2, 3, 4] }
     }, {});
   }
 };

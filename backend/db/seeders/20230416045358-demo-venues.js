@@ -43,7 +43,7 @@ module.exports = {
     options.tableName = 'Venues';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      groupId: { [Op.in]: [1,2,3] }
+      groupId: { [Op.in]: [1,2,4,3] }
     }, {});
   }
 };
