@@ -18,24 +18,34 @@ router.delete('/:imageId', requireAuth, async (req, res, next) => {
         return next(err)
     }
 
-    const user = await Membership.findOne({where: {memberId: req.user.id, groupId: image.imageableId}})
-    const group = await Group.findOne({ where: { id: image.imageableId }})
-    const event = await Event.findOne({ where: { id: image.imageableId }})
+    let organizerId;
+    let groupId;
 
+    if (image.imageableType === 'Group') {
 
-    if ((user && user.status === 'co-host') || (req.user.id === group.organizerId)) {
+        const group = await Group.findOne({ where: { id: image.imageableId }})
+        organizerId = group.organizerId
+        groupId = group.id
 
-        if (image.imageableType === 'Group') {
+    } else if (image.imageableType === 'Event') {
+        const event = await Event.findOne({
+            where: {
+                id: image.imageableId
+            },
+            include: {
+                model: Group
+            }
+        });
+        organizerId = event.Group.organizerId
+        groupId = event.Group.id
+    }
 
-            await image.destroy();
-            return res.json({ message: 'Successfully deleted', statusCode: 200 })
+    const user = await Membership.findOne({where: { memberId: req.user.id, groupId }})
 
-       }
+    if ((user && user.status === 'co-host') || (req.user.id === organizerId)) {
 
-       if (image.imageableType === 'Event') {
-            await image.destroy();
-            return res.json({ message: 'Successfully deleted', statusCode: 200 })
-        }
+        await image.destroy();
+        return res.json({ message: 'Successfully deleted', statusCode: 200 })
 
     } else {
         const err = new Error("User does not have permission")
