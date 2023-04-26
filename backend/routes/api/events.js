@@ -12,6 +12,7 @@ const { Group, Venue, Image, Event, Attendee, Membership, sequelize } = require(
 
 // Get all events
 router.get('/', async (req, res, next) => {
+
     const events = await Event.findAll({
         include: [{
             model: Group,

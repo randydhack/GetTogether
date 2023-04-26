@@ -21,30 +21,29 @@ module.exports = (sequelize, DataTypes) => {
 
       Image.addHook("afterFind", async (result) => {
         if (!Array.isArray(result)) result = [result];
+
         for (const instance of result) {
-          if (
-            instance.imageableType === "Image" &&
-            instance.image !== undefined
-          ) {
-            instance.imageable = instance.Image;
-          } else if (
-            instance.imageableType === "Group" &&
-            instance.Group !== undefined
-          ) {
-            instance.imageable = instance.Group;
-          } else if (
-            instance.imageableType === "Event" &&
-            instance.Event !== undefined
-          ) {
-            instance.imageable = instance.Event;
-          } else {
-            instance.imageable = null;
+          if (instance !== null) {
+            if (
+              instance.imageableType === "Image" &&
+              instance.image !== undefined
+            ) {
+              instance.imageable = instance.Image;
+            } else if (
+              instance.imageableType === "Group" &&
+              instance.Group !== undefined
+            ) {
+              instance.imageable = instance.Group;
+            } else if (
+              instance.imageableType === "Event" &&
+              instance.Event !== undefined
+            ) {
+              instance.imageable = instance.Event;
+            } else {
+              instance.imageable = null;
+            }
           }
-          // To prevent mistakes:
-          delete instance.Group;
-          delete instance.dataValues.Group;
-          delete instance.Event;
-          delete instance.dataValues.Event;
+
         }
       });
     }
@@ -53,7 +52,10 @@ module.exports = (sequelize, DataTypes) => {
   Image.init(
     {
       url: DataTypes.STRING,
-      imageableType: DataTypes.ENUM('Group', 'Event'),
+      imageableType: {
+        type: DataTypes.ENUM("Group", "Event"),
+        allowNull: false,
+      },
       imageableId: DataTypes.INTEGER,
     },
     {
@@ -61,8 +63,8 @@ module.exports = (sequelize, DataTypes) => {
       modelName: "Image",
       defaultScope: {
         attributes: {
-          exclude: ["hashedPassword", "email", "createdAt", "updatedAt"]
-        }
+          exclude: ["hashedPassword", "email", "createdAt", "updatedAt"],
+        },
       },
     }
   );
