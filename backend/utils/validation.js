@@ -131,11 +131,11 @@ const validateEvent = [
 const paginationValidation = [
   query('page')
     .optional()
-    .isInt({min: 0, max: 10})
+    .isInt({min: 0})
     .withMessage("Page must be greater than or equal to 0"),
   query('size')
     .optional()
-    .isInt({min: 0, max: 20})
+    .isInt({min: 0})
     .withMessage("Size must be less than or equal to 20"),
   query('name')
     .optional()
