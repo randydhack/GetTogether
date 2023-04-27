@@ -52,7 +52,7 @@ module.exports = {
           groupId: 3,
           venueId: 1,
           name: "PLAY LEAGUE",
-          type: 'ONLINE',
+          type: 'Online',
           capacity: 80,
           price: 0.00,
           description: 'saw u playing in a bin',
