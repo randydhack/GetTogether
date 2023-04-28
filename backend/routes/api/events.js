@@ -23,7 +23,7 @@ router.get('/', paginationValidation, async (req, res, next) => {
     if(!page) page = 0;
     if(!size) size = 20;
     if(page > 10) page = 10
-    if(size > 20) page = 20
+    if(size > 20) size = 20
 
     pagination.limit = size;
     pagination.offset = size * page;
