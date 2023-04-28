@@ -97,7 +97,7 @@ const validateVenue = [
 
 const validateEvent = [
   check('venueId')
-    .exists({ checkFalsy: true})
+    .isInt()
     .withMessage('Venue does not exist'),
   check('name')
     .isLength({ min: 5 })
