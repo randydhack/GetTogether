@@ -16,6 +16,7 @@ module.exports = {
       },
       organizerId: {
         type: Sequelize.INTEGER,
+        allowNull: false
       },
       name: {
         type: Sequelize.STRING(60),

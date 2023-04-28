@@ -155,7 +155,7 @@ router.get('/:groupId/venues', requireAuth, async (req, res, next) => {
 
     const user = await Membership.findOne({ where: { memberId: req.user.id, groupId: group.organizerId}})
 
-    if (user.status === 'co-host' || user.id === group.organizerId) {
+    if ((user && user.status === 'co-host') || req.user.id === group.organizerId) {
 
         const venues = await Venue.findAll({
             where: {
@@ -218,8 +218,6 @@ router.post('/', requireAuth, validateGroupCreate, async (req, res, next) => {
         organizerId: req.user.id, name, about, type, private, city, state
     });
 
-    const user = await Membership.findOne({ where: { memberId: req.user.id}})
-
     const safeGroup = {
         id: group.id,
         organizerId: group.organizerId,
@@ -230,6 +228,7 @@ router.post('/', requireAuth, validateGroupCreate, async (req, res, next) => {
         city: group.city,
         state: group.state
     }
+
     res.status(201).json(safeGroup)
 })
 
@@ -276,9 +275,9 @@ router.post('/:groupId/venues', requireAuth, validateVenue, async (req, res, nex
         return next(err)
     }
 
-    const user = await  User.findOne({ where: { id: req.user.id}})
+    const user = await Membership.findOne({ where: { id: req.user.id }})
 
-    if (user.status === 'co-host' || user.id === group.organizerId) {
+    if ((user && user.status === 'co-host') || user.id === group.organizerId) {
 
         const newVenue = await Venue.create({ groupId: group.id, address, city, state, lat, lng})
 
@@ -311,10 +310,10 @@ router.post('/:groupId/events', requireAuth, validateEvent, async (req, res, nex
     }
 
     if ((user && user.status === 'co-host') || (req.user.id === findGroup.organizerId)) {
-        await Event.create({groupId: findGroup.id, venueId, name, type, capacity, price, description, startDate, endDate})
+        const event = await Event.create({groupId: findGroup.id, venueId, name, type, capacity, price, description, startDate, endDate})
 
         const safeEvent = {
-            groupId: findGroup.id, venueId, name, type, capacity, price, description, startDate, endDate
+            id: event.id, groupId: findGroup.id, venueId, name, type, capacity, price, description, startDate, endDate
         }
 
         res.status(200).json(safeEvent)
