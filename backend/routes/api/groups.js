@@ -292,6 +292,10 @@ router.post('/:groupId/venues', requireAuth, validateVenue, async (req, res, nex
         }
 
         res.status(200).json(safeVenue)
+    } else {
+        const err = new Error('User does not have permission')
+        err.status = 403
+        return next(err);
     }
 });
 
