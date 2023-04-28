@@ -100,7 +100,7 @@ router.get('/:eventId', async (req, res, next) => {
         }, {
             model: Image,
             as: 'EventImages',
-            attributes: ['id', 'url', 'preview']
+            attributes: ['id', 'url', 'preview'],
         },{
             model: Attendee,
             attributes: []
@@ -109,6 +109,7 @@ router.get('/:eventId', async (req, res, next) => {
             include: [[sequelize.fn('COUNT', sequelize.col('Attendees.id')), 'numAttendees']],
             exclude: ['description']
         },
+        group: 'EventImages.id'
     })
     res.status(200).json(event)
 });
