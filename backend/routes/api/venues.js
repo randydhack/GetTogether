@@ -23,7 +23,6 @@ router.put("/:venueId", requireAuth, validateVenue, async (req, res, next) => {
 
   const group = await Group.findOne({where: { id: venue.groupId }})
 
-
   if ((user && user.status === 'co-host') || (req.user.id === group.organizerId)) {
     await venue.update({
       address,

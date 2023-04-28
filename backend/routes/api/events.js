@@ -26,7 +26,7 @@ router.get('/', paginationValidation, async (req, res, next) => {
     if(size > 20) page = 20
 
     pagination.limit = size;
-    pagination.offset = size * (page - 1);
+    pagination.offset = size * page;
 
     // name, type, startDate
     if (name) {
@@ -58,7 +58,7 @@ router.get('/', paginationValidation, async (req, res, next) => {
         exclude: ['price','capacity', 'description'],
     },
     group: ['Event.id'],
-    pagination
+    ...pagination
     });
 
     const eventArr = []

@@ -13,10 +13,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Venue.init({
-    groupId: DataTypes.INTEGER,
-    address: DataTypes.STRING,
-    city: DataTypes.STRING,
-    state: DataTypes.STRING,
+    groupId: {type: DataTypes.INTEGER, allowNull: false },
+    address: {type: DataTypes.STRING, allowNull: false },
+    city: {type: DataTypes.STRING, allowNull: false },
+    state: {type: DataTypes.STRING, allowNull: false },
     lat: DataTypes.DECIMAL,
     lng: DataTypes.DECIMAL
   }, {

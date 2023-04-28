@@ -56,7 +56,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.ENUM("Group", "Event"),
         allowNull: false,
       },
-      imageableId: DataTypes.INTEGER,
+      imageableId: {type: DataTypes.INTEGER, allowNull: false },
     },
     {
       sequelize,
