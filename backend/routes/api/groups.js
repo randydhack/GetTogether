@@ -175,16 +175,17 @@ router.get('/:groupId/venues', requireAuth, async (req, res, next) => {
 router.get('/:groupId/events', async (req, res, next) => {
     const { groupId } = req.params
 
-    const group = await Event.findOne({ where: { id: groupId } });
+    const groups = await Group.findOne({ where: { id: groupId } });
 
-    if (!group) {
+    if (!groups) {
         const err = new Error("Group couldn't be found");
         err.status = 404
         return next(err)
     }
+
     const event = await Event.findAll({
         where: {
-            groupId: group.id
+            groupId: groups.id
         },
         include: [{
             model: Attendee,
@@ -199,7 +200,7 @@ router.get('/:groupId/events', async (req, res, next) => {
             attributes: ['id', 'city', 'state']
         }],
         attributes: {
-            include: [[sequelize.fn('COUNT', sequelize.col('Attendees.eventId')), 'numAttendees']],
+            include: [[sequelize.fn('COUNT', sequelize.col('Attendees.id')), 'numAttendees']],
             exclude: ['price', 'capacity', 'description']
         },
         group: 'Event.id'
