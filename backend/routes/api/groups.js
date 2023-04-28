@@ -248,7 +248,7 @@ router.post('/:groupId/images', requireAuth, async (req, res, next) => {
     }
 
     if (req.user.id === group.organizerId) {
-        const image = await Image.create({ url, imageableType: 'Group', imageableId: group.id })
+        const image = await Image.create({ url, imageableType: 'Group', imageableId: group.id, preview })
 
         const safeImage = {
             url: image.url,

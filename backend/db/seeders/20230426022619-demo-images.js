@@ -14,21 +14,25 @@ module.exports = {
         url: 'group-image1',
         imageableType: 'Group',
         imageableId: 1,
+        preview: true
       },
       {
         url: 'group-image2',
         imageableType: 'Group',
         imageableId: 1,
+        preview: false
       },
       {
         url: 'event-image3',
         imageableType: 'Event',
         imageableId: 2,
+        preview: false
       },
       {
         url: 'event-image4',
         imageableType: 'Event',
         imageableId: 2,
+        preview: true,
       },
     ], {});
   },

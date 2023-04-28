@@ -100,7 +100,7 @@ router.get('/:eventId', async (req, res, next) => {
         }, {
             model: Image,
             as: 'EventImages',
-            attributes: ['id', 'url']
+            attributes: ['id', 'url', 'preview']
         },{
             model: Attendee,
             attributes: []
@@ -119,7 +119,7 @@ router.get('/:eventId', async (req, res, next) => {
 // NOTE: preview will not part of the image table
 router.post('/:eventId/images', requireAuth, async (req, res, next) => {
     const { eventId } = req.params
-    const { url } = req.body
+    const { url, preview } = req.body
     const event = await Event.findOne({ where: { id: eventId }})
     const user = await Attendee.findOne({where:{userId: req.user.id}})
 
@@ -130,7 +130,7 @@ router.post('/:eventId/images', requireAuth, async (req, res, next) => {
     }
 
     if ((user && user.eventId) === event.id) {
-        const image = await Image.create({ url, imageableType: 'Event', imageableId: event.id })
+        const image = await Image.create({ url, imageableType: 'Event', imageableId: event.id, preview })
         const safeImage = {
             id: image.id,
             url: image.url
