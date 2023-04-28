@@ -11,7 +11,6 @@ const { User, Group, Membership, Venue, sequelize, Image, Event, Attendee} = req
 router.get('/:eventId', async (req, res, next) => {
     const { eventId } = req.params
 
-    const coHost = await Membership.findOne({ where: { memberId: req.user.id } });
     const event = await Event.findOne({ where: { id: eventId }})
     const group = await Group.findOne({ where: { id: eventId }})
 
@@ -20,6 +19,8 @@ router.get('/:eventId', async (req, res, next) => {
         err.status = 404
         return next(err)
     }
+
+    const coHost = await Membership.findOne({ where: { memberId: req.user.id, groupId: group.id } });
 
     // if cohost or organizer, allow to see all status
     if ((coHost && coHost === 'co-host') || req.user.id === group.organizerId) {
@@ -178,8 +179,9 @@ router.put('/:eventId', requireAuth, async (req, res, next) => {
 
 router.delete('/:eventId', requireAuth, async (req, res, next) => {
     const { eventId } = req.params
+    const { userId } = req.body
 
-    const attendee = await Attendee.findOne({where: { userId: req.user.id, eventId: eventId }})
+    const attendee = await Attendee.findOne({where: { userId: userId, eventId: eventId }})
     const event = await Event.findOne({where: { groupId: eventId }})
     const group = await Group.findOne({where: { id: eventId }})
 
@@ -190,7 +192,7 @@ router.delete('/:eventId', requireAuth, async (req, res, next) => {
     }
 
     if (!attendee) {
-        const err = new Error("Attendance between the user and the event does not exist");
+        const err = new Error("Attendance does not exist for this User");
         err.status = 404
         return next(err)
     }

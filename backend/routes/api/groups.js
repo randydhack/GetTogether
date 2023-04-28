@@ -307,6 +307,7 @@ router.post('/:groupId/events', requireAuth, validateEvent, async (req, res, nex
 
     const findGroup = await Group.findOne({ where: { id: groupId }})
     const user = await Membership.findOne({ where: { memberId: req.user.id}})
+    const venue = await Venue.findByPk(venueId)
 
     if (!findGroup) {
         const err = new Error("Group couldn't be found");

@@ -128,7 +128,8 @@ router.post('/:eventId/images', requireAuth, async (req, res, next) => {
         err.status = 404
         return next(err)
     }
-    if (user.eventId === event.id) {
+
+    if ((user && user.eventId) === event.id) {
         const image = await Image.create({ url, imageableType: 'Event', imageableId: event.id })
         const safeImage = {
             id: image.id,
@@ -184,13 +185,14 @@ router.delete('/:eventId', requireAuth, async (req, res, next) => {
 
     const user = await Membership.findOne({ where: { memberId: req.user.id }})
     const event = await Event.findOne({ where: { id: eventId}})
-    const group = await Group.findOne({where: { id: event.groupId }})
 
     if (!event) {
         const err = new Error("Event couldn't be found")
         err.status = 404
         return next(err)
     }
+
+    const group = await Group.findOne({where: { id: event.groupId }})
 
     if ((user && user.status === 'co-host') || (req.user.id === group.organizerId)) {
         await event.destroy()
