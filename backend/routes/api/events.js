@@ -98,11 +98,11 @@ router.get('/:eventId', async (req, res, next) => {
                 exclude: ['groupId', 'createdAt', 'updatedAt']
             }
         },
-        // {
-        //     model: Image,
-        //     as: 'EventImages',
-        //     attributes: ['id', 'url', 'preview'],
-        // },
+        {
+            model: Image,
+            as: 'EventImages',
+            attributes: ['id', 'url', 'preview'],
+        },
         {
             model: Attendee,
             attributes: []
@@ -111,16 +111,16 @@ router.get('/:eventId', async (req, res, next) => {
             include: [[sequelize.fn('COUNT', sequelize.col('Attendees.id')), 'numAttendees']],
             exclude: ['description']
         },
-        group: ['Event.id', 'Group.id','Venue.id']
+        group: ['Event.id', 'Group.id']
     })
 
 
-    const images = await Image.findAll({where: { imageableId: eventId, imageableType: 'Event' }, attributes: ['id','url','preview']})
+    // const images = await Image.findAll({where: { imageableId: eventId, imageableType: 'Event' }, attributes: ['id','url','preview']})
 
-    const EventImages =  images
+    // const EventImages =  images
 
 
-    res.status(200).json({ event, EventImages })
+    res.status(200).json(event)
 });
 
 // ------------------ POST ENDPOINTS -----------------------
