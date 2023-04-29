@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       Event.hasMany(models.Image, {
         foreignKey: 'imageableId',
         constraints: false,
-        as: 'EventImages',
+        // as: 'EventImages',
         scope: {
           imageableType: 'Event'
         }
