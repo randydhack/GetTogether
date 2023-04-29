@@ -121,7 +121,10 @@ router.get('/:groupId', requireAuth, async (req, res, next) => {
             attributes: []
         }
     ],
-    group: ['GroupImages.id', 'Group.id', 'Organizer.id', 'Venues.id']
+    group: ['GroupImages.id', 'Group.id', 'Organizer.id', 'Venues.id'],
+    attributes: {
+        exclude: ['previewImage']
+    }
     })
 
     if (!group) {
@@ -169,6 +172,10 @@ router.get('/:groupId/venues', requireAuth, async (req, res, next) => {
         })
 
         res.status(200).json({ Venues: venues })
+    } else {
+        const err = new Error("User does not have permission")
+        err.status = 404
+        return next(err)
     }
 })
 
@@ -252,11 +259,16 @@ router.post('/:groupId/images', requireAuth, async (req, res, next) => {
         const image = await Image.create({ url, imageableType: 'Group', imageableId: group.id, preview })
 
         const safeImage = {
+            id: image.id,
             url: image.url,
             preview: preview
         }
 
         res.status(201).json(safeImage)
+    } else {
+        const err = new Error('User does not have permission')
+        err.status = 403
+        return next(err);
     }
 })
 
@@ -383,6 +395,10 @@ router.delete('/:groupId', requireAuth, async (req, res, next) => {
             message: 'Successfully deleted',
             statusCode: 200
         })
+    } else {
+        const err = new Error("User does not have permission")
+        err.status = 404
+        return next(err)
     }
 })
 

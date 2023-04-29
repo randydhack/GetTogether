@@ -159,29 +159,29 @@ router.put('/:groupId', requireAuth, async (req, res, next) => {
     }
 
     const coHost = await Membership.findOne({where: { memberId: req.user.id, groupId: groupId }})
-    const member = await Membership.findOne({where: { memberId: 5, groupId } })
+    const member = await Membership.findOne({where: { memberId: memberId, groupId: groupId } })
     const user = await User.findOne({where: {id: memberId}})
 
     // check if user is a member
     if (!user) {
-        const err = new Error('Validation Error')
-        err.status = 400
-        err.errors = { status: "User couldn't be found"}
-        return next(err)
+      const err = new Error('Validation Error')
+      err.status = 400
+      err.errors = { status: "User couldn't be found"}
+      return next(err)
     }
 
     if (member && member.status === status) {
-        const err = new Error('Validation Error')
-        err.status = 400
-        err.errors = { status: "User already have that status"}
-        return next(err)
+      const err = new Error('Validation Error')
+      err.status = 400
+      err.errors = { status: "User already have that status"}
+      return next(err)
     }
 
     // checks if belong to that group
     if (!member) {
-        const err = new Error("Membership between the user and the group does not exists")
-        err.status = 400
-        return next(err)
+      const err = new Error("Membership between the user and the group does not exists")
+      err.status = 400
+      return next(err)
     }
 
     if ((coHost && coHost.status === 'co-host') || (req.user.id === group.organizerId)) {
@@ -189,25 +189,26 @@ router.put('/:groupId', requireAuth, async (req, res, next) => {
         if (member.status === 'pending') {
             await member.update({ memberId, status})
             const safeStatus = { id: member.id, groupId, memberId, status }
-            res.status(200).json(safeStatus)
+            return res.status(200).json(safeStatus)
         }
 
         if (req.user.id === group.organizerId && member.status === 'member' && status === 'co-host') {
             await member.update({ memberId, groupId, status })
             const safeStatus = { id: member.id, groupId, memberId, status }
-            res.status(200).json(safeStatus)
+            return res.status(200).json(safeStatus)
         }
 
         if (req.user.id === group.organizerId && member.status === 'co-host' && status === 'member') {
           await member.update({ memberId, groupId, status })
           const safeStatus = { id: member.id, groupId, memberId, status }
-          res.status(200).json(safeStatus)
+          return res.status(200).json(safeStatus)
       }
-    } else {
-        const err = new Error('User does not have permission')
-        err.status = 403
-        return next(err)
     }
+
+    const err = new Error('User does not have permission')
+    err.status = 403
+    return next(err)
+
 });
 
 // ---------------- DELETE ENDPOINTS -------------------------
@@ -217,7 +218,7 @@ router.delete('/:groupId', requireAuth, async (req, res, next) => {
     const { memberId } = req.body
 
     const group = await Group.findOne({ where: { id: groupId }})
-    const user = await User.findOne({where: {id: memberId}})
+    const user = await User.findOne({where: {id: memberId }})
     const member = await Membership.findOne({ where: { memberId: memberId, groupId: group.organizerId}})
 
     // throw error if group does not exist
@@ -243,7 +244,7 @@ router.delete('/:groupId', requireAuth, async (req, res, next) => {
     }
 
     // if user is organizer or user, delete membership
-    if (req.user.id === group.organizerId || user.id === member.userId) {
+    if (req.user.id === group.organizerId || user.id === member.memberId) {
         await member.destroy()
         res.status(200).json({ message: 'Successfully deleted membership from group' })
     } else {

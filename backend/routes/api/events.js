@@ -67,7 +67,7 @@ router.get('/', paginationValidation, async (req, res, next) => {
         const event = events[i]
         const eventJSON = event.toJSON()
 
-        eventJSON.numAttendees = await event.countAttendees()
+        eventJSON.numAttending = await event.countAttendees()
         eventArr.push(eventJSON)
     }
 
