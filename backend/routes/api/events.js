@@ -115,7 +115,7 @@ router.get('/:eventId', async (req, res, next) => {
     })
 
 
-    const images = await Image.findAll({where: { imageableId: eventId, imageableType: 'Event' }})
+    const images = await Image.findAll({where: { imageableId: eventId, imageableType: 'Event' }, attributes: ['id','url','preview']})
 
     const EventImages =  images
 
