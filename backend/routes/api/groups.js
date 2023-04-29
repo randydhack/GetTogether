@@ -121,6 +121,7 @@ router.get('/:groupId', requireAuth, async (req, res, next) => {
             attributes: []
         }
     ],
+    group: 'GroupImages.id'
     })
 
     if (!group) {
