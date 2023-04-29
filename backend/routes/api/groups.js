@@ -121,7 +121,7 @@ router.get('/:groupId', requireAuth, async (req, res, next) => {
             attributes: []
         }
     ],
-    group: 'GroupImages.id'
+    group: ['GroupImages.id', 'Group.id', 'Organizer.id', 'Venue.id', 'Membership.id']
     })
 
     if (!group) {
