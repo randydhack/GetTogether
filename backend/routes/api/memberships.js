@@ -197,6 +197,12 @@ router.put('/:groupId', requireAuth, async (req, res, next) => {
             const safeStatus = { id: member.id, groupId, memberId, status }
             res.status(200).json(safeStatus)
         }
+
+        if (req.user.id === group.organizerId && member.status === 'co-host' && status === 'member') {
+          await member.update({ memberId, groupId, status })
+          const safeStatus = { id: member.id, groupId, memberId, status }
+          res.status(200).json(safeStatus)
+      }
     } else {
         const err = new Error('User does not have permission')
         err.status = 403
