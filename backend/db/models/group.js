@@ -22,7 +22,6 @@ module.exports = (sequelize, DataTypes) => {
 
       Group.hasMany(models.Membership, {
         foreignKey: 'groupId',
-        // as: 'numMembers'
       })
 
       Group.hasMany(models.Event, {
