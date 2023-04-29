@@ -121,7 +121,7 @@ router.get('/:groupId', requireAuth, async (req, res, next) => {
             attributes: []
         }
     ],
-    group: ['GroupImages.id', 'Group.id', 'Organizer.id']
+    group: ['GroupImages.id', 'Group.id', 'Organizer.id', 'Venues.id']
     })
 
     if (!group) {
@@ -204,7 +204,7 @@ router.get('/:groupId/events', async (req, res, next) => {
             include: [[sequelize.fn('COUNT', sequelize.col('Attendees.id')), 'numAttendees']],
             exclude: ['price', 'capacity', 'description']
         },
-        group: ['Group.id','Event.id']
+        group: ['Group.id','Event.id', 'Venue.id']
     })
 
     res.json({Events: event })
