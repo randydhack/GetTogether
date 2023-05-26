@@ -9,14 +9,18 @@ import App from './App';
 
 import { restoreCSRF, csrfFetch } from './store/csrf';
 
+import * as sessionActions from "./store/session";
+
 import configureStore from './store';
 
 const store = configureStore();
 
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== "production") {
   restoreCSRF();
+
   window.csrfFetch = csrfFetch;
   window.store = store;
+  window.sessionActions = sessionActions;
 }
 
 const Root = () => {
