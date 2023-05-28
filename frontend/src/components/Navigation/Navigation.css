@@ -1,0 +1,17 @@
+.profile-dropdown.hidden {
+    display: none;
+}
+
+.session-links {
+    display: flex;
+    justify-content: space-between;
+}
+
+.session-links a {
+    text-decoration: none;
+}
+
+.top-right-nav-links {
+    display: flex;
+    justify-content: space-between;
+}

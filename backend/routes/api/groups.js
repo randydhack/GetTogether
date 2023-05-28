@@ -207,6 +207,7 @@ router.get('/:groupId/events', async (req, res, next) => {
             model: Venue,
             attributes: ['id', 'city', 'state']
         }],
+
         attributes: {
             include: [[sequelize.fn('COUNT', sequelize.col('Attendees.id')), 'numAttendees']],
             exclude: ['price', 'capacity', 'description']

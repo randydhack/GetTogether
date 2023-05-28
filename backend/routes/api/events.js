@@ -7,7 +7,6 @@ const { requireAuth, } = require("../../utils/auth");
 const { validateEvent, paginationValidation } = require('../../utils/validation');
 const { Group, Venue, Image, Event, Attendee, Membership, sequelize } = require("../../db/models");
 
-
 // ------------------ GET ENDPOINTS -----------------------
 
 // Get all events
