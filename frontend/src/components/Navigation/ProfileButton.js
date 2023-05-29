@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from 'react-redux';
+import { Link } from "react-router-dom";
 import * as sessionActions from '../../store/session';
 
 function ProfileButton({ user }) {
@@ -42,6 +43,7 @@ function ProfileButton({ user }) {
         <li>{user.username}</li>
         <li>{user.firstName} {user.lastName}</li>
         <li>{user.email}</li>
+        <li><Link to='/groups'>All Groups</Link></li>
         <li>
           <button onClick={logout}>Log Out</button>
         </li>

@@ -1,9 +1,5 @@
 import "./LandingPage.css";
 import { Link } from "react-router-dom";
-import { allGroups } from "../../store/group";
-import { useDispatch } from "react-redux";
-import { useEffect } from "react";
-
 
 function LandingPage() {
 
@@ -46,7 +42,7 @@ function LandingPage() {
             className="group-event-images"
             src="https://secure.meetupstatic.com/next/images/shared/handsUp.svg?w=384"
           />
-          <Link src="" className="group-event-link">
+          <Link to="/groups" className="group-event-link">
             See all groups
           </Link>
           <p className="caption">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
@@ -58,7 +54,7 @@ function LandingPage() {
             className="group-event-images"
             src="https://secure.meetupstatic.com/next/images/shared/ticket.svg?w=384"
           />
-          <Link src="" className="group-event-link">
+          <Link to={''} className="group-event-link">
             See all events
           </Link>
           <p className="caption">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
@@ -71,7 +67,7 @@ function LandingPage() {
             src="https://secure.meetupstatic.com/next/images/shared/joinGroup.svg?w=384"
           />
           <div>
-            <Link src="" className="group-event-link">
+            <Link to={''} className="group-event-link">
               Start a new group
             </Link>
             <p className="caption">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
