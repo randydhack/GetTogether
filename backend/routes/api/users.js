@@ -76,8 +76,7 @@ router.post("/login", validateLogin, async (req, res, next) => {
   });
 });
 
-
-// Delete token
+// Logout and Delete token
 router.delete("/", (_req, res) => {
   res.clearCookie("token");
   return res.json({ message: "success" });

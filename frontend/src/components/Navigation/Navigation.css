@@ -5,6 +5,8 @@
 .session-links {
     display: flex;
     justify-content: space-between;
+    padding: 20px 20px;
+    border-bottom: 3px solid lightgray;
 }
 
 .session-links a {
@@ -13,5 +15,12 @@
 
 .top-right-nav-links {
     display: flex;
-    justify-content: space-between;
+    align-items: center;
+
+}
+
+.home-button {
+    font-weight: 700;
+    color: rgb(253, 74, 74);
+    font-size: 34px;
 }
