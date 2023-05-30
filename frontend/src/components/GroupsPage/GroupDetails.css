@@ -1,0 +1,115 @@
+.grey-p {
+    margin: 10px 0px;
+    color: grey;
+}
+
+.back-button {
+    text-decoration: none;
+}
+
+.back-button:hover {
+    text-decoration: underline;
+}
+
+.section-1-detail {
+    width: fit-content;
+}
+
+.group-detail-container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 60px;
+}
+
+.group-details {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 30px;
+    width: fit-content;
+}
+
+.group-info h1 {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    inline-size: 425px;
+    overflow-wrap: break-word;
+}
+
+.join-group-button {
+    position: absolute;
+    bottom: 165px;
+    width: 210px;
+    height: 50px;
+    font-size: 20px;
+    color: white;
+    border: 2px solid black;
+    background-color: rgb(198, 0, 0);
+    box-shadow: 3px 3px 2px black;
+    border-radius: 3%;
+}
+.join-group-button:hover {
+    cursor: pointer;
+}
+
+/* section 2*/
+
+.group-detail-section-2 {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background-color: rgb(234, 234, 234);
+}
+
+.section-2-container {
+    display: flex;
+    flex-direction: column;
+    margin-left: 200px;
+    width: fit-content;
+}
+/* event section */
+
+.past-events, .upcoming-events {
+    background-color: white;
+    border-radius: 5%;
+    width: 600px;
+    height: 250px;
+    margin: 20px 0px;
+}
+
+.past-event-div-1 {
+padding: 20px 0px 0px 20px;
+display: flex;
+flex-direction: row;
+}
+
+.location-info {
+    margin-left: 10px;
+}
+
+.event-time {
+    color: rgb(35, 69, 57);
+    margin: 0px;
+}
+
+.event-caption {
+    margin-left: 20px;
+    width: fit-content;
+    inline-size: auto;
+    word-wrap: break-word;
+    font-size: 10px;
+}
+
+.create-event-button {
+    background-color: lightgray;
+}
+
+.edit-delete-button {
+    background-color: gray;
+}
+
+.organizer-buttons {
+    border: none;
+    cursor: pointer;
+    border-radius: 3px;
+}

@@ -34,7 +34,7 @@ function GroupsPage() {
         </p>
         {groups.map((group) => {
           return (
-            <Link className="group-link" to={`/groups/${group.id}`}>
+            <Link key={group.id} to={`/groups/${group.id}`} className="group-link">
               <div key={group.id} className="group-container">
                 <img
                   src="https://t4.ftcdn.net/jpg/02/16/27/49/360_F_216274912_GyI0SwIKvhuxxrLpOv5QYxqmaoaLZkQg.jpg"
@@ -47,20 +47,13 @@ function GroupsPage() {
                   </p>
                   <p className="group-about">{group.about}</p>
                   <p className="group-event" style={{ color: "grey" }}>
-                    <span>## Events</span> ·{" "}
-                    <span>{group.private ? "Private" : "Public"}</span>
+                    ## Events · {group.private ? "Private" : "Public"}
                   </p>
                 </div>
               </div>
             </Link>
           );
         })}
-
-        <Switch>
-          <Route path="/groups/:groupId">
-            <GroupDetails />
-          </Route>
-        </Switch>
       </div>
     )
   );
