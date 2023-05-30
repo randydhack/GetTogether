@@ -114,7 +114,7 @@ function GroupDetails() {
               <p>{group.about}</p>
             </div>
 
-            {upcomingEvent && (
+            {upcomingEvent.length !== 0 && (
               <div>
                 <h2>Upcoming Events ({upcomingEvent.length})</h2>
                 {upcomingEvent.map((event) => {
@@ -145,7 +145,7 @@ function GroupDetails() {
               </div>
             )}
 
-            {pastEvent && (
+            {pastEvent.length !== 0 && (
               <div>
                 <h2>Past Events ({pastEvent.length})</h2>
                 {pastEvent.map((event) => {
