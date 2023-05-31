@@ -24,8 +24,8 @@ function Navigation({ isLoaded }){
   } else {
     sessionLinks = (
       <div className='top-right-nav-links'>
-        <NavLink to="/login" className='log-in-button'>Log In</NavLink>
-        <NavLink to="/signup" className='sign-up-button'>Sign Up</NavLink>
+        <NavLink to="/login" className='log-in-button' style={{color: 'black', marginRight: '30px'}}>Log In</NavLink>
+        <NavLink to="/signup" className='sign-up-button' style={{color: 'black', marginRight: '10px'}}>Sign Up</NavLink>
       </div>
     );
   }
@@ -33,7 +33,7 @@ function Navigation({ isLoaded }){
   return (
     <div className='session-links'>
       <div>
-        <NavLink exact to="/" className='home-button'>Home</NavLink>
+        <NavLink exact to="/" className='home-button'>GatherUp</NavLink>
       </div>
       {isLoaded && sessionLinks}
     </div>

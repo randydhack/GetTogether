@@ -1,0 +1,94 @@
+/* container */
+.landing-page-section-1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+}
+/* section 1 */
+.landing-page-heading {
+    width: 500px;
+}
+
+/* section 2 */
+.landing-page-section-2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 50px;
+}
+
+.landing-page-section-2 h2 {
+    margin-bottom: 0px;
+    font-size: 28px;
+}
+
+.subtitle-info {
+    margin-top: 3px;
+    width: 500px;
+    text-align: center;
+}
+
+/* Section 3 */
+
+.landing-page-section-3 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 10px;
+}
+
+.landing-page-section-3 a {
+    text-decoration: none;
+    font-size: 20px;
+    color: rgb(9, 77, 77)
+}
+
+.group-event-images {
+    width: 180px;
+    height: 160px;
+}
+
+.group-event-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 20px;
+    margin-right: 20px;
+    width: 200px;
+}
+
+.group-event-link:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.caption {
+    margin-top: 5px;
+}
+
+/* Section 4 */
+
+.landing-page-section-4 {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
+.section-4-button a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-decoration: none;
+    background-color: rgb(14, 120, 120);
+    width: 200px;
+    height: 50px;
+    font-size: 21px;
+    box-shadow: 5px 5px 10px #000000e1;
+    margin-bottom: 20px;
+    border-radius: 8px;
+}

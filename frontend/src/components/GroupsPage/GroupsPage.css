@@ -1,0 +1,57 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 60px 0px;
+}
+
+.event-group-heading {
+    display: block;
+    margin-right: 515px
+}
+.event-group-heading a {
+    text-decoration: none;
+    color: black;
+    font-size: 26px;
+}
+
+.event-group-heading a:last-child {
+    margin-left: 20px;
+    text-decoration: underline;
+    color: rgb(9, 77, 77);
+    pointer-events: none;
+}
+
+.group-container {
+    display: flex;
+    flex-direction: row;
+    padding: 15px 0px;
+    border-top: 2px solid lightgrey;
+    width: 700px;
+}
+
+.group-info {
+    margin-left: 20px;
+}
+
+.group-name {
+    margin: 0px;
+}
+
+.group-location {
+    font-size: 14px;
+    margin: 8px 0px;
+}
+
+.group-about {
+    margin: 8px 0px;
+}
+
+.group-event {
+    margin: 8px 0px;
+}
+
+.group-link {
+    text-decoration: none;
+    color: black;
+}
