@@ -1,0 +1,148 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    margin: 20px;
+}
+
+.wrapper {
+    width: 100%;
+
+}
+
+.event-details-section-1 {
+    margin-left: 10%;
+    margin-right: 10%;
+    padding: 0px 1.25rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.event-details-section-2 {
+    margin-left: 10%;
+    margin-right: 10%;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+
+.event-name {
+    margin: 10px 0px 0px 0px;
+}
+
+.organizer-name {
+    color: grey;
+    margin-top: 5px;
+}
+
+/* section 2 */
+
+
+.wrapper {
+    width: 100%;
+    padding: 1.25rem;
+}
+
+.wrapper-details {
+    box-shadow: 0px -2px 10px rgba(50, 50, 50, 0.25);
+    border-top: 1px solid gray;
+    background-color: rgb(234, 234, 234);
+}
+
+.event-image {
+    width: 600px;
+    height: 390px;
+    border-radius: 15px;
+}
+
+.group-image {
+    width: 150px;
+    height: 90px;
+    border-radius: 5px;
+}
+
+.event-side-details {
+    margin-left: 30px;
+
+}
+
+.group-info-section {
+    background-color: white;
+    border-radius: 25px;
+    display: flex;
+    flex-direction: row;
+    width: 400px;
+padding: 20px 20px;
+}
+
+.group-name-privacy {
+    margin-left: 10px;
+    word-wrap: break-word;
+}
+
+.group-name {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.group-privacy {
+    margin-top: 5px;
+    font-size: 16px;
+    color: grey;
+}
+
+.event-time-price-type {
+    background-color: white;
+    border-radius: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    margin-top: 15px;
+    width: 400px;
+    padding: 20px 20px;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.start-end-date {
+    margin-left: 20px;
+}
+
+.start-date {
+    margin-bottom: 0px;
+}
+
+.end-date {
+    margin-top: 0px;
+}
+
+.span-start-date {
+    margin-left: 20px;
+}
+
+.span-end-date {
+    margin-left: 28px;
+}
+
+.event-price {
+    margin-left: 20px;
+}
+
+
+.event-type-icon {
+    margin-left: 8px;
+    margin-right: 22px;
+}
+
+.event-type {
+    padding-left: 6px;
+}

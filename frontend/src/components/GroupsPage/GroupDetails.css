@@ -23,6 +23,7 @@
 }
 
 .group-details {
+    word-wrap: break-word;
     display: flex;
     flex-direction: row;
     margin-bottom: 30px;
@@ -71,14 +72,15 @@
 
 .past-events, .upcoming-events {
     background-color: white;
-    border-radius: 5%;
-    width: 600px;
-    height: 250px;
+    border-radius: 15px;
+    height: fit-content;
     margin: 20px 0px;
+    margin-top: 10px;
+    padding-bottom: 10px;
 }
 
-.past-event-div-1 {
-padding: 20px 0px 0px 20px;
+.event-container {
+padding: 20px 20px 0px 20px;
 display: flex;
 flex-direction: row;
 }
@@ -92,11 +94,12 @@ flex-direction: row;
     margin: 0px;
 }
 
+.caption-container {
+    word-wrap: break-word;
+}
 .event-caption {
     margin-left: 20px;
-    width: fit-content;
-    inline-size: auto;
-    word-wrap: break-word;
+    margin-right: 20px;
     font-size: 10px;
 }
 
@@ -112,4 +115,12 @@ flex-direction: row;
     border: none;
     cursor: pointer;
     border-radius: 3px;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.past-event-container {
+    width: fit-content;
 }

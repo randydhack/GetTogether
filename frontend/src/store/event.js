@@ -1,5 +1,6 @@
 const ALL_EVENTS = "event/ALL_EVENTS";
 const GROUP_EVENTS = 'event/GROUP_EVENTS'
+const GET_EVENT = 'event/GET_EVENT'
 
 export const allEvents = (events) => {
   return {
@@ -12,6 +13,13 @@ export const groupEvents = (events) => {
     return {
         type: GROUP_EVENTS,
         events
+    }
+}
+
+export const singleEvent = (event) => {
+    return {
+        type: GET_EVENT,
+        event
     }
 }
 
@@ -34,6 +42,19 @@ export const getEventByGroup = (groupId) => async (dispatch) => {
   }
 };
 
+export const getEventDetail = (eventId) => async dispatch => {
+    const res = await fetch(`/api/events/${eventId}`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+
+    if (res.ok) {
+        const event = await res.json()
+        dispatch(singleEvent(event))
+        return event
+    }
+}
+
 const eventReducer = (state = {}, action) => {
   let newState;
   switch (action.type) {
@@ -45,6 +66,8 @@ const eventReducer = (state = {}, action) => {
         newState = {};
         action.events.Events.forEach((event) => (newState[event.id] = event));
         return newState;
+    case GET_EVENT:
+        return { ...state, [action.event.id]: action.event };
     default:
       return state;
   }

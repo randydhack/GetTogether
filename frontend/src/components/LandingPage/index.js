@@ -54,7 +54,7 @@ function LandingPage() {
             className="group-event-images"
             src="https://secure.meetupstatic.com/next/images/shared/ticket.svg?w=384"
           />
-          <Link to={''} className="group-event-link">
+          <Link to='/events' className="group-event-link">
             See all events
           </Link>
           <p className="caption">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>

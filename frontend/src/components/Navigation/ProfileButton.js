@@ -43,7 +43,8 @@ function ProfileButton({ user }) {
         <li>{user.username}</li>
         <li>{user.firstName} {user.lastName}</li>
         <li>{user.email}</li>
-        <li><Link to='/groups'>All Groups</Link></li>
+        <li><Link to='/groups'>View Groups</Link></li>
+        <li><Link to='/events'>View Events</Link></li>
         <li>
           <button onClick={logout}>Log Out</button>
         </li>

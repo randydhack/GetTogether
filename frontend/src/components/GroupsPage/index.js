@@ -18,7 +18,7 @@ function GroupsPage() {
     groups && (
       <div className="container">
         <div className="event-group-heading">
-          <Link to="/events">Events</Link>
+          <Link style={{color: 'grey'}} to="/events">Events</Link>
           <Link>Groups</Link>
         </div>
         <p
@@ -38,7 +38,7 @@ function GroupsPage() {
               <div key={group.id} className="group-container">
                 <img
                   src="https://t4.ftcdn.net/jpg/02/16/27/49/360_F_216274912_GyI0SwIKvhuxxrLpOv5QYxqmaoaLZkQg.jpg"
-                  style={{ width: "200px", height: "150px" }}
+                  style={{ width: "200px", height: "150px", borderRadius: '5px' }}
                 />
                 <div className="group-info">
                   <h2 className="group-name">{group.name}</h2>

@@ -16,8 +16,6 @@ function GroupDetails() {
   const event = useSelector((state) => Object.values(state.eventState));
   const user = useSelector((state) => state.session.user);
 
-  const [hidden, setHidden] = useState("");
-
   event.forEach((event) => {
     const date = new Date().toString();
     if (event.endDate < date) pastEvent.push(event);
@@ -34,6 +32,17 @@ function GroupDetails() {
     return alert("Feature coming soon");
   };
 
+  const fullDate = (data) => {
+    const eventDate = new Date(data);
+    const year = eventDate.getFullYear();
+    const month = eventDate.getMonth();
+    const date = eventDate.getDate();
+
+    const time = eventDate.toLocaleTimeString("en-US");
+
+    return `${year}/${month}/${date} · ${time}`;
+  };
+
   return (
     group &&
     group.Organizer && (
@@ -45,7 +54,7 @@ function GroupDetails() {
             </Link>
             <div className="group-details">
               <img
-                style={{ width: "600px", height: "350px" }}
+                style={{ width: "600px", height: "350px", borderRadius: '15px' }}
                 src="https://media.istockphoto.com/id/186411638/photo/green-golf-field-and-blue-cloudy-sky.jpg?s=612x612&w=0&k=20&c=erretmwt9wV7oW39yBXtAI8C9AqxiAYoedOAyuf-80c="
               />
               <div className="group-info">
@@ -81,7 +90,7 @@ function GroupDetails() {
                     </button>
                     <button
                       onClick={handleJoinGroup}
-                      style={{margin: '0px 10px'}}
+                      style={{ margin: "0px 10px" }}
                       className="organizer-buttons edit-delete-button"
                     >
                       Edit
@@ -120,23 +129,33 @@ function GroupDetails() {
                 {upcomingEvent.map((event) => {
                   return (
                     <div key={event.id} className="upcoming-events">
-                      <div>
+                      <div className="event-container">
                         <img
-                          style={{ width: "200px", height: "150px" }}
+                        className="cursor-pointer"
+                          style={{ width: "200px", height: "150px", borderRadius: '5px' }}
                           src="https://media.istockphoto.com/id/186411638/photo/green-golf-field-and-blue-cloudy-sky.jpg?s=612x612&w=0&k=20&c=erretmwt9wV7oW39yBXtAI8C9AqxiAYoedOAyuf-80c="
                         />
                         <div>
-                          <p className="event-time">{event.startDate}</p>
-                          <h3>{event.name}</h3>
-                          <p className="event-caption">
+                          <p className="event-time cursor-pointer">
+                            {fullDate(event.startDate)}
+                          </p>
+                          <h3
+                            className="cursor-pointer"
+                            style={{
+                              overflowWrap: "break-word",
+                              margin: "5px 0px",
+                            }}
+                          >
+                            {event.name}
+                          </h3>
+                          <p className="event-caption cursor-pointer">
                             {event.Venue.city}, {event.Venue.state}
                           </p>
                         </div>
                       </div>
                       <div>
-                        <p>
-                          LOREM IPSUL LOREM IPSUL LOREM IPSUL LOREM IPSUL v
-                          LOREM IPSUL vvLOREM IPSUL LOREM IPSUL
+                        <p className="cursor-pointer">
+                          EVENT DETAIL FIX BACKEND
                         </p>
                       </div>
                     </div>
@@ -146,19 +165,24 @@ function GroupDetails() {
             )}
 
             {pastEvent.length !== 0 && (
-              <div>
+              <div className="past-event-container">
                 <h2>Past Events ({pastEvent.length})</h2>
                 {pastEvent.map((event) => {
                   return (
                     <div key={event.id} className="past-events">
-                      <div className="past-event-div-1">
+                      <Link to={`/events/${event.id}`}>
+                      <div className="event-container">
                         <img
-                          style={{ width: "200px", height: "150px" }}
+                          className="cursor-pointer"
+                          style={{ width: "200px", height: "150px" ,borderRadius: '5px' }}
                           src="https://media.istockphoto.com/id/186411638/photo/green-golf-field-and-blue-cloudy-sky.jpg?s=612x612&w=0&k=20&c=erretmwt9wV7oW39yBXtAI8C9AqxiAYoedOAyuf-80c="
                         />
                         <div className="location-info">
-                          <p className="event-time">{Date(event.startDate)}</p>
+                          <p className="event-time cursor-pointer">
+                            {fullDate(event.startDate)}
+                          </p>
                           <h3
+                            className="cursor-pointer"
                             style={{
                               overflowWrap: "break-word",
                               margin: "5px 0px",
@@ -166,22 +190,20 @@ function GroupDetails() {
                           >
                             {event.name}
                           </h3>
-                          <p style={{ margin: "0px", color: "grey" }}>
+                          <p
+                            className="cursor-pointer"
+                            style={{ margin: "0px", color: "grey" }}
+                          >
                             {event.Venue.city}, {event.Venue.state}
                           </p>
                         </div>
                       </div>
-                      <div>
-                        <p className="event-caption">
-                          LOREM IPSUL LOREM IPSUL LOREM IPSUL LOREM IPSUL v
-                          LOREM IPSUL vvLOREM IPSUL LOREM IPSUL LOREM IPSUL
-                          LOREM IPSUL LOREM IPSUL LOREM IPSUL v LOREM IPSUL
-                          vvLOREM IPSUL LOREM IPSUL LOREM IPSUL LOREM IPSUL
-                          LOREM IPSUL LOREM IPSUL v LOREM IPSUL vvLOREM IPSUL
-                          LOREM IPSUL LOREM IPSUL LOREM IPSUL LOREM IPSUL LOREM
-                          IPSUL v
+                      <div className="caption-container">
+                        <p className="event-caption cursor-pointer">
+                          EVENT DETAIL FIX BACK
                         </p>
                       </div>
+                      </Link>
                     </div>
                   );
                 })}
