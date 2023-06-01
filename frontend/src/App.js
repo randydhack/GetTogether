@@ -8,7 +8,10 @@ import LoginFormPage from "./components/LoginFormPage";
 import SignupFormPage from "./components/SignupFormPage";
 import Navigation from "./components/Navigation";
 import LandingPage from "./components/LandingPage";
-import GroupsPage from "./components/GroupsPage";
+import GroupsPage from "./components/GroupsPage/index";
+import GroupDetails from "./components/GroupsPage/GroupDetails";
+import EventsPage from "./components/EventsPage";
+import EventDetails from "./components/EventsPage/EventDetails";
 
 function App() {
   const dispatch = useDispatch();
@@ -25,18 +28,12 @@ function App() {
           <Route exact path='/'>
             <LandingPage />
           </Route>
-            <Route path="/login">
-              <LoginFormPage />
-            </Route>
-            <Route path="/signup">
-              <SignupFormPage />
-            </Route>
-            <Route path="/groups">
-              <GroupsPage />
-            </Route>
-            {/* <Route path="/events">
-
-            </Route> */}
+            <Route path="/login" component={LoginFormPage}></Route>
+            <Route path="/signup" component={SignupFormPage}></Route>
+            <Route exact path="/groups/:groupId" component={GroupDetails}></Route>
+            <Route path="/groups" component={GroupsPage}></Route>
+            <Route exact path="/events/:eventId" component={EventDetails}></Route>
+            <Route path="/events" component={EventsPage}></Route>
           </Switch>
       )}
     </>

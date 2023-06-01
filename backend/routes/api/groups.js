@@ -94,7 +94,7 @@ router.get("/currentUser", requireAuth, async (req, res, next) => {
 
 // Get Group by groupId
 // No preview boolean "GroupImages" due to different schema approach
-router.get('/:groupId', requireAuth, async (req, res, next) => {
+router.get('/:groupId', async (req, res, next) => {
     const id = req.params.groupId
 
     const group = await Group.findOne({
@@ -122,9 +122,6 @@ router.get('/:groupId', requireAuth, async (req, res, next) => {
         }
     ],
     group: ['GroupImages.id', 'Group.id', 'Organizer.id', 'Venues.id'],
-    attributes: {
-        exclude: ['previewImage']
-    }
     })
 
     if (!group) {

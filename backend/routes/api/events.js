@@ -54,7 +54,7 @@ router.get('/', paginationValidation, async (req, res, next) => {
         }
     ],
     attributes: {
-        exclude: ['price','capacity', 'description'],
+        exclude: ['price','capacity'],
     },
     group: ['Event.id'],
     ...pagination
@@ -107,8 +107,7 @@ router.get('/:eventId', async (req, res, next) => {
             attributes: []
         }],
         attributes: {
-            include: [[sequelize.fn('COUNT', sequelize.col('Attendees.id')), 'numAttendees']],
-            exclude: ['description']
+            include: [[sequelize.fn('COUNT', sequelize.col('Attendees.id')), 'numAttendees']]
         },
         group: ['Event.id', 'Group.id', 'EventImages.id', 'Venue.id']
     })

@@ -1,9 +1,8 @@
 import { fetchGroups } from "../../store/group";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { Link, Switch, Route } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-import GroupDetails from "./GroupDetails";
 import "./GroupsPage.css";
 
 function GroupsPage() {
@@ -18,7 +17,7 @@ function GroupsPage() {
     groups && (
       <div className="container">
         <div className="event-group-heading">
-          <Link to="/events">Events</Link>
+          <Link style={{color: 'grey'}} to="/events">Events</Link>
           <Link>Groups</Link>
         </div>
         <p
@@ -34,11 +33,11 @@ function GroupsPage() {
         </p>
         {groups.map((group) => {
           return (
-            <Link className="group-link" to={`/groups/${group.id}`}>
+            <Link key={group.id} to={`/groups/${group.id}`} className="group-link">
               <div key={group.id} className="group-container">
                 <img
-                  src="https://t4.ftcdn.net/jpg/02/16/27/49/360_F_216274912_GyI0SwIKvhuxxrLpOv5QYxqmaoaLZkQg.jpg"
-                  style={{ width: "200px", height: "150px" }}
+                  src={group.previewImage}
+                  style={{ width: "200px", height: "140px", borderRadius: '5px' }}
                 />
                 <div className="group-info">
                   <h2 className="group-name">{group.name}</h2>
@@ -47,20 +46,13 @@ function GroupsPage() {
                   </p>
                   <p className="group-about">{group.about}</p>
                   <p className="group-event" style={{ color: "grey" }}>
-                    <span>## Events</span> ·{" "}
-                    <span>{group.private ? "Private" : "Public"}</span>
+                    ## Events · {group.private ? "Private" : "Public"}
                   </p>
                 </div>
               </div>
             </Link>
           );
         })}
-
-        <Switch>
-          <Route path="/groups/:groupId">
-            <GroupDetails />
-          </Route>
-        </Switch>
       </div>
     )
   );
