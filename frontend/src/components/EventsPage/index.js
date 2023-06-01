@@ -41,6 +41,9 @@ function EventsPage() {
     return `${year}/${month}/${date} · ${hours}:${minutes} ${ampm}`;
   };
 
+  const shortenDescription = (description) => {
+    return description.split('.').slice(0,5).join('.')
+  }
   return (
     events && (
       <div className="container">
@@ -87,7 +90,7 @@ function EventsPage() {
                   </div>
                 </div>
                 <div>
-                  <p>{event.description.split('.').slice(0,5).join()}.</p>
+                  <p>{shortenDescription(event.description)}</p>
                 </div>
               </div>
             </Link>
