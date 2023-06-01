@@ -101,7 +101,7 @@ function GroupDetails() {
                     </button>
                     <button
                       onClick={handleJoinGroup}
-                      style={{ margin: "0px 10px" }}
+                      style={{ 'margin': "0px 10px" }}
                       className="organizer-buttons edit-delete-button"
                     >
                       Edit

@@ -10,7 +10,15 @@ function EventsPage() {
 
   const events = useSelector((state) => Object.values(state.eventState));
 
-  const sortedEvents = events.sort((a, b) => b - a);
+  const sortEventByDate = events.sort((a, b) => {
+    const timeA = a.startDate
+    const timeB = b.startDate
+
+    const convertTimeA = new Date(timeA).getTime()
+    const convertTimeB= new Date(timeB).getTime()
+
+    return convertTimeB - convertTimeA
+  })
 
   useEffect(() => {
     dispatch(fetchEvent());
@@ -31,7 +39,7 @@ function EventsPage() {
     minutes = minutes < 10 ? "0" + minutes : minutes;
 
     return `${year}/${month}/${date} · ${hours}:${minutes} ${ampm}`;
-  }
+  };
 
   return (
     events && (
@@ -53,7 +61,7 @@ function EventsPage() {
         >
           Events in GatherUp
         </p>
-        {sortedEvents.map((event) => {
+        {sortEventByDate.map((event) => {
           return (
             <Link
               key={event.id}
@@ -61,20 +69,26 @@ function EventsPage() {
               className="event-link"
             >
               <div key={event.id} className="events-container">
-                <img
-                  src={event.previewImage}
-                  style={{ width: "200px", height: "120px", borderRadius: '5px' }}
-                />
-                <div className="event-details">
-                  <p className="event-date">{fullDate(event.endDate)}</p>
-                  <h2 className="event-title">{event.name}</h2>
-                  <p className="event-location">
-                    {event.Venue.city}, {event.Venue.state}
-                  </p>
+                <div className="flex-row">
+                  <img
+                    src={event.previewImage}
+                    style={{
+                      width: "200px",
+                      height: "120px",
+                      borderRadius: "5px",
+                    }}
+                  />
+                  <div className="event-details">
+                    <p className="event-date">{fullDate(event.endDate)}</p>
+                    <h2 className="event-title">{event.name}</h2>
+                    <p className="event-location">
+                      {event.Venue.city}, {event.Venue.state}
+                    </p>
+                  </div>
                 </div>
-              </div>
-              <div>
-                <p>EVENT DETAILS (FIX BACKEND)</p>
+                <div>
+                  <p>{event.description.split('.').slice(0,5).join()}.</p>
+                </div>
               </div>
             </Link>
           );

@@ -5,6 +5,10 @@
     margin: 60px 0px;
 }
 
+.flex-row {
+    display: flex;
+}
+
 .event-link {
     text-decoration: none;
     color: black;
@@ -32,9 +36,7 @@
 }
 
 .events-container {
-    display: flex;
-    flex-direction: row;
-    padding: 15px 0px 0px 0px;
+    padding: 15px 0px 15px 0px;
     border-top: 2px solid lightgrey;
     width: 700px;
 }

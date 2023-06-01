@@ -9,8 +9,8 @@ function EventDetails() {
   const dispatch = useDispatch();
   const { eventId } = useParams();
   const event = useSelector((state) => state.eventState[eventId]);
-  // const groups = useSelector(state => Object.values(state.groupState))
 
+  console.log(event)
   useEffect(() => {
     dispatch(getEventDetail(eventId));
     dispatch(fetchGroups());
@@ -45,7 +45,7 @@ function EventDetails() {
             <div>
               <h1 className="event-name">{event.name}</h1>
               <p className="organizer-name">
-                COME BACK, DONT KNOW HOW TO FETCH FOR NAME
+                {event?.Group.name}
               </p>
             </div>
           </div>
@@ -60,7 +60,7 @@ function EventDetails() {
 
             {/* Side bar informaton event */}
             <div className="event-side-details">
-              <Link className="group-link" to={`/groups}`}>
+              <Link className="group-link" to={`/groups/${event.groupId}`}>
                 <div className="group-info-section">
                   <div>
                     <img
@@ -69,8 +69,8 @@ function EventDetails() {
                     />
                   </div>
                   <div className="group-name-privacy">
-                    <p className="group-name">Group Name</p>
-                    <p className="group-privacy">Public</p>
+                    <p className="group-name">{event?.Group.name}</p>
+                    <p className="group-privacy">{event?.Group.private ? 'Private' : 'In Person'}</p>
                   </div>
                 </div>
               </Link>
@@ -78,7 +78,7 @@ function EventDetails() {
               {/* Side bar informaton price, time, type */}
               <div className="event-time-price-type">
                 <div className="flex-column">
-                  <i class="fa-regular fa-clock fa-2xl"></i>
+                  <i className="fa-regular fa-clock fa-2xl"></i>
                   <div className="start-end-date">
                     <p className="start-date">
                       Start Date:{" "}
@@ -95,13 +95,13 @@ function EventDetails() {
                   </div>
                 </div>
                 <div className="flex-column">
-                  <i class="fa-solid fa-money-bill fa-2xl"></i>
+                  <i className="fa-solid fa-money-bill fa-2xl"></i>
                   <p className="event-price">
                     {event.price > 0 ? `$${event.price}` : "FREE"}
                   </p>
                 </div>
                 <div className="flex-column">
-                  <i class="fa-solid fa-map-pin fa-2xl event-type-icon"></i>
+                  <i className="fa-solid fa-map-pin fa-2xl event-type-icon"></i>
                   <p className="event-type">{event.type}</p>
                 </div>
               </div>
