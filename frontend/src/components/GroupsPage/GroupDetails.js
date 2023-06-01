@@ -16,6 +16,8 @@ function GroupDetails() {
   const event = useSelector((state) => Object.values(state.eventState));
   const user = useSelector((state) => state.session.user);
 
+  console.log(group);
+
   event.forEach((event) => {
     const date = new Date().toString();
     if (event.endDate < date) pastEvent.push(event);
@@ -38,11 +40,16 @@ function GroupDetails() {
     const month = eventDate.getMonth();
     const date = eventDate.getDate();
 
-    const time = eventDate.toLocaleTimeString("en-US");
+    let hours = eventDate.getHours();
+    let minutes = eventDate.getMinutes();
 
-    return `${year}/${month}/${date} · ${time}`;
+    const ampm = hours >= 12 ? "pm" : "am";
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    minutes = minutes < 10 ? "0" + minutes : minutes;
+
+    return `${year}/${month}/${date} · ${hours}:${minutes} ${ampm}`;
   };
-
   return (
     group &&
     group.Organizer && (
@@ -54,8 +61,12 @@ function GroupDetails() {
             </Link>
             <div className="group-details">
               <img
-                style={{ width: "600px", height: "350px", borderRadius: '15px' }}
-                src="https://media.istockphoto.com/id/186411638/photo/green-golf-field-and-blue-cloudy-sky.jpg?s=612x612&w=0&k=20&c=erretmwt9wV7oW39yBXtAI8C9AqxiAYoedOAyuf-80c="
+                style={{
+                  width: "600px",
+                  height: "350px",
+                  borderRadius: "15px",
+                }}
+                src={group.previewImage}
               />
               <div className="group-info">
                 <h1>{group.name}</h1>
@@ -131,9 +142,13 @@ function GroupDetails() {
                     <div key={event.id} className="upcoming-events">
                       <div className="event-container">
                         <img
-                        className="cursor-pointer"
-                          style={{ width: "200px", height: "150px", borderRadius: '5px' }}
-                          src="https://media.istockphoto.com/id/186411638/photo/green-golf-field-and-blue-cloudy-sky.jpg?s=612x612&w=0&k=20&c=erretmwt9wV7oW39yBXtAI8C9AqxiAYoedOAyuf-80c="
+                          className="cursor-pointer"
+                          style={{
+                            width: "200px",
+                            height: "150px",
+                            borderRadius: "5px",
+                          }}
+                          src={event.previewImage}
                         />
                         <div>
                           <p className="event-time cursor-pointer">
@@ -154,9 +169,7 @@ function GroupDetails() {
                         </div>
                       </div>
                       <div>
-                        <p className="cursor-pointer">
-                          EVENT DETAIL FIX BACKEND
-                        </p>
+                        <p className="cursor-pointer">{event.description}</p>
                       </div>
                     </div>
                   );
@@ -170,39 +183,46 @@ function GroupDetails() {
                 {pastEvent.map((event) => {
                   return (
                     <div key={event.id} className="past-events">
-                      <Link to={`/events/${event.id}`}>
-                      <div className="event-container">
-                        <img
-                          className="cursor-pointer"
-                          style={{ width: "200px", height: "150px" ,borderRadius: '5px' }}
-                          src="https://media.istockphoto.com/id/186411638/photo/green-golf-field-and-blue-cloudy-sky.jpg?s=612x612&w=0&k=20&c=erretmwt9wV7oW39yBXtAI8C9AqxiAYoedOAyuf-80c="
-                        />
-                        <div className="location-info">
-                          <p className="event-time cursor-pointer">
-                            {fullDate(event.startDate)}
-                          </p>
-                          <h3
+                      <Link
+                        to={`/events/${event.id}`}
+                        className="event-link-container"
+                      >
+                        <div className="event-container">
+                          <img
                             className="cursor-pointer"
                             style={{
-                              overflowWrap: "break-word",
-                              margin: "5px 0px",
+                              width: "200px",
+                              height: "150px",
+                              borderRadius: "5px",
                             }}
-                          >
-                            {event.name}
-                          </h3>
-                          <p
-                            className="cursor-pointer"
-                            style={{ margin: "0px", color: "grey" }}
-                          >
-                            {event.Venue.city}, {event.Venue.state}
+                            src={event.previewImage}
+                          />
+                          <div className="location-info">
+                            <p className="event-time cursor-pointer">
+                              {fullDate(event.startDate)}
+                            </p>
+                            <h3
+                              className="cursor-pointer"
+                              style={{
+                                overflowWrap: "break-word",
+                                margin: "5px 0px",
+                              }}
+                            >
+                              {event.name}
+                            </h3>
+                            <p
+                              className="cursor-pointer"
+                              style={{ margin: "0px", color: "grey" }}
+                            >
+                              {event.Venue.city}, {event.Venue.state}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="caption-container">
+                          <p className="event-caption cursor-pointer">
+                            {console.log(event)}
                           </p>
                         </div>
-                      </div>
-                      <div className="caption-container">
-                        <p className="event-caption cursor-pointer">
-                          EVENT DETAIL FIX BACK
-                        </p>
-                      </div>
                       </Link>
                     </div>
                   );

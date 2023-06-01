@@ -22,10 +22,16 @@ function EventsPage() {
     const month = eventDate.getMonth();
     const date = eventDate.getDate();
 
-    const time = eventDate.toLocaleTimeString("en-US");
+    let hours = eventDate.getHours();
+    let minutes = eventDate.getMinutes();
 
-    return `${year}/${month}/${date} · ${time}`;
-  };
+    const ampm = hours >= 12 ? "pm" : "am";
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    minutes = minutes < 10 ? "0" + minutes : minutes;
+
+    return `${year}/${month}/${date} · ${hours}:${minutes} ${ampm}`;
+  }
 
   return (
     events && (
@@ -56,8 +62,8 @@ function EventsPage() {
             >
               <div key={event.id} className="events-container">
                 <img
-                  src="https://images.pexels.com/photos/976866/pexels-photo-976866.jpeg?cs=srgb&dl=pexels-josh-sorenson-976866.jpg&fm=jpg"
-                  style={{ width: "200px", height: "150px", borderRadius: '5px' }}
+                  src={event.previewImage}
+                  style={{ width: "200px", height: "120px", borderRadius: '5px' }}
                 />
                 <div className="event-details">
                   <p className="event-date">{fullDate(event.endDate)}</p>

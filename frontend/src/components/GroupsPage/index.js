@@ -1,9 +1,8 @@
 import { fetchGroups } from "../../store/group";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { Link, Switch, Route } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-import GroupDetails from "./GroupDetails";
 import "./GroupsPage.css";
 
 function GroupsPage() {
@@ -37,8 +36,8 @@ function GroupsPage() {
             <Link key={group.id} to={`/groups/${group.id}`} className="group-link">
               <div key={group.id} className="group-container">
                 <img
-                  src="https://t4.ftcdn.net/jpg/02/16/27/49/360_F_216274912_GyI0SwIKvhuxxrLpOv5QYxqmaoaLZkQg.jpg"
-                  style={{ width: "200px", height: "150px", borderRadius: '5px' }}
+                  src={group.previewImage}
+                  style={{ width: "200px", height: "140px", borderRadius: '5px' }}
                 />
                 <div className="group-info">
                   <h2 className="group-name">{group.name}</h2>

@@ -55,34 +55,43 @@ function EventDetails() {
         <div className="wrapper wrapper-details">
           <div className="event-details-section-2">
             <div>
-              <img
-                className="event-image"
-                src="https://images.pexels.com/photos/976866/pexels-photo-976866.jpeg?cs=srgb&dl=pexels-josh-sorenson-976866.jpg&fm=jpg"
-              />
+              <img className="event-image" src={event.previewImage} />
             </div>
 
             {/* Side bar informaton event */}
             <div className="event-side-details">
-              <div className="group-info-section">
-                <div>
-                  <img
-                    className="group-image"
-                    src="https://images.pexels.com/photos/976866/pexels-photo-976866.jpeg?cs=srgb&dl=pexels-josh-sorenson-976866.jpg&fm=jpg"
-                  />
+              <Link className="group-link" to={`/groups}`}>
+                <div className="group-info-section">
+                  <div>
+                    <img
+                      className="group-image"
+                      src="https://images.pexels.com/photos/976866/pexels-photo-976866.jpeg?cs=srgb&dl=pexels-josh-sorenson-976866.jpg&fm=jpg"
+                    />
+                  </div>
+                  <div className="group-name-privacy">
+                    <p className="group-name">Group Name</p>
+                    <p className="group-privacy">Public</p>
+                  </div>
                 </div>
-                <div className="group-name-privacy">
-                  <p className="group-name">Group Name</p>
-                  <p className="group-privacy">Public</p>
-                </div>
-              </div>
+              </Link>
 
               {/* Side bar informaton price, time, type */}
               <div className="event-time-price-type">
                 <div className="flex-column">
                   <i class="fa-regular fa-clock fa-2xl"></i>
                   <div className="start-end-date">
-                    <p className="start-date">Start Date: <span className="span-start-date">{fullDate(event.startDate)}</span></p>
-                    <p className="end-date">End Date: <span className="span-end-date">{fullDate(event.endDate)}</span></p>
+                    <p className="start-date">
+                      Start Date:{" "}
+                      <span className="span-start-date">
+                        {fullDate(event.startDate)}
+                      </span>
+                    </p>
+                    <p className="end-date">
+                      End Date:{" "}
+                      <span className="span-end-date">
+                        {fullDate(event.endDate)}
+                      </span>
+                    </p>
                   </div>
                 </div>
                 <div className="flex-column">
@@ -97,6 +106,12 @@ function EventDetails() {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+        <div className="wrapper">
+          <div className="event-description">
+            <h2>Description</h2>
+            <p>{event.description}</p>
           </div>
         </div>
       </div>
