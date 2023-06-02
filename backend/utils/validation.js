@@ -7,10 +7,10 @@ const handleValidationErrors = (req, _res, next) => {
   const validationErrors = validationResult(req);
 
   if (!validationErrors.isEmpty()) {
-    const errors = [];
+    const errors = {};
     validationErrors
       .array()
-      .forEach(error => errors.push(error.msg));
+      .forEach((error) => (errors[error.param] = error.msg));
 
     const err = Error("Validation Error");
     err.status = 400;
@@ -55,7 +55,7 @@ const validateLogin = [
 // Validate Create Group
 const validateGroupCreate = [
   check('name')
-    .isLength({ max: 60 })
+    .isLength({ min: 3 ,max: 60 })
     .withMessage('Name must be 60 characters or less'),
   check('about')
     .isLength({ min: 50 })

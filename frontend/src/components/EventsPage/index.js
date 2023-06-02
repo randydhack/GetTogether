@@ -90,7 +90,7 @@ function EventsPage() {
                   </div>
                 </div>
                 <div>
-                  <p>{shortenDescription(event.description)}</p>
+                  <p>{event.description && shortenDescription(event.description)}</p>
                 </div>
               </div>
             </Link>

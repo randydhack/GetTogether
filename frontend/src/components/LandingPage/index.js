@@ -1,7 +1,12 @@
+import { useDispatch, useSelector } from "react-redux";
 import "./LandingPage.css";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
 
 function LandingPage() {
+  const user = useSelector((state) => state.session.user);
+
+  const disableOrEnableButton = user ? "start-group-link" : "disabled";
 
   return (
     <div className="landing-page-container">
@@ -42,10 +47,12 @@ function LandingPage() {
             className="group-event-images"
             src="https://secure.meetupstatic.com/next/images/shared/handsUp.svg?w=384"
           />
-          <Link to="/groups" className="group-event-link">
+          <Link to="/groups" className="all-groups-link">
             See all groups
           </Link>
-          <p className="caption">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          <p className="caption">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          </p>
         </div>
 
         {/* 2 */}
@@ -54,10 +61,12 @@ function LandingPage() {
             className="group-event-images"
             src="https://secure.meetupstatic.com/next/images/shared/ticket.svg?w=384"
           />
-          <Link to='/events' className="group-event-link">
+          <Link to="/events" className="all-events-link">
             See all events
           </Link>
-          <p className="caption">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          <p className="caption">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          </p>
         </div>
 
         {/* 3 */}
@@ -67,19 +76,23 @@ function LandingPage() {
             src="https://secure.meetupstatic.com/next/images/shared/joinGroup.svg?w=384"
           />
           <div>
-            <Link to={''} className="group-event-link">
+            <Link to='/group/new' className={disableOrEnableButton}>
               Start a new group
             </Link>
-            <p className="caption">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p className="caption">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            </p>
           </div>
         </div>
       </div>
       {/* Section 4 */}
-      <div className="landing-page-section-4">
-        <div className="section-4-button">
-          <Link src=''>Join GatherUp</Link>
+      {!user && (
+        <div className="landing-page-section-4">
+          <div className="section-4-button">
+            <Link src="/group/new">Join GatherUp</Link>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

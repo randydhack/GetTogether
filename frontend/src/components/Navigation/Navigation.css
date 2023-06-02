@@ -2,6 +2,27 @@
     display: none;
 }
 
+.profile-dropdown {
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    border: 2px black solid;
+    background-color: white;
+    width: fit-content;
+    padding: 0px 20px;
+    padding-bottom: 20px;
+    align-items: center;
+}
+
+.logout-button {
+    border-top: 2px solid black;
+}
+
+.logout-button button {
+    margin-top: 20px;
+
+}
+
 .session-links {
     display: flex;
     justify-content: space-between;
@@ -16,11 +37,39 @@
 .top-right-nav-links {
     display: flex;
     align-items: center;
-
 }
 
 .home-button {
     font-weight: 700;
     color: rgb(253, 74, 74);
     font-size: 34px;
+}
+
+.start-group-profile-button {
+    display: flex;
+    align-items: center;
+}
+
+.start-group {
+    color: rgb(0, 79, 61);
+    font-weight: 500;
+    margin-right: 30px;
+}
+
+.start-group:hover {
+    text-decoration: underline;
+}
+
+.open-menu {
+    display: absolute;
+}
+
+.profile-button {
+    background-color: white;
+    border: 0px;
+    cursor: pointer;
+}
+
+.arrow-icon {
+    margin-left: 10px;
 }

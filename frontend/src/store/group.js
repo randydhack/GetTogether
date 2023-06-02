@@ -1,5 +1,9 @@
+import { csrfFetch } from "./csrf";
+
 const ALL_GROUPS = "group/ALL_GROUPS";
 const GET_GROUP = "group/GET_GROUP";
+const CREATE_GROUP = 'group/CREATE_GROUP'
+
 export const allGroups = (groups) => {
   return {
     type: ALL_GROUPS,
@@ -13,6 +17,13 @@ export const singleGroup = (group) => {
     group,
   };
 };
+
+export const newGroup = (group) => {
+  return {
+    type: CREATE_GROUP,
+    group
+  }
+}
 
 // Get All Groups
 export const fetchGroups = () => async (dispatch) => {
@@ -35,6 +46,25 @@ export const getGroup = (groupId) => async (dispatch) => {
   }
 };
 
+export const createGroup = (group) => async (dispatch) => {
+  const response = await csrfFetch("/api/groups", {
+    method: "POST",
+    body: JSON.stringify({
+      name: group.name,
+      about: group.about,
+      type: group.type,
+      state: group.state,
+      private: group.privated,
+      city: group.city
+    }),
+  });
+
+  const groupData = await response.json();
+  console.log(groupData)
+  dispatch(newGroup(groupData));
+  return response;
+};
+
 // const initialState = { entries: {}, isLoading: true };
 const groupReducer = (state = {}, action) => {
   let newState;
@@ -45,6 +75,8 @@ const groupReducer = (state = {}, action) => {
       return newState;
     case GET_GROUP:
       return { ...state, [action.group.id]: action.group };
+    case CREATE_GROUP:
+      return { ...state, [action.group.id]: action.group}
     default:
       return state;
   }
