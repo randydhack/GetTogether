@@ -46,7 +46,7 @@ function EventsPage() {
   }
   return (
     events && (
-      <div className="container">
+      <div className="all-events-container">
         <div className="events-nav">
           <Link>Events</Link>
           <Link to="/groups" className="groups-link">

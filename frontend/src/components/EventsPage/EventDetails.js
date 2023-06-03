@@ -10,7 +10,6 @@ function EventDetails() {
   const { eventId } = useParams();
   const event = useSelector((state) => state.eventState[eventId]);
 
-  console.log(event)
   useEffect(() => {
     dispatch(getEventDetail(eventId));
     dispatch(fetchGroups());
@@ -35,83 +34,86 @@ function EventDetails() {
 
   return (
     event && (
-      <div className="container">
+      <div className="events-detail-container">
         {/* Section 1 */}
         <div className="wrapper">
-          <div className="event-details-section-1">
-            <div>
-              <Link to="/events">Back to events</Link>
-            </div>
-            <div>
-              <h1 className="event-name">{event.name}</h1>
-              <p className="organizer-name">
-                {event?.Group.name}
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Section 2 */}
-        <div className="wrapper wrapper-details">
-          <div className="event-details-section-2">
-            <div>
-              <img className="event-image" src={event.previewImage} />
+          <div>
+            <div className="event-details-section-1">
+              <div>
+                <Link to="/events">Back to events</Link>
+              </div>
+              <div>
+                <h1 className="event-name">{event.name}</h1>
+                <p className="organizer-name">{event?.Group.name}</p>
+              </div>
             </div>
 
-            {/* Side bar informaton event */}
-            <div className="event-side-details">
-              <Link className="group-link" to={`/groups/${event.groupId}`}>
-                <div className="group-info-section">
-                  <div>
-                    <img
-                      className="group-image"
-                      src="https://images.pexels.com/photos/976866/pexels-photo-976866.jpeg?cs=srgb&dl=pexels-josh-sorenson-976866.jpg&fm=jpg"
-                    />
-                  </div>
-                  <div className="group-name-privacy">
-                    <p className="group-name">{event?.Group.name}</p>
-                    <p className="group-privacy">{event?.Group.private ? 'Private' : 'In Person'}</p>
-                  </div>
+            {/* Section 2 */}
+            <div className="wrapper wrapper-details">
+              <div className="event-details-section-2">
+                <div>
+                  <img className="event-image" src={event.previewImage} />
                 </div>
-              </Link>
 
-              {/* Side bar informaton price, time, type */}
-              <div className="event-time-price-type">
-                <div className="flex-column">
-                  <i className="fa-regular fa-clock fa-2xl"></i>
-                  <div className="start-end-date">
-                    <p className="start-date">
-                      Start Date:{" "}
-                      <span className="span-start-date">
-                        {fullDate(event.startDate)}
-                      </span>
-                    </p>
-                    <p className="end-date">
-                      End Date:{" "}
-                      <span className="span-end-date">
-                        {fullDate(event.endDate)}
-                      </span>
-                    </p>
+                {/* Side bar informaton event */}
+                <div className="event-side-details">
+                  <Link className="group-link" to={`/groups/${event.groupId}`}>
+                    <div className="group-info-section">
+                      <div>
+                        <img
+                          className="group-image"
+                          src="https://images.pexels.com/photos/976866/pexels-photo-976866.jpeg?cs=srgb&dl=pexels-josh-sorenson-976866.jpg&fm=jpg"
+                        />
+                      </div>
+                      <div className="group-name-privacy">
+                        <p className="group-name">{event?.Group.name}</p>
+                        <p className="group-privacy">
+                          {event?.Group.private ? "Private" : "In Person"}
+                        </p>
+                      </div>
+                    </div>
+                  </Link>
+
+                  {/* Side bar informaton price, time, type */}
+                  <div className="event-time-price-type">
+                    <div className="flex-column">
+                      <i className="fa-regular fa-clock fa-2xl"></i>
+                      <div className="start-end-date">
+                        <p className="start-date">
+                          Start Date:{" "}
+                          <span className="span-start-date">
+                            {fullDate(event.startDate)}
+                          </span>
+                        </p>
+                        <p className="end-date">
+                          End Date:{" "}
+                          <span className="span-end-date">
+                            {fullDate(event.endDate)}
+                          </span>
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex-column">
+                      <i className="fa-solid fa-money-bill fa-2xl"></i>
+                      <p className="event-price">
+                        {event.price > 0 ? `$${event.price}` : "FREE"}
+                      </p>
+                    </div>
+                    <div className="flex-column">
+                      <i className="fa-solid fa-map-pin fa-2xl event-type-icon"></i>
+                      <p className="event-type">{event.type}</p>
+                    </div>
                   </div>
-                </div>
-                <div className="flex-column">
-                  <i className="fa-solid fa-money-bill fa-2xl"></i>
-                  <p className="event-price">
-                    {event.price > 0 ? `$${event.price}` : "FREE"}
-                  </p>
-                </div>
-                <div className="flex-column">
-                  <i className="fa-solid fa-map-pin fa-2xl event-type-icon"></i>
-                  <p className="event-type">{event.type}</p>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <div className="wrapper">
-          <div className="event-description">
-            <h2>Description</h2>
-            <p>{event.description}</p>
+
+          <div className="wrapper">
+            <div className="event-description">
+              <h2>Description</h2>
+              <p>{event.description}</p>
+            </div>
           </div>
         </div>
       </div>

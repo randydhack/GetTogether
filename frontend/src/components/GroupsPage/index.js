@@ -15,7 +15,7 @@ function GroupsPage() {
 
   return (
     groups && (
-      <div className="container">
+      <div className="all-group-container">
         <div className="event-group-heading">
           <Link style={{color: 'grey'}} to="/events">Events</Link>
           <Link>Groups</Link>

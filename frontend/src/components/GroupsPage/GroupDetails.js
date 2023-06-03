@@ -8,6 +8,7 @@ import "./GroupDetails.css";
 
 function GroupDetails() {
   const dispatch = useDispatch();
+
   const { groupId } = useParams();
   const pastEvent = [];
   const upcomingEvent = [];
@@ -15,8 +16,6 @@ function GroupDetails() {
   const group = useSelector((state) => state.groupState[groupId]);
   const event = useSelector((state) => Object.values(state.eventState));
   const user = useSelector((state) => state.session.user);
-
-  console.log(group);
 
   event.forEach((event) => {
     const date = new Date().toString();
@@ -34,22 +33,21 @@ function GroupDetails() {
     return alert("Feature coming soon");
   };
 
+  const handleCreateEvent = (e) => {
+    e.preventDefault()
+  }
+
   const fullDate = (data) => {
     const eventDate = new Date(data);
     const year = eventDate.getFullYear();
     const month = eventDate.getMonth();
     const date = eventDate.getDate();
 
-    let hours = eventDate.getHours();
-    let minutes = eventDate.getMinutes();
+    const time = eventDate.toLocaleTimeString("en-US");
 
-    const ampm = hours >= 12 ? "pm" : "am";
-    hours = hours % 12;
-    hours = hours ? hours : 12; // the hour '0' should be '12'
-    minutes = minutes < 10 ? "0" + minutes : minutes;
-
-    return `${year}/${month}/${date} · ${hours}:${minutes} ${ampm}`;
+    return `${year}/${month}/${date} · ${time}`;
   };
+
   return (
     group &&
     group.Organizer && (
@@ -61,12 +59,8 @@ function GroupDetails() {
             </Link>
             <div className="group-details">
               <img
-                style={{
-                  width: "600px",
-                  height: "350px",
-                  borderRadius: "15px",
-                }}
-                src={group.previewImage}
+                style={{ width: "600px", height: "350px", borderRadius: '15px' }}
+                src={group.GroupImages[group.GroupImages.length - 1].url}
               />
               <div className="group-info">
                 <h1>{group.name}</h1>
@@ -94,14 +88,14 @@ function GroupDetails() {
                 {user && user.id === group.organizerId && (
                   <div>
                     <button
-                      onClick={handleJoinGroup}
+                      onClick={handleCreateEvent}
                       className="create-event-button organizer-buttons"
                     >
-                      Create Event
+                      <Link to={`/group/${group.id}/events/new`} style={{color: 'black', textDecoration: 'none'}}>Create Event</Link>
                     </button>
                     <button
                       onClick={handleJoinGroup}
-                      style={{ 'margin': "0px 10px" }}
+                      style={{ margin: "0px 10px" }}
                       className="organizer-buttons edit-delete-button"
                     >
                       Edit
@@ -134,6 +128,8 @@ function GroupDetails() {
               <p>{group.about}</p>
             </div>
 
+            {!upcomingEvent.length && !pastEvent.length && (<h2>No Upcoming Events</h2>)}
+
             {upcomingEvent.length !== 0 && (
               <div>
                 <h2>Upcoming Events ({upcomingEvent.length})</h2>
@@ -142,13 +138,9 @@ function GroupDetails() {
                     <div key={event.id} className="upcoming-events">
                       <div className="event-container">
                         <img
-                          className="cursor-pointer"
-                          style={{
-                            width: "200px",
-                            height: "150px",
-                            borderRadius: "5px",
-                          }}
-                          src={event.previewImage}
+                        className="cursor-pointer"
+                          style={{ width: "200px", height: "150px", borderRadius: '5px' }}
+                          src="https://media.istockphoto.com/id/186411638/photo/green-golf-field-and-blue-cloudy-sky.jpg?s=612x612&w=0&k=20&c=erretmwt9wV7oW39yBXtAI8C9AqxiAYoedOAyuf-80c="
                         />
                         <div>
                           <p className="event-time cursor-pointer">
@@ -169,7 +161,9 @@ function GroupDetails() {
                         </div>
                       </div>
                       <div>
-                        <p className="cursor-pointer">{event.description}</p>
+                        <p className="cursor-pointer">
+                          EVENT DETAIL FIX BACKEND
+                        </p>
                       </div>
                     </div>
                   );
@@ -183,46 +177,39 @@ function GroupDetails() {
                 {pastEvent.map((event) => {
                   return (
                     <div key={event.id} className="past-events">
-                      <Link
-                        to={`/events/${event.id}`}
-                        className="event-link-container"
-                      >
-                        <div className="event-container">
-                          <img
+                      <Link to={`/events/${event.id}`}>
+                      <div className="event-container">
+                        <img
+                          className="cursor-pointer"
+                          style={{ width: "200px", height: "150px" ,borderRadius: '5px' }}
+                          src="https://media.istockphoto.com/id/186411638/photo/green-golf-field-and-blue-cloudy-sky.jpg?s=612x612&w=0&k=20&c=erretmwt9wV7oW39yBXtAI8C9AqxiAYoedOAyuf-80c="
+                        />
+                        <div className="location-info">
+                          <p className="event-time cursor-pointer">
+                            {fullDate(event.startDate)}
+                          </p>
+                          <h3
                             className="cursor-pointer"
                             style={{
-                              width: "200px",
-                              height: "150px",
-                              borderRadius: "5px",
+                              overflowWrap: "break-word",
+                              margin: "5px 0px",
                             }}
-                            src={event.previewImage}
-                          />
-                          <div className="location-info">
-                            <p className="event-time cursor-pointer">
-                              {fullDate(event.startDate)}
-                            </p>
-                            <h3
-                              className="cursor-pointer"
-                              style={{
-                                overflowWrap: "break-word",
-                                margin: "5px 0px",
-                              }}
-                            >
-                              {event.name}
-                            </h3>
-                            <p
-                              className="cursor-pointer"
-                              style={{ margin: "0px", color: "grey" }}
-                            >
-                              {event.Venue.city}, {event.Venue.state}
-                            </p>
-                          </div>
-                        </div>
-                        <div className="caption-container">
-                          <p className="event-caption cursor-pointer">
-                            {console.log(event)}
+                          >
+                            {event.name}
+                          </h3>
+                          <p
+                            className="cursor-pointer"
+                            style={{ margin: "0px", color: "grey" }}
+                          >
+                            {event.Venue.city}, {event.Venue.state}
                           </p>
                         </div>
+                      </div>
+                      <div className="caption-container">
+                        <p className="event-caption cursor-pointer">
+                          EVENT DETAIL FIX BACK
+                        </p>
+                      </div>
                       </Link>
                     </div>
                   );

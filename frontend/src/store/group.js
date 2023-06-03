@@ -3,6 +3,8 @@ import { csrfFetch } from "./csrf";
 const ALL_GROUPS = "group/ALL_GROUPS";
 const GET_GROUP = "group/GET_GROUP";
 const CREATE_GROUP = 'group/CREATE_GROUP'
+const DELETE_GROUP = 'group/DELETE_GROUP'
+const ADD_IMAGE = 'group/ADD_IMAGE'
 
 export const allGroups = (groups) => {
   return {
@@ -22,6 +24,24 @@ export const newGroup = (group) => {
   return {
     type: CREATE_GROUP,
     group
+  }
+}
+
+export const removeGroup = (groupId) => {
+  return {
+    type: DELETE_GROUP,
+    groupId
+  }
+}
+
+export const addImage = (image, groupId) => {
+  return {
+    type: ADD_IMAGE,
+    payload: {
+      image,
+      groupId
+    }
+
   }
 }
 
@@ -60,10 +80,35 @@ export const createGroup = (group) => async (dispatch) => {
   });
 
   const groupData = await response.json();
-  console.log(groupData)
   dispatch(newGroup(groupData));
-  return response;
+  return groupData;
 };
+
+export const deleteGroup = (groupId) => async dispatch => {
+  const response = await csrfFetch(`/api/groups/${groupId}`, {
+    method: 'DELETE'
+  })
+
+  if (response.ok) {
+    dispatch(removeGroup(groupId))
+  }
+}
+
+export const addGroupImage = (url, groupId) => async dispatch => {
+  const response = await csrfFetch(`/api/groups/${groupId}/images`, {
+    method: 'POST',
+    body: JSON.stringify({
+      url: url,
+      preview: true
+    }),
+  })
+
+  if (response.ok) {
+    const image = await response.json()
+    dispatch(addImage(image, groupId))
+    return image
+  }
+}
 
 // const initialState = { entries: {}, isLoading: true };
 const groupReducer = (state = {}, action) => {
@@ -76,7 +121,14 @@ const groupReducer = (state = {}, action) => {
     case GET_GROUP:
       return { ...state, [action.group.id]: action.group };
     case CREATE_GROUP:
-      return { ...state, [action.group.id]: action.group}
+      return { ...state, [action.group.id]: action.group};
+    case DELETE_GROUP:
+      newState = { ...state }
+      delete newState[action.groupId]
+      return newState
+    case ADD_IMAGE:
+      newState = { ...state }
+      return newState;
     default:
       return state;
   }

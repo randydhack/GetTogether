@@ -1,41 +1,59 @@
-import "./CreateGroupForm.css";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
-import { createGroup } from "../../store/group";
+import { addGroupImage, createGroup, deleteGroup } from "../../store/group";
+import { useHistory } from "react-router-dom";
+
+import "./CreateGroupForm.css";
 
 function CreateGroupForm() {
   const dispatch = useDispatch();
+  const history = useHistory()
 
   const [name, setName] = useState("");
   const [about, setAbout] = useState("");
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
-  const [privated, setPrivated] = useState('');
+  const [privated, setPrivated] = useState("");
   const [type, setType] = useState("");
-  const [errors, setErrors] = useState({});
+  const [image, setImage] = useState("");
 
-  console.log(errors);
-  const handleSubmit = (e) => {
+  const [errors, setErrors] = useState({});
+  const [imageError, setImageError] = useState({});
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    return dispatch(
+    const splitImage = image.split(".");
+    const verifiedImage =
+      splitImage[splitImage.length - 1].match(/jpg|png|jpeg/g);
+
+    const group = await dispatch(
       createGroup({ name, about, city, state, privated, type })
     ).catch(async (res) => {
       const data = await res.json();
       if (data && data.errors) setErrors(data.errors);
     });
+
+    if (!group) return
+
+    if (group && verifiedImage === null) {
+      setImageError({ image: "Image URL must end in .png, .jpg, or .jpeg" });
+      return dispatch(deleteGroup(group.id));
+    } else {
+    history.push(`/groups/${group.id}`)
+      return dispatch(addGroupImage(image, group.id));
+    }
   };
 
   return (
-    <div className="container">
-      <div className="container-headers">
-        <h1>START A NEW GROUP AND BECOME AN ORGANIZER</h1>
-        <h2>
-          We'll walk you through a few steps to build your local community
-        </h2>
-      </div>
-
+    <div className="create-group-container">
       <form onSubmit={handleSubmit}>
+        <div className="container-headers">
+          <h1>START A NEW GROUP AND BECOME AN ORGANIZER</h1>
+          <h2>
+            We'll walk you through a few steps to build your local community
+          </h2>
+        </div>
         <div className="border-line"></div>
         <div>
           <label>
@@ -53,7 +71,9 @@ function CreateGroupForm() {
                   value={city}
                   onChange={(e) => setCity(e.target.value)}
                 ></input>
-                {errors.city && <p className="error-message">{errors.city}</p>}
+                {errors.city && (
+                  <p className="error-message">City is required</p>
+                )}
               </div>
               <div>
                 <input
@@ -63,7 +83,11 @@ function CreateGroupForm() {
                   value={state}
                   onChange={(e) => setState(e.target.value)}
                 ></input>
-                {errors.state && <p className="error-message state-input-box">{errors.state}</p>}
+                {errors.state && (
+                  <p className="error-message state-input-box">
+                    State is required
+                  </p>
+                )}
               </div>
             </div>
           </label>
@@ -86,7 +110,7 @@ function CreateGroupForm() {
               value={name}
               onChange={(e) => setName(e.target.value)}
             ></input>
-            {errors.name && <p className="error-message">{errors.name}</p>}
+            {errors.name && <p className="error-message">Name is required</p>}
           </label>
         </div>
 
@@ -107,9 +131,10 @@ function CreateGroupForm() {
               <li>What will you do at your events?</li>
             </ol>
             <textarea
-              placeholder="Please write at least 30 characters"
+              placeholder="Please write at least 50 characters"
               type="input"
               className="text-area-box"
+              minLength={50}
               value={about}
               onChange={(e) => setAbout(e.target.value)}
             />
@@ -120,32 +145,47 @@ function CreateGroupForm() {
 
         <div>
           <label>
-            <h2 className="section-title">Final step...</h2>
+            <h2 className="section-title">Final steps...</h2>
             <p className="section-caption">
               Is this an in person or online group?
             </p>
-            <select onChange={(e) => setType(e.target.value)}>
-              <option value="" disabled selected>
+            <select onChange={(e) => setType(e.target.value)} defaultValue={""}>
+              <option value="" disabled>
                 (Select One)
               </option>
               <option value="In person">In person</option>
               <option value="Online">Online</option>
             </select>
-            {errors.type && <p className="error-message">{errors.type}</p>}
+            {errors.type && (
+              <p className="error-message">Group Type is required</p>
+            )}
 
             <p>Is this group public or private?</p>
-            <select onChange={(e) => setPrivated(e.target.value)}>
-              <option value="" disabled selected>
+            <select
+              onChange={(e) => setPrivated(e.target.value)}
+              defaultValue={""}
+            >
+              <option value="" disabled>
                 (Select One)
               </option>
               <option value="false">Public</option>
               <option value="true">Private</option>
             </select>
-            {errors.private && <p className="error-message">{errors.private}</p>}
+            {errors.private && (
+              <p className="error-message">Visibility Type is required</p>
+            )}
 
             <p>Please add in image url for your group below:</p>
-            <input type="text" placeholder="Image Url"></input>
+            <input
+              type="text"
+              placeholder="Image Url"
+              value={image}
+              onChange={(e) => setImage(e.target.value)}
+            ></input>
           </label>
+          {imageError.image && (
+            <p className="error-message">{imageError.image}</p>
+          )}
         </div>
         <button type="submit" className="create-group-button">
           Create Group

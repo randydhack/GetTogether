@@ -50,12 +50,12 @@ function ProfileButton({ user }) {
         />
         {arrow ? (
           <i
-            class="fa-solid fa-angle-down fa-2xl arrow-icon"
+            className="fa-solid fa-angle-down fa-2xl arrow-icon"
             style={{ color: "#a8a8a8" }}
           ></i>
         ) : (
           <i
-            class="fa-solid fa-angle-up fa-2xl arrow-icon"
+            className="fa-solid fa-angle-up fa-2xl arrow-icon"
             style={{ color: "#a8a8a8" }}
           ></i>
         )}

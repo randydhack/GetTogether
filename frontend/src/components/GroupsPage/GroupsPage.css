@@ -1,4 +1,4 @@
-.container {
+.all-group-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -30,8 +30,12 @@
     width: 700px;
 }
 
+.group-container:hover {
+    background-color: rgb(235, 235, 235);
+}
 .group-info {
     margin-left: 20px;
+    word-break: break-word;
 }
 
 .group-name {
