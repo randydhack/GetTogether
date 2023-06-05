@@ -3,7 +3,6 @@ import "./EventDetails.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getEventDetail } from "../../store/event";
-import { fetchGroups, getGroup } from "../../store/group";
 
 function EventDetails() {
   const dispatch = useDispatch();
@@ -12,8 +11,7 @@ function EventDetails() {
 
   useEffect(() => {
     dispatch(getEventDetail(eventId));
-    dispatch(fetchGroups());
-  }, [dispatch, eventId]);
+  }, [dispatch]);
 
   const fullDate = (data) => {
     const eventDate = new Date(data);
@@ -43,8 +41,8 @@ function EventDetails() {
                 <Link to="/events">Back to events</Link>
               </div>
               <div>
-                <h1 className="event-name">{event.name}</h1>
-                <p className="organizer-name">{event?.Group.name}</p>
+                <h1 className="event-name">{event?.name}</h1>
+                <p className="organizer-name">{event.Group.name}</p>
               </div>
             </div>
 
@@ -66,7 +64,7 @@ function EventDetails() {
                         />
                       </div>
                       <div className="group-name-privacy">
-                        <p className="group-name">{event?.Group.name}</p>
+                        <p className="group-name">{event.Group?.name}</p>
                         <p className="group-privacy">
                           {event?.Group.private ? "Private" : "In Person"}
                         </p>

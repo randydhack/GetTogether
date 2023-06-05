@@ -28,7 +28,7 @@ const validateSignup = [
     .withMessage("Invalid email"),
    check('username')
     .isLength({min: 4})
-    .withMessage('Please provide a username with at least 4 characters.'),
+    .withMessage('Username must be 4 characters or more'),
   check('password')
     .isLength({ min: 6 })
     .withMessage('Password must be 6 characters or more.'),

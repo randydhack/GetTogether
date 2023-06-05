@@ -33,10 +33,6 @@ function GroupDetails() {
     return alert("Feature coming soon");
   };
 
-  const handleCreateEvent = (e) => {
-    e.preventDefault()
-  }
-
   const fullDate = (data) => {
     const eventDate = new Date(data);
     const year = eventDate.getFullYear();
@@ -65,7 +61,7 @@ function GroupDetails() {
               <div className="group-info">
                 <h1>{group.name}</h1>
                 <p className="grey-p">
-                  {group.city}, {group.state}
+                  {group?.city}, {group.state}
                 </p>
                 <p className="grey-p">
                   {upcomingEvent.length} events ·{" "}
@@ -88,7 +84,6 @@ function GroupDetails() {
                 {user && user.id === group.organizerId && (
                   <div>
                     <button
-                      onClick={handleCreateEvent}
                       className="create-event-button organizer-buttons"
                     >
                       <Link to={`/group/${group.id}/events/new`} style={{color: 'black', textDecoration: 'none'}}>Create Event</Link>

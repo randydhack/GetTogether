@@ -3,16 +3,12 @@ import { NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import ProfileButton from "./ProfileButton";
 import LoginFormModal from "../LoginFormModal";
+import SignupFormModal from "../SignupFormModal";
+
 import "./Navigation.css";
 
 function Navigation({ isLoaded }) {
   const sessionUser = useSelector((state) => state.session.user);
-  //   const dispatch = useDispatch();
-
-  //   const logout = (e) => {
-  //     e.preventDefault();
-  //     dispatch(sessionActions.logout());
-  //   };
 
   let sessionLinks;
 
@@ -25,13 +21,7 @@ function Navigation({ isLoaded }) {
     sessionLinks = (
       <div className="top-right-nav-links">
         <LoginFormModal />
-        <NavLink
-          to="/signup"
-          className="sign-up-button"
-          style={{ color: "black", marginRight: "10px" }}
-        >
-          Sign Up
-        </NavLink>
+        <SignupFormModal />
       </div>
     );
   }

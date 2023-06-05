@@ -1,17 +1,18 @@
 import { useDispatch, useSelector } from "react-redux";
 import "./LandingPage.css";
 import { Link } from "react-router-dom";
-import { useEffect } from "react";
+import SignupForm from "../SignupFormModal/SignupForm";
+import { Modal } from "../../context/Modal";
+import { useState } from "react";
 
 function LandingPage() {
   const user = useSelector((state) => state.session.user);
-
-  const disableOrEnableButton = user ? "start-group-link" : "disabled";
+  const [showModal, setShowModal] = useState(false);
 
   return (
     <div className="landing-page-container">
       {/* Landing Page */}
-      <div className="landing-page-section-1">
+      <section className="landing-page-section-1">
         {/* Section 1 */}
         <div className="landing-page-heading">
           <h1 style={{ fontSize: "46px" }}>
@@ -28,19 +29,19 @@ function LandingPage() {
           style={{ width: "600px" }}
           src="https://secure.meetupstatic.com/next/images/shared/online_events.svg?w=1080"
         />
-      </div>
+      </section>
 
       {/* Section 2 */}
-      <div className="landing-page-section-2">
+      <section className="landing-page-section-2">
         <h2>How GatherUp Works</h2>
         <p className="subtitle-info">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua.
         </p>
-      </div>
+      </section>
 
       {/* Section 3 */}
-      <div className="landing-page-section-3">
+      <section className="landing-page-section-3">
         {/* 1 */}
         <div className="group-event-container">
           <img
@@ -76,22 +77,38 @@ function LandingPage() {
             src="https://secure.meetupstatic.com/next/images/shared/joinGroup.svg?w=384"
           />
           <div>
-            <Link to='/group/new' className={disableOrEnableButton}>
+
+            {user &&
+            <Link to="/group/new" className='start-group-link'>
               Start a new group
-            </Link>
+            </Link>}
+            {!user &&
+            <p className="disabled-start-group">
+              Start a new group
+            </p>}
             <p className="caption">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit.
             </p>
           </div>
         </div>
-      </div>
+      </section>
       {/* Section 4 */}
+
       {!user && (
-        <div className="landing-page-section-4">
+        <section className="landing-page-section-4">
           <div className="section-4-button">
-            <Link src="/group/new">Join GatherUp</Link>
+            <button
+              onClick={() => setShowModal(true)}
+            >
+              Join GatherUp
+            </button>
+            {showModal && (
+              <Modal onClose={() => setShowModal(false)}>
+                <SignupForm />
+              </Modal>
+            )}
           </div>
-        </div>
+        </section>
       )}
     </div>
   );

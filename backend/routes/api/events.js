@@ -130,6 +130,7 @@ router.post('/:eventId/images', requireAuth, async (req, res, next) => {
     const { url, preview } = req.body
     const event = await Event.findOne({ where: { id: eventId }})
     const user = await Attendee.findOne({where:{userId: req.user.id}})
+    const group = await Group.findOne({where: {organizerId: req.user.id}})
 
     if (!event) {
         const err = new Error("Event couldn't be found")
@@ -137,7 +138,7 @@ router.post('/:eventId/images', requireAuth, async (req, res, next) => {
         return next(err)
     }
 
-    if ((user && user.eventId) === event.id) {
+    if ((user && user.eventId === event.id) || (group.organizerId === user.id)) {
         const image = await Image.create({ url, imageableType: 'Event', imageableId: event.id, preview })
         const safeImage = {
             id: image.id,

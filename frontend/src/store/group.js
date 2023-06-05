@@ -79,9 +79,11 @@ export const createGroup = (group) => async (dispatch) => {
     }),
   });
 
-  const groupData = await response.json();
-  dispatch(newGroup(groupData));
-  return groupData;
+  if (response.ok) {
+    const groupData = await response.json();
+    dispatch(newGroup(groupData));
+    return groupData;
+  }
 };
 
 export const deleteGroup = (groupId) => async dispatch => {
