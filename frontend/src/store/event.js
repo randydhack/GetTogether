@@ -76,6 +76,7 @@ export const getEventByGroup = (groupId) => async (dispatch) => {
   if (res.ok) {
     const events = await res.json();
     dispatch(groupEvents(events));
+    return events
   }
 };
 

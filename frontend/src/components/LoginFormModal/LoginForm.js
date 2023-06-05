@@ -37,6 +37,10 @@ function LoginForm() {
     )
   };
 
+  let disableLogin;
+
+  if (credential.length < 4 || password.length < 6) disableLogin = 'disableLogin'
+
   return (
     <>
       <form onSubmit={handleSubmit} className="login-container">
@@ -44,9 +48,9 @@ function LoginForm() {
         {errors.message &&
           <div className="validation-error-message">{errors.message}</div>}
         <label>
+          <p className="login-input-title">Username or Email</p>
           <input
             className="input-field"
-            placeholder="Username or Email"
             type="text"
             value={credential}
             onChange={(e) => setCredential(e.target.value)}
@@ -54,9 +58,9 @@ function LoginForm() {
           />
         </label>
         <label>
+          <p className="login-input-title">Password</p>
           <input
             className="input-field"
-            placeholder="Password"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -64,7 +68,7 @@ function LoginForm() {
           />
         </label>
         <div className="login-box-button">
-          <button type="submit" className="login-button" disabled={credential.length < 4 || password.length < 6}>
+          <button type="submit" className={disableLogin || 'login-button'}>
             Log In
           </button>
           <button className="demo-user-button" onClick={demoUser}>

@@ -4,7 +4,10 @@ const ALL_GROUPS = "group/ALL_GROUPS";
 const GET_GROUP = "group/GET_GROUP";
 const CREATE_GROUP = 'group/CREATE_GROUP'
 const DELETE_GROUP = 'group/DELETE_GROUP'
+const UPDATE_GROUP = 'group/UPDATE_GROUP'
 const ADD_IMAGE = 'group/ADD_IMAGE'
+
+// --------------------------- Action Creator ------------------------------------
 
 export const allGroups = (groups) => {
   return {
@@ -45,6 +48,12 @@ export const addImage = (image, groupId) => {
   }
 }
 
+export const editGroup = () => {
+
+}
+
+// --------------------------------------------- Thunk Creator ---------------------------------------------------------------
+
 // Get All Groups
 export const fetchGroups = () => async (dispatch) => {
   const response = await fetch("/api/groups");
@@ -66,6 +75,7 @@ export const getGroup = (groupId) => async (dispatch) => {
   }
 };
 
+// Create Group
 export const createGroup = (group) => async (dispatch) => {
   const response = await csrfFetch("/api/groups", {
     method: "POST",
@@ -86,6 +96,7 @@ export const createGroup = (group) => async (dispatch) => {
   }
 };
 
+// Delete group
 export const deleteGroup = (groupId) => async dispatch => {
   const response = await csrfFetch(`/api/groups/${groupId}`, {
     method: 'DELETE'
@@ -96,6 +107,7 @@ export const deleteGroup = (groupId) => async dispatch => {
   }
 }
 
+// Add image to group
 export const addGroupImage = (url, groupId) => async dispatch => {
   const response = await csrfFetch(`/api/groups/${groupId}/images`, {
     method: 'POST',
@@ -112,7 +124,23 @@ export const addGroupImage = (url, groupId) => async dispatch => {
   }
 }
 
-// const initialState = { entries: {}, isLoading: true };
+export const updateGroup = (groupId) => async dispatch => {
+  const response = await csrfFetch("/api/groups", {
+    method: "POST",
+    body: JSON.stringify({
+
+    }),
+  });
+
+  if (response.ok) {
+    const groupData = await response.json();
+    dispatch(newGroup(groupData));
+    return groupData;
+  }
+}
+
+// --------------------------- Group Reducer ---------------------------------------------
+
 const groupReducer = (state = {}, action) => {
   let newState;
   switch (action.type) {
@@ -131,6 +159,9 @@ const groupReducer = (state = {}, action) => {
     case ADD_IMAGE:
       newState = { ...state }
       return newState;
+    case UPDATE_GROUP:
+      newState = { ...state }
+
     default:
       return state;
   }

@@ -89,11 +89,10 @@ function GroupDetails() {
                       <Link to={`/group/${group.id}/events/new`} style={{color: 'black', textDecoration: 'none'}}>Create Event</Link>
                     </button>
                     <button
-                      onClick={handleJoinGroup}
                       style={{ margin: "0px 10px" }}
                       className="organizer-buttons edit-delete-button"
                     >
-                      Edit
+                      <Link to={`/group/${group.id}/edit`} style={{color: 'black', textDecoration: 'none'}}>Create Event</Link>
                     </button>
                     <button
                       onClick={handleJoinGroup}
