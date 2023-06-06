@@ -18,7 +18,7 @@ function GroupsPage() {
       <div className="all-group-container">
         <div className="event-group-heading">
           <Link style={{color: 'grey'}} to="/events">Events</Link>
-          <Link>Groups</Link>
+          <span>Groups</span>
         </div>
         <p
           style={{
@@ -36,7 +36,7 @@ function GroupsPage() {
             <Link key={group.id} to={`/groups/${group.id}`} className="group-link">
               <div key={group.id} className="group-container">
                 <img
-                  src={group.previewImage}
+                  src={group.GroupImages[group.GroupImages.length - 1].url}
                   style={{ width: "200px", height: "140px", borderRadius: '5px' }}
                 />
                 <div className="group-info">

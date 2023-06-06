@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { getGroup } from "../../store/group";
-import { getEventByGroup } from "../../store/event";
+import { fetchEvent, getEventByGroup } from "../../store/event";
 
 import "./GroupDetails.css";
 
@@ -26,7 +26,7 @@ function GroupDetails() {
   useEffect(() => {
     dispatch(getGroup(groupId));
     dispatch(getEventByGroup(groupId));
-  }, [dispatch, groupId]);
+  }, [dispatch]);
 
   const handleJoinGroup = (e) => {
     e.preventDefault();
@@ -92,7 +92,7 @@ function GroupDetails() {
                       style={{ margin: "0px 10px" }}
                       className="organizer-buttons edit-delete-button"
                     >
-                      <Link to={`/group/${group.id}/edit`} style={{color: 'black', textDecoration: 'none'}}>Create Event</Link>
+                      <Link to={`/group/${group.id}/edit`} style={{color: 'black', textDecoration: 'none'}}>Edit</Link>
                     </button>
                     <button
                       onClick={handleJoinGroup}
@@ -134,7 +134,7 @@ function GroupDetails() {
                         <img
                         className="cursor-pointer"
                           style={{ width: "200px", height: "150px", borderRadius: '5px' }}
-                          src="https://media.istockphoto.com/id/186411638/photo/green-golf-field-and-blue-cloudy-sky.jpg?s=612x612&w=0&k=20&c=erretmwt9wV7oW39yBXtAI8C9AqxiAYoedOAyuf-80c="
+                          src={event.EventImages[event.EventImages.length - 1].url}
                         />
                         <div>
                           <p className="event-time cursor-pointer">
@@ -156,7 +156,7 @@ function GroupDetails() {
                       </div>
                       <div>
                         <p className="cursor-pointer">
-                          EVENT DETAIL FIX BACKEND
+                          {event.about}
                         </p>
                       </div>
                     </div>
@@ -174,10 +174,11 @@ function GroupDetails() {
                       <Link to={`/events/${event.id}`}>
                       <div className="event-container">
                         <img
+                        src={event.previewImage}
                           className="cursor-pointer"
                           style={{ width: "200px", height: "150px" ,borderRadius: '5px' }}
-                          src="https://media.istockphoto.com/id/186411638/photo/green-golf-field-and-blue-cloudy-sky.jpg?s=612x612&w=0&k=20&c=erretmwt9wV7oW39yBXtAI8C9AqxiAYoedOAyuf-80c="
                         />
+
                         <div className="location-info">
                           <p className="event-time cursor-pointer">
                             {fullDate(event.startDate)}
@@ -201,7 +202,7 @@ function GroupDetails() {
                       </div>
                       <div className="caption-container">
                         <p className="event-caption cursor-pointer">
-                          EVENT DETAIL FIX BACK
+                        {event.description}
                         </p>
                       </div>
                       </Link>

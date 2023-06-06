@@ -24,10 +24,11 @@
     font-size: 26px;
 }
 
-.events-nav a:first-child {
+.events-nav span {
     text-decoration: underline;
     color: rgb(9, 77, 77);
     pointer-events: none;
+    font-size: 26px;
 }
 
 .groups-link {

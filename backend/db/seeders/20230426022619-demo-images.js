@@ -11,27 +11,63 @@ module.exports = {
     options.tableName = 'Images';
     return queryInterface.bulkInsert(options, [
       {
-        url: 'group-image1',
+        url: 'https://www.theclickcommunity.com/blog/wp-content/uploads/2014/05/playing-tennis-under-water-pic-by-Alix-Martinez.jpg',
         imageableType: 'Group',
         imageableId: 1,
         preview: true
       },
       {
-        url: 'group-image2',
+        url: 'https://www.theclickcommunity.com/blog/wp-content/uploads/2014/05/playing-tennis-under-water-pic-by-Alix-Martinez.jpg',
         imageableType: 'Group',
+        imageableId: 2,
+        preview: false
+      },
+      {
+        url: 'https://www.theclickcommunity.com/blog/wp-content/uploads/2014/05/playing-tennis-under-water-pic-by-Alix-Martinez.jpg',
+        imageableType: 'Group',
+        imageableId: 3,
+        preview: false
+      },
+      {
+        url: 'https://historicbridges.org/ohio/mainavenue/little_main_9000_1_2vib.jpg',
+        imageableType: 'Group',
+        imageableId: 4,
+        preview: false
+      },
+      {
+        url: 'https://historicbridges.org/ohio/mainavenue/little_main_9000_1_2vib.jpg',
+        imageableType: 'Group',
+        imageableId: 5,
+        preview: false
+      },
+      {
+        url: 'https://www.theclickcommunity.com/blog/wp-content/uploads/2014/05/playing-tennis-under-water-pic-by-Alix-Martinez.jpg',
+        imageableType: 'Group',
+        imageableId: 6,
+        preview: false
+      },
+      {
+        url: 'https://historicbridges.org/ohio/mainavenue/little_main_9000_1_2vib.jpg',
+        imageableType: 'Event',
         imageableId: 1,
         preview: false
       },
       {
-        url: 'event-image3',
+        url: 'https://historicbridges.org/ohio/mainavenue/little_main_9000_1_2vib.jpg',
         imageableType: 'Event',
         imageableId: 2,
-        preview: false
+        preview: true,
       },
       {
-        url: 'event-image4',
+        url: 'https://historicbridges.org/ohio/mainavenue/little_main_9000_1_2vib.jpg',
         imageableType: 'Event',
-        imageableId: 2,
+        imageableId: 3,
+        preview: true,
+      },
+      {
+        url: 'https://historicbridges.org/ohio/mainavenue/little_main_9000_1_2vib.jpg',
+        imageableType: 'Event',
+        imageableId: 4,
         preview: true,
       },
     ], {});

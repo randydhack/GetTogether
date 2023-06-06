@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { addGroupImage, updateGroup, getGroup } from "../../store/group";
-import { useHistory, useParams } from "react-router-dom";
+import { Redirect, useHistory, useParams } from "react-router-dom";
 import './UpdateGroup.css'
 import { useEffect } from "react";
 
@@ -11,49 +11,39 @@ function UpdateGroup() {
     const { groupId } = useParams()
 
     const group = useSelector(state => state.groupState[groupId])
+    const user = useSelector(state => state.session.user)
 
-    const [name, setName] = useState("");
-    const [about, setAbout] = useState("");
-    const [city, setCity] = useState("");
-    const [state, setState] = useState("");
-    const [privated, setPrivated] = useState("");
-    const [type, setType] = useState("");
-    const [image, setImage] = useState("");
+
+    const [name, setName] = useState(group?.name || '');
+    const [about, setAbout] = useState(group?.about || '');
+    const [city, setCity] = useState(group?.city || '');
+    const [state, setState] = useState(group?.state || '');
+    const [privated, setPrivated] = useState(false);
+    const [type, setType] = useState(group?.type || '' );
 
     const [errors, setErrors] = useState({});
-    const [imageError, setImageError] = useState({});
-    console.log(group)
 
     useEffect(() => {
         dispatch(getGroup(groupId))
     }, [dispatch, groupId])
 
+
+    if (!user || user.id !== group?.organizerId) return <Redirect to='/'/>
+
     const handleSubmit = async (e) => {
-      e.preventDefault();
+        e.preventDefault();
 
-      const splitImage = image.split(".");
-      const verifiedImage =
-        splitImage[splitImage.length - 1].match(/jpg|png|jpeg/g);
+        history.push(`/groups/${groupId}`)
 
-      const group = await dispatch(
-        updateGroup({ name, about, city, state, privated, type })
+      return await dispatch(
+        updateGroup({ name, about, city, state, privated, type }, groupId)
       ).catch(async (res) => {
         const data = await res.json();
         if (data && data.errors) setErrors(data.errors);
       });
-
-    //   if (!group) return
-
-    //   if (group && verifiedImage === null) {
-    //     setImageError({ image: "Image URL must end in .png, .jpg, or .jpeg" });
-    //     return dispatch(deleteGroup(group.id));
-    //   } else {
-    //   history.push(`/groups/${group.id}`)
-    //     return dispatch(addGroupImage(image, group.id));
-    //   }
     };
 
-    return (
+    return user && user.id === group.organizerId && (
       <div className="create-group-container">
         <form onSubmit={handleSubmit}>
           <div className="container-headers">
@@ -157,7 +147,7 @@ function UpdateGroup() {
               <p className="section-caption">
                 Is this an in person or online group?
               </p>
-              <select onChange={(e) => setType(e.target.value)} defaultValue={""}>
+              <select onChange={(e) => setType(e.target.value)} defaultValue={type}>
                 <option value="" disabled>
                   (Select One)
                 </option>
@@ -171,7 +161,7 @@ function UpdateGroup() {
               <p>Is this group public or private?</p>
               <select
                 onChange={(e) => setPrivated(e.target.value)}
-                defaultValue={""}
+                defaultValue={privated}
               >
                 <option value="" disabled>
                   (Select One)
@@ -182,18 +172,7 @@ function UpdateGroup() {
               {errors.private && (
                 <p className="error-message">Visibility Type is required</p>
               )}
-
-              <p>Please add in image url for your group below:</p>
-              <input
-                type="text"
-                placeholder="Image Url"
-                value={image}
-                onChange={(e) => setImage(e.target.value)}
-              ></input>
             </label>
-            {imageError.image && (
-              <p className="error-message">{imageError.image}</p>
-            )}
           </div>
           <button type="submit" className="create-group-button">
             Create Group

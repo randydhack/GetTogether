@@ -45,10 +45,10 @@ function EventsPage() {
     return description.split('.').slice(0,5).join('.')
   }
   return (
-    events && (
+    events && sortEventByDate && (
       <div className="all-events-container">
         <div className="events-nav">
-          <Link>Events</Link>
+          <span>Events</span>
           <Link to="/groups" className="groups-link">
             Groups
           </Link>
@@ -81,6 +81,7 @@ function EventsPage() {
                       borderRadius: "5px",
                     }}
                   />
+                  {console.log(event)}
                   <div className="event-details">
                     <p className="event-date">{fullDate(event.endDate)}</p>
                     <h2 className="event-title">{event.name}</h2>

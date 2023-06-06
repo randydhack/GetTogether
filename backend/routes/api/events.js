@@ -5,7 +5,7 @@ const { Op } = require("sequelize");
 
 const { requireAuth, } = require("../../utils/auth");
 const { validateEvent, paginationValidation } = require('../../utils/validation');
-const { Group, Venue, Image, Event, Attendee, Membership, sequelize } = require("../../db/models");
+const { Group, Venue, Image, Event, Attendee, Membership, sequelize, User } = require("../../db/models");
 
 // ------------------ GET ENDPOINTS -----------------------
 
@@ -51,7 +51,12 @@ router.get('/', paginationValidation, async (req, res, next) => {
         {
             model: Venue,
             attributes: ['id', 'city','state']
-        }
+        },
+        {
+            model: Image,
+            as: "EventImages",
+            attributes: ["id", "url", "preview"],
+          },
     ],
     attributes: {
         exclude: ['price','capacity'],
@@ -66,6 +71,7 @@ router.get('/', paginationValidation, async (req, res, next) => {
         const event = events[i]
         const eventJSON = event.toJSON()
 
+        eventJSON.previewImage = eventJSON.EventImages[0].url
         eventJSON.numAttending = await event.countAttendees()
         eventArr.push(eventJSON)
     }
@@ -90,7 +96,12 @@ router.get('/:eventId', async (req, res, next) => {
         },
         include: [{
             model: Group,
-            attributes: ['id', 'name', 'private', 'city', 'state']
+            attributes: ['id', 'name', 'private', 'city', 'state'],
+            include: {
+                model: User,
+                as: "Organizer",
+                attributes: ["id", "firstName", "lastName"],
+            }
         }, {
             model: Venue,
             attributes: {
@@ -112,13 +123,11 @@ router.get('/:eventId', async (req, res, next) => {
         group: ['Event.id', 'Group.id', 'EventImages.id', 'Venue.id']
     })
 
+    const eventJSON = event.toJSON()
 
-    // const images = await Image.findAll({where: { imageableId: eventId, imageableType: 'Event' }, attributes: ['id','url','preview']})
+    eventJSON.previewImage = eventJSON.EventImages[0].url
 
-    // const EventImages =  images
-
-
-    res.status(200).json(event)
+    res.status(200).json(eventJSON)
 });
 
 // ------------------ POST ENDPOINTS -----------------------

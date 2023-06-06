@@ -48,8 +48,11 @@ export const addImage = (image, groupId) => {
   }
 }
 
-export const editGroup = () => {
-
+export const editGroup = (group) => {
+  return {
+    type: UPDATE_GROUP,
+    group
+  }
 }
 
 // --------------------------------------------- Thunk Creator ---------------------------------------------------------------
@@ -124,17 +127,22 @@ export const addGroupImage = (url, groupId) => async dispatch => {
   }
 }
 
-export const updateGroup = (groupId) => async dispatch => {
-  const response = await csrfFetch("/api/groups", {
-    method: "POST",
+export const updateGroup = (group, groupId) => async dispatch => {
+  const response = await csrfFetch(`/api/groups/${groupId}`, {
+    method: "PUT",
     body: JSON.stringify({
-
+      name: group.name,
+      about: group.about,
+      type: group.type,
+      city: group.city,
+      state: group.state,
+      private: group.privated
     }),
   });
 
   if (response.ok) {
     const groupData = await response.json();
-    dispatch(newGroup(groupData));
+    dispatch(editGroup(groupData));
     return groupData;
   }
 }
@@ -161,7 +169,8 @@ const groupReducer = (state = {}, action) => {
       return newState;
     case UPDATE_GROUP:
       newState = { ...state }
-
+      newState[action.group.id] = action.group
+      return newState
     default:
       return state;
   }

@@ -1,6 +1,7 @@
 .create-group-container {
     display: flex;
     justify-content: center;
+    align-items: center;
     margin: 20px 0px;
     padding: 0px 20px;
 }
