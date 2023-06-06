@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { getGroup } from "../../store/group";
-import { fetchEvent, getEventByGroup } from "../../store/event";
+import { getEventByGroup } from "../../store/event";
 
 import "./GroupDetails.css";
 
@@ -24,8 +24,12 @@ function GroupDetails() {
   });
 
   useEffect(() => {
-    dispatch(getGroup(groupId));
-    dispatch(getEventByGroup(groupId));
+
+    (async() => {
+      await dispatch(getGroup(groupId));
+      await dispatch(getEventByGroup(groupId));
+    })();
+
   }, [dispatch]);
 
   const handleJoinGroup = (e) => {

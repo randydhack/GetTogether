@@ -156,21 +156,27 @@ const groupReducer = (state = {}, action) => {
       newState = {};
       action.groups.Groups.forEach((group) => (newState[group.id] = group));
       return newState;
+
     case GET_GROUP:
       return { ...state, [action.group.id]: action.group };
+
     case CREATE_GROUP:
       return { ...state, [action.group.id]: action.group};
+
     case DELETE_GROUP:
       newState = { ...state }
       delete newState[action.groupId]
       return newState
+
     case ADD_IMAGE:
       newState = { ...state }
       return newState;
+
     case UPDATE_GROUP:
       newState = { ...state }
       newState[action.group.id] = action.group
       return newState
+
     default:
       return state;
   }

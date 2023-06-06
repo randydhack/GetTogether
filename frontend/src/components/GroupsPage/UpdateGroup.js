@@ -2,60 +2,63 @@ import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { addGroupImage, updateGroup, getGroup } from "../../store/group";
 import { Redirect, useHistory, useParams } from "react-router-dom";
-import './UpdateGroup.css'
+import "./UpdateGroup.css";
 import { useEffect } from "react";
 
 function UpdateGroup() {
-    const dispatch = useDispatch();
-    const history = useHistory()
-    const { groupId } = useParams()
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const { groupId } = useParams();
 
-    const group = useSelector(state => state.groupState[groupId])
-    const user = useSelector(state => state.session.user)
+  const group = useSelector((state) => state.groupState[groupId]);
+  const user = useSelector((state) => state.session.user);
 
+  const [name, setName] = useState(group?.name || "");
+  const [about, setAbout] = useState(group?.about || "");
+  const [city, setCity] = useState(group?.city || "");
+  const [state, setState] = useState(group?.state || "");
+  const [privated, setPrivated] = useState(false);
+  const [type, setType] = useState(group?.type || "");
 
-    const [name, setName] = useState(group?.name || '');
-    const [about, setAbout] = useState(group?.about || '');
-    const [city, setCity] = useState(group?.city || '');
-    const [state, setState] = useState(group?.state || '');
-    const [privated, setPrivated] = useState(false);
-    const [type, setType] = useState(group?.type || '' );
+  const [errors, setErrors] = useState({});
 
-    const [errors, setErrors] = useState({});
+  useEffect(() => {
+    dispatch(getGroup(groupId));
+  }, [dispatch, groupId]);
 
-    useEffect(() => {
-        dispatch(getGroup(groupId))
-    }, [dispatch, groupId])
+  if (!user || user.id !== group?.organizerId) return <Redirect to="/" />;
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-    if (!user || user.id !== group?.organizerId) return <Redirect to='/'/>
+    await dispatch(
+      updateGroup({ name, about, city, state, privated, type }, groupId)
+    ).catch(async (res) => {
+      const data = await res.json();
+      if (data && data.errors) setErrors(data.errors);
+    });
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    return history.push(`/groups/${groupId}`)
+  };
 
-        history.push(`/groups/${groupId}`)
-
-      return await dispatch(
-        updateGroup({ name, about, city, state, privated, type }, groupId)
-      ).catch(async (res) => {
-        const data = await res.json();
-        if (data && data.errors) setErrors(data.errors);
-      });
-    };
-
-    return user && user.id === group.organizerId && (
+  return (
+    user &&
+    user.id === group.organizerId && (
       <div className="create-group-container">
         <form onSubmit={handleSubmit}>
           <div className="container-headers">
             <h1>UPDATE YOUR GROUP</h1>
             <h2>
-            We'll walk you through a few steps to update your group's information
+              We'll walk you through a few steps to update your group's
+              information
             </h2>
           </div>
           <div className="border-line"></div>
           <div>
             <label>
-              <h2 className="section-title">First, set your group's location.</h2>
+              <h2 className="section-title">
+                First, set your group's location.
+              </h2>
               <p className="section-caption">
                 Meetup groups meet locally, in person and online. We'll connect
                 you with people in your area, and more can join you online.
@@ -97,9 +100,9 @@ function UpdateGroup() {
             <label>
               <h2 className="section-title">What will your group's name be?</h2>
               <p className="section-caption">
-                Choose a name that will give people a clear idea of what the group
-                is about. Feel free to get creative! You can edit this later if
-                you change your mind.
+                Choose a name that will give people a clear idea of what the
+                group is about. Feel free to get creative! You can edit this
+                later if you change your mind.
               </p>
               <input
                 placeholder="What is your group's name?"
@@ -147,7 +150,10 @@ function UpdateGroup() {
               <p className="section-caption">
                 Is this an in person or online group?
               </p>
-              <select onChange={(e) => setType(e.target.value)} defaultValue={type}>
+              <select
+                onChange={(e) => setType(e.target.value)}
+                defaultValue={type}
+              >
                 <option value="" disabled>
                   (Select One)
                 </option>
@@ -179,7 +185,8 @@ function UpdateGroup() {
           </button>
         </form>
       </div>
-    );
+    )
+  );
 }
 
 export default UpdateGroup;

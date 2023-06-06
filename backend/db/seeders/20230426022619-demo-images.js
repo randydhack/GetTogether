@@ -77,7 +77,7 @@ module.exports = {
     options.tableName = 'Images';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      url: { [Op.in]: ['group-image1','group-image2','event-image3','event-image4'] }
+      url: { [Op.in]: ['https://historicbridges.org/ohio/mainavenue/little_main_9000_1_2vib.jpg','https://www.theclickcommunity.com/blog/wp-content/uploads/2014/05/playing-tennis-under-water-pic-by-Alix-Martinez.jpg'] }
     }, {});
   }
 };

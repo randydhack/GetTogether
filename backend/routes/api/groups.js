@@ -469,12 +469,8 @@ router.put(
     }
 
     if (req.user.id === group.organizerId) {
-      if (name) group.name = name;
-      if (about) group.about = about;
-      if (type) group.type = type;
-      if (private) group.private = private;
-      if (city) group.city = city;
-      if (state) group.state = state;
+
+      await group.update({name, about, type, private, city, state})
 
       res.status(200).json(group);
     } else {
