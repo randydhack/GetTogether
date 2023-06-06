@@ -10,7 +10,10 @@ function GroupsPage() {
   const groups = useSelector((state) => Object.values(state.groupState));
 
   useEffect(() => {
-    dispatch(fetchGroups());
+
+    (async() => {
+      dispatch(fetchGroups());
+    })()
   }, [dispatch]);
 
   return (

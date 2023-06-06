@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { getGroup } from "../../store/group";
 import { getEventByGroup } from "../../store/event";
+import DeleteGroupModal from "./DeleteGroupModal";
 
 import "./GroupDetails.css";
 
@@ -24,12 +25,10 @@ function GroupDetails() {
   });
 
   useEffect(() => {
-
-    (async() => {
+    (async () => {
       await dispatch(getGroup(groupId));
       await dispatch(getEventByGroup(groupId));
     })();
-
   }, [dispatch]);
 
   const handleJoinGroup = (e) => {
@@ -59,7 +58,11 @@ function GroupDetails() {
             </Link>
             <div className="group-details">
               <img
-                style={{ width: "600px", height: "350px", borderRadius: '15px' }}
+                style={{
+                  width: "600px",
+                  height: "350px",
+                  borderRadius: "15px",
+                }}
                 src={group.GroupImages[group.GroupImages.length - 1].url}
               />
               <div className="group-info">
@@ -87,23 +90,28 @@ function GroupDetails() {
 
                 {user && user.id === group.organizerId && (
                   <div>
-                    <button
-                      className="create-event-button organizer-buttons"
-                    >
-                      <Link to={`/group/${group.id}/events/new`} style={{color: 'black', textDecoration: 'none'}}>Create Event</Link>
+                    <button className="create-event-button organizer-buttons">
+                      <Link
+                        to={`/group/${group.id}/events/new`}
+                        style={{ color: "black", textDecoration: "none" }}
+                      >
+                        Create Event
+                      </Link>
                     </button>
                     <button
                       style={{ margin: "0px 10px" }}
                       className="organizer-buttons edit-delete-button"
                     >
-                      <Link to={`/group/${group.id}/edit`} style={{color: 'black', textDecoration: 'none'}}>Edit</Link>
+                      <Link
+                        to={`/group/${group.id}/edit`}
+                        style={{ color: "black", textDecoration: "none" }}
+                      >
+                        Edit
+                      </Link>
                     </button>
-                    <button
-                      onClick={handleJoinGroup}
-                      className="organizer-buttons edit-delete-button"
-                    >
-                      Delete
-                    </button>
+
+                      <DeleteGroupModal/>
+
                   </div>
                 )}
               </div>
@@ -126,7 +134,9 @@ function GroupDetails() {
               <p>{group.about}</p>
             </div>
 
-            {!upcomingEvent.length && !pastEvent.length && (<h2>No Upcoming Events</h2>)}
+            {!upcomingEvent.length && !pastEvent.length && (
+              <h2>No Upcoming Events</h2>
+            )}
 
             {upcomingEvent.length !== 0 && (
               <div>
@@ -136,9 +146,15 @@ function GroupDetails() {
                     <div key={event.id} className="upcoming-events">
                       <div className="event-container">
                         <img
-                        className="cursor-pointer"
-                          style={{ width: "200px", height: "150px", borderRadius: '5px' }}
-                          src={event.EventImages[event.EventImages.length - 1].url}
+                          className="cursor-pointer"
+                          style={{
+                            width: "200px",
+                            height: "150px",
+                            borderRadius: "5px",
+                          }}
+                          src={
+                            event.EventImages[event.EventImages.length - 1].url
+                          }
                         />
                         <div>
                           <p className="event-time cursor-pointer">
@@ -159,9 +175,7 @@ function GroupDetails() {
                         </div>
                       </div>
                       <div>
-                        <p className="cursor-pointer">
-                          {event.about}
-                        </p>
+                        <p className="cursor-pointer">{event.about}</p>
                       </div>
                     </div>
                   );
@@ -176,39 +190,43 @@ function GroupDetails() {
                   return (
                     <div key={event.id} className="past-events">
                       <Link to={`/events/${event.id}`}>
-                      <div className="event-container">
-                        <img
-                        src={event.previewImage}
-                          className="cursor-pointer"
-                          style={{ width: "200px", height: "150px" ,borderRadius: '5px' }}
-                        />
-
-                        <div className="location-info">
-                          <p className="event-time cursor-pointer">
-                            {fullDate(event.startDate)}
-                          </p>
-                          <h3
+                        <div className="event-container">
+                          <img
+                            src={event.previewImage}
                             className="cursor-pointer"
                             style={{
-                              overflowWrap: "break-word",
-                              margin: "5px 0px",
+                              width: "200px",
+                              height: "150px",
+                              borderRadius: "5px",
                             }}
-                          >
-                            {event.name}
-                          </h3>
-                          <p
-                            className="cursor-pointer"
-                            style={{ margin: "0px", color: "grey" }}
-                          >
-                            {event.Venue.city}, {event.Venue.state}
+                          />
+
+                          <div className="location-info">
+                            <p className="event-time cursor-pointer">
+                              {fullDate(event.startDate)}
+                            </p>
+                            <h3
+                              className="cursor-pointer"
+                              style={{
+                                overflowWrap: "break-word",
+                                margin: "5px 0px",
+                              }}
+                            >
+                              {event.name}
+                            </h3>
+                            <p
+                              className="cursor-pointer"
+                              style={{ margin: "0px", color: "grey" }}
+                            >
+                              {event.Venue.city}, {event.Venue.state}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="caption-container">
+                          <p className="event-caption cursor-pointer">
+                            {event.description}
                           </p>
                         </div>
-                      </div>
-                      <div className="caption-container">
-                        <p className="event-caption cursor-pointer">
-                        {event.description}
-                        </p>
-                      </div>
                       </Link>
                     </div>
                   );

@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
-import { addGroupImage, updateGroup, getGroup } from "../../store/group";
+import { updateGroup, getGroup } from "../../store/group";
 import { Redirect, useHistory, useParams } from "react-router-dom";
 import "./UpdateGroup.css";
 import { useEffect } from "react";

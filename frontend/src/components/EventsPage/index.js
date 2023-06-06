@@ -81,7 +81,6 @@ function EventsPage() {
                       borderRadius: "5px",
                     }}
                   />
-                  {console.log(event)}
                   <div className="event-details">
                     <p className="event-date">{fullDate(event.endDate)}</p>
                     <h2 className="event-title">{event.name}</h2>

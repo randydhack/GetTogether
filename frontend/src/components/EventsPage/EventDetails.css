@@ -2,10 +2,11 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+
 }
 
 .event-details-section-1 {
-    margin: 20px 550px 10px 0px;
+    margin: 20px 830px 10px 0px;
 }
 
 .event-details-section-2 {
@@ -16,10 +17,18 @@
     border-top: 1px solid lightgray;
     padding: 20px 0px;
     align-items: center;
-    flex-direction: column;
+    margin: 0px;
+    width: 100%;
+}
+
+.main-event-container {
+    display: flex;
+
 }
 
 .event-description {
+    position:relative;
+    max-width: 1080px;
 }
 
 .event-name {

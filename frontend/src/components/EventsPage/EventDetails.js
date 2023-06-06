@@ -31,7 +31,7 @@ function EventDetails() {
   };
 
   return (
-    event && (
+    event && event.Group.GroupImages && (
       <div className="events-detail-container">
         {/* Section 1 */}
 
@@ -49,74 +49,69 @@ function EventDetails() {
         </div>
 
         {/* Section 2 */}
-        <div>
           <div className="event-details-section-2">
             {/* image */}
-            <div>
+            <div className="main-event-container">
               <img className="event-image" src={event.previewImage} />
-            </div>
 
-            {/* Side bar informaton event */}
-            <div className="event-side-details">
-              <Link
-                className="event-group-link"
-                to={`/groups/${event.groupId}`}
-              >
-                <div className="group-info-section">
-                  <div>
-                    <img
-                      className="group-image"
-                      src="https://images.pexels.com/photos/976866/pexels-photo-976866.jpeg?cs=srgb&dl=pexels-josh-sorenson-976866.jpg&fm=jpg"
-                    />
+              {/* Side bar informaton event */}
+              <div className="event-side-details">
+                <Link
+                  className="event-group-link"
+                  to={`/groups/${event.groupId}`}
+                >
+                  <div className="group-info-section">
+                    <div>
+                      <img
+                        className="group-image"
+                        src={event.Group.GroupImages[event.Group.GroupImages.length - 1].url} />
+                    </div>
+                    <div className="group-name-privacy">
+                      <p className="group-name">{event.Group?.name}</p>
+                      <p className="group-privacy">
+                        {event?.Group.private ? "Private" : "In Person"}
+                      </p>
+                    </div>
                   </div>
-                  <div className="group-name-privacy">
-                    <p className="group-name">{event.Group?.name}</p>
-                    <p className="group-privacy">
-                      {event?.Group.private ? "Private" : "In Person"}
-                    </p>
-                  </div>
-                </div>
-              </Link>
+                </Link>
 
-              {/* Side bar informaton price, time, type */}
-              <div className="event-time-price-type">
-                <div className="flex-column">
-                  <i className="fa-regular fa-clock fa-2xl"></i>
-                  <div className="start-end-date">
-                    <p className="start-date">
-                      Start Date:{" "}
-                      <span className="span-start-date">
-                        {fullDate(event.startDate)}
-                      </span>
-                    </p>
-                    <p className="end-date">
-                      End Date:{" "}
-                      <span className="span-end-date">
-                        {fullDate(event.endDate)}
-                      </span>
+                {/* Side bar informaton price, time, type */}
+                <div className="event-time-price-type">
+                  <div className="flex-column">
+                    <i className="fa-regular fa-clock fa-2xl"></i>
+                    <div className="start-end-date">
+                      <p className="start-date">
+                        Start Date:{" "}
+                        <span className="span-start-date">
+                          {fullDate(event.startDate)}
+                        </span>
+                      </p>
+                      <p className="end-date">
+                        End Date:{" "}
+                        <span className="span-end-date">
+                          {fullDate(event.endDate)}
+                        </span>
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex-column">
+                    <i className="fa-solid fa-money-bill fa-2xl"></i>
+                    <p className="event-price">
+                      {event.price > 0 ? `$${event.price}` : "FREE"}
                     </p>
                   </div>
-                </div>
-                <div className="flex-column">
-                  <i className="fa-solid fa-money-bill fa-2xl"></i>
-                  <p className="event-price">
-                    {event.price > 0 ? `$${event.price}` : "FREE"}
-                  </p>
-                </div>
-                <div className="flex-column">
-                  <i className="fa-solid fa-map-pin fa-2xl event-type-icon"></i>
-                  <p className="event-type">{event.type}</p>
+                  <div className="flex-column">
+                    <i className="fa-solid fa-map-pin fa-2xl event-type-icon"></i>
+                    <p className="event-type">{event.type}</p>
+                  </div>
                 </div>
               </div>
             </div>
-
-            {/* description */}
-            <div className="event-description">
+          </div>
+            <div className='event-description'>
               <h2>Description</h2>
               <p>{event.description}</p>
             </div>
-          </div>
-        </div>
       </div>
     )
   );

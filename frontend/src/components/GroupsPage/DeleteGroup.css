@@ -1,0 +1,43 @@
+.delete-group-button {
+    background-color: gray;
+    border: none;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.delete-form-container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 400px;
+    height: 250px;
+    background-color: white;
+    border-radius: 30px;
+}
+
+.delete-form-container h1 {
+    margin-bottom: 0px;
+}
+
+.delete-form-container p {
+    margin: 0px;
+}
+
+.delete-group-delete-button {
+    border: black 2px solid;
+    width: 320px;
+    height: 45px;
+    font-size: 14px;
+}
+
+.delete-group-yes {
+    margin: 20px 0px 10px 0px;
+    background-color: rgb(255, 58, 58);
+    color: white;
+    cursor: pointer;
+}
+
+.delete-group-no {
+    background-color: lightgray;
+    cursor: pointer;
+}
