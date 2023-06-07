@@ -50,6 +50,10 @@
 
 .group-about {
     margin: 8px 0px;
+    overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 450px;
 }
 
 .group-event {

@@ -70,6 +70,7 @@ function CreateGroupForm() {
                   className="input-box"
                   value={city}
                   onChange={(e) => setCity(e.target.value)}
+                  maxLength='25'
                 ></input>
                 {errors.city && (
                   <p className="error-message">City is required</p>
@@ -82,6 +83,7 @@ function CreateGroupForm() {
                   className="input-box state-input-box"
                   value={state}
                   onChange={(e) => setState(e.target.value)}
+                  maxLength='25'
                 ></input>
                 {errors.state && (
                   <p className="error-message state-input-box">

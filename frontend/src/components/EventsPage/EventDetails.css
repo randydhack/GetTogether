@@ -6,7 +6,9 @@
 }
 
 .event-details-section-1 {
-    margin: 20px 830px 10px 0px;
+    margin-top: 20px;
+    width: 100%;
+    max-width: 1080px;
 }
 
 .event-details-section-2 {
@@ -23,11 +25,13 @@
 
 .main-event-container {
     display: flex;
-
+    width: 100%;
+    max-width: 1080px;
 }
 
 .event-description {
     position:relative;
+    width: 100%;
     max-width: 1080px;
 }
 

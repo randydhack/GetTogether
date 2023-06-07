@@ -47,7 +47,15 @@ router.get("/", async (req, res, next) => {
     group: "Group.id",
   });
 
-  res.status(200).json({ Groups: allGroups });
+  const groupArr = [];
+
+  allGroups.forEach(el => {
+    const groupJSON = el.toJSON()
+    groupJSON.previewImage = groupJSON.GroupImages[0]?.url
+    groupArr.push(groupJSON)
+  })
+
+  res.status(200).json({ Groups: groupArr });
 });
 
 // Get all groups or organized by currentUser
@@ -168,6 +176,7 @@ router.get("/:groupId", async (req, res, next) => {
     where: { groupId: group.id },
   });
 
+  groupJSON.previewImage = await groupJSON.GroupImages[0].url
   groupJSON.numMembers = numMembers;
 
   res.status(200).json(groupJSON);

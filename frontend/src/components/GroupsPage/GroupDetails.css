@@ -1,3 +1,11 @@
+.group-detail-container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 60px;
+    justify-content: center;
+}
+
 .grey-p {
     margin: 10px 0px;
     color: grey;
@@ -15,12 +23,6 @@
     width: fit-content;
 }
 
-.group-detail-container {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    margin-top: 60px;
-}
 
 .group-details {
     word-wrap: break-word;
@@ -29,6 +31,7 @@
     margin-bottom: 30px;
     width: fit-content;
 }
+
 
 .group-info h1 {
     margin-top: 0px;
@@ -86,6 +89,7 @@ flex-direction: row;
 }
 
 .location-info {
+    color: black;
     margin-left: 10px;
 }
 
@@ -101,6 +105,10 @@ flex-direction: row;
     margin-left: 20px;
     margin-right: 20px;
     font-size: 10px;
+    max-height: 50px;
+    overflow: scroll;
+    text-overflow: ellipsis;
+    color: black;
 }
 
 .create-event-button {
@@ -122,7 +130,15 @@ flex-direction: row;
 }
 
 .past-event-container {
-    width: fit-content;
+    max-width: 550px;
+}
+
+.past-event-links {
+    text-decoration: none;
+}
+
+.upcoming-event-links {
+    text-decoration: none;
 }
 
 .event-link-container {

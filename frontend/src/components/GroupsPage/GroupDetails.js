@@ -17,17 +17,14 @@ function GroupDetails() {
   const group = useSelector((state) => state.groupState[groupId]);
   const event = useSelector((state) => Object.values(state.eventState));
   const user = useSelector((state) => state.session.user);
+  const [isLoaded, setIsLoaded] = useState(false)
 
-  event.forEach((event) => {
-    const date = new Date().toString();
-    if (event.endDate < date) pastEvent.push(event);
-    if (event.startDate > date) upcomingEvent.push(event);
-  });
 
   useEffect(() => {
     (async () => {
-      await dispatch(getGroup(groupId));
-      await dispatch(getEventByGroup(groupId));
+      await dispatch(getGroup(groupId))
+      await dispatch(getEventByGroup(groupId))
+      setIsLoaded(true)
     })();
   }, [dispatch]);
 
@@ -35,6 +32,19 @@ function GroupDetails() {
     e.preventDefault();
     return alert("Feature coming soon");
   };
+
+  event.forEach((event) => {
+    const date = new Date().getTime();
+
+    const timeA = event.startDate;
+    const timeB = event.endDate;
+
+    const convertTimeA = new Date(timeA).getTime();
+    const convertTimeB = new Date(timeB).getTime();
+
+    if (convertTimeA > date) upcomingEvent.push(event);
+    if (convertTimeB < date) pastEvent.push(event);
+  });
 
   const fullDate = (data) => {
     const eventDate = new Date(data);
@@ -47,9 +57,7 @@ function GroupDetails() {
     return `${year}/${month}/${date} · ${time}`;
   };
 
-  return (
-    group &&
-    group.Organizer && (
+  return isLoaded && (
       <div className="group-detail-container">
         <div className="section-1-detail">
           <div>
@@ -63,12 +71,13 @@ function GroupDetails() {
                   height: "350px",
                   borderRadius: "15px",
                 }}
-                src={group.GroupImages[group.GroupImages.length - 1].url}
+                src={group.previewImage  ? group.previewImage : ''}
+                visibility={group.previewImage ? 'visible' : 'hidden'}
               />
               <div className="group-info">
                 <h1>{group.name}</h1>
                 <p className="grey-p">
-                  {group?.city}, {group.state}
+                  {group.city}, {group.state}
                 </p>
                 <p className="grey-p">
                   {upcomingEvent.length} events ·{" "}
@@ -110,8 +119,7 @@ function GroupDetails() {
                       </Link>
                     </button>
 
-                      <DeleteGroupModal/>
-
+                    <DeleteGroupModal />
                   </div>
                 )}
               </div>
@@ -138,50 +146,62 @@ function GroupDetails() {
               <h2>No Upcoming Events</h2>
             )}
 
+            {/* --------- --------- --------- --------- UPCOMING EVENTS --------- --------- --------- ---------  */}
             {upcomingEvent.length !== 0 && (
-              <div>
+              <div className="past-event-container">
                 <h2>Upcoming Events ({upcomingEvent.length})</h2>
                 {upcomingEvent.map((event) => {
                   return (
-                    <div key={event.id} className="upcoming-events">
-                      <div className="event-container">
-                        <img
-                          className="cursor-pointer"
-                          style={{
-                            width: "200px",
-                            height: "150px",
-                            borderRadius: "5px",
-                          }}
-                          src={
-                            event.EventImages[event.EventImages.length - 1].url
-                          }
-                        />
-                        <div>
-                          <p className="event-time cursor-pointer">
-                            {fullDate(event.startDate)}
-                          </p>
-                          <h3
+                    <div key={event.id} className="past-events">
+                      <Link
+                        to={`/events/${event.id}`}
+                        className="past-event-links"
+                      >
+                        <div className="event-container">
+                          <img
+                            src={event.previewImage}
                             className="cursor-pointer"
                             style={{
-                              overflowWrap: "break-word",
-                              margin: "5px 0px",
+                              width: "200px",
+                              height: "150px",
+                              borderRadius: "5px",
                             }}
-                          >
-                            {event.name}
-                          </h3>
+                          />
+
+                          <div className="location-info">
+                            <p className="event-time cursor-pointer">
+                              {fullDate(event.startDate)}
+                            </p>
+                            <h3
+                              className="cursor-pointer"
+                              style={{
+                                overflowWrap: "break-word",
+                                margin: "5px 0px",
+                              }}
+                            >
+                              {event.name}
+                            </h3>
+                            <p
+                              className="cursor-pointer"
+                              style={{ margin: "0px", color: "grey" }}
+                            >
+                              {event.Venue.city}, {event.Venue.state}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="caption-container">
                           <p className="event-caption cursor-pointer">
-                            {event.Venue.city}, {event.Venue.state}
+                            {event.description}
                           </p>
                         </div>
-                      </div>
-                      <div>
-                        <p className="cursor-pointer">{event.about}</p>
-                      </div>
+                      </Link>
                     </div>
                   );
                 })}
               </div>
             )}
+
+            {/* --------- --------- --------- PAST EVENTS  --------- --------- --------- --------- */}
 
             {pastEvent.length !== 0 && (
               <div className="past-event-container">
@@ -189,7 +209,10 @@ function GroupDetails() {
                 {pastEvent.map((event) => {
                   return (
                     <div key={event.id} className="past-events">
-                      <Link to={`/events/${event.id}`}>
+                      <Link
+                        to={`/events/${event.id}`}
+                        className="past-event-links"
+                      >
                         <div className="event-container">
                           <img
                             src={event.previewImage}
@@ -236,7 +259,6 @@ function GroupDetails() {
           </div>
         </div>
       </div>
-    )
   );
 }
 

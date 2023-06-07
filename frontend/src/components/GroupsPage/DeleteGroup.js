@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import * as sessionActions from "../../store/session";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, Redirect, useParams } from "react-router-dom";
 import { deleteGroup } from "../../store/group";
 import { Modal } from '../../context/Modal';
+import { getEventByGroup, deleteEvent } from "../../store/event";
 
 function DeleteGroup() {
     const dispatch = useDispatch()
@@ -14,6 +15,7 @@ function DeleteGroup() {
 
     const handleDeleteGroup = (e) => {
         e.preventDefault()
+
         history.push('/groups')
         dispatch(deleteGroup(groupId))
     }

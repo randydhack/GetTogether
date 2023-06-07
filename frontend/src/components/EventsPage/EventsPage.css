@@ -64,3 +64,9 @@
 .event-title {
     margin: 5px 0px;
 }
+
+.event-about {
+overflow:scroll;
+  text-overflow: ellipsis;
+  max-height: 100px;
+}

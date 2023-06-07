@@ -9,8 +9,10 @@ function EventDetails() {
   const { eventId } = useParams();
   const event = useSelector((state) => state.eventState[eventId]);
 
+  console.log('hello', event)
+
   useEffect(() => {
-    dispatch(getEventDetail(eventId));
+      dispatch(getEventDetail(eventId));
   }, [dispatch]);
 
   const fullDate = (data) => {
@@ -30,8 +32,7 @@ function EventDetails() {
     return `${year}/${month}/${date} · ${hours}:${minutes} ${ampm}`;
   };
 
-  return (
-    event && event.Group.GroupImages && (
+  return event && event.Group && event.Group.GroupImages && (
       <div className="events-detail-container">
         {/* Section 1 */}
 
@@ -40,7 +41,7 @@ function EventDetails() {
             <Link to="/events">Back to events</Link>
           </div>
           <div>
-            <h1 className="event-name">{event?.name}</h1>
+            <h1 className="event-name">{event.name}</h1>
             <p className="organizer-name">
               Hosted by {event.Group.Organizer?.firstName}{" "}
               {event.Group.Organizer?.lastName}
@@ -108,12 +109,11 @@ function EventDetails() {
               </div>
             </div>
           </div>
-            <div className='event-description'>
+          <div className='event-description'>
               <h2>Description</h2>
               <p>{event.description}</p>
             </div>
       </div>
-    )
   );
 }
 
