@@ -118,7 +118,7 @@ export const addGroupImage = (url, groupId) => async dispatch => {
       url: url,
       preview: true
     }),
-  })
+  });
 
   if (response.ok) {
     const image = await response.json()
@@ -167,10 +167,6 @@ const groupReducer = (state = {}, action) => {
       newState = { ...state }
       delete newState[action.groupId]
       return newState
-
-    case ADD_IMAGE:
-      newState = { ...state }
-      return newState;
 
     case UPDATE_GROUP:
       newState = { ...state }

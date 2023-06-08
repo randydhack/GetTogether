@@ -7,7 +7,7 @@ import "./CreateGroupForm.css";
 
 function CreateGroupForm() {
   const dispatch = useDispatch();
-  const history = useHistory()
+  const history = useHistory();
 
   const [name, setName] = useState("");
   const [about, setAbout] = useState("");
@@ -27,21 +27,20 @@ function CreateGroupForm() {
     const verifiedImage =
       splitImage[splitImage.length - 1].match(/jpg|png|jpeg/g);
 
-    const group = await dispatch(
-      createGroup({ name, about, city, state, privated, type })
-    ).catch(async (res) => {
-      const data = await res.json();
-      if (data && data.errors) setErrors(data.errors);
-    });
+      const group = await dispatch(
+        createGroup({ name, about, city, state, privated, type })
+      ).catch(async (res) => {
+        const data = await res.json();
+        if (data && data.errors) setErrors(data.errors);
+      });
 
-    if (!group) return
-
+      if (!group) return
     if (group && verifiedImage === null) {
       setImageError({ image: "Image URL must end in .png, .jpg, or .jpeg" });
       return dispatch(deleteGroup(group.id));
     } else {
-    history.push(`/groups/${group.id}`)
-      return dispatch(addGroupImage(image, group.id));
+      dispatch(addGroupImage(image, group.id));
+      return history.push(`/groups/${group.id}`);
     }
   };
 
@@ -70,7 +69,7 @@ function CreateGroupForm() {
                   className="input-box"
                   value={city}
                   onChange={(e) => setCity(e.target.value)}
-                  maxLength='25'
+                  maxLength="25"
                 ></input>
                 {errors.city && (
                   <p className="error-message">City is required</p>
@@ -83,7 +82,7 @@ function CreateGroupForm() {
                   className="input-box state-input-box"
                   value={state}
                   onChange={(e) => setState(e.target.value)}
-                  maxLength='25'
+                  maxLength="25"
                 ></input>
                 {errors.state && (
                   <p className="error-message state-input-box">

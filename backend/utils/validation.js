@@ -112,8 +112,8 @@ const validateEvent = [
     .isDecimal()
     .withMessage('Price is invalid'),
   check('description')
-    .exists({checkFalsy: true})
-    .withMessage('Description is required'),
+    .isLength({ min: 30 })
+    .withMessage('Description must be at least 30 characters long'),
   check('startDate')
     .custom((value, {req})=> {
       const date = new Date()

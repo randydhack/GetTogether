@@ -176,7 +176,7 @@ router.get("/:groupId", async (req, res, next) => {
     where: { groupId: group.id },
   });
 
-  groupJSON.previewImage = await groupJSON.GroupImages[0].url
+  groupJSON.previewImage = await groupJSON.GroupImages[0] ? groupJSON.GroupImages[0].url : null;
   groupJSON.numMembers = numMembers;
 
   res.status(200).json(groupJSON);

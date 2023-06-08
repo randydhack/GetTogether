@@ -150,7 +150,7 @@ router.get("/:eventId", async (req, res, next) => {
 
   const eventJSON = event.toJSON();
 
-  eventJSON.previewImage = eventJSON.EventImages[0].url;
+  eventJSON.previewImage = eventJSON.EventImages[0] ? eventJSON.EventImages[0].url : null;
 
   res.status(200).json(eventJSON);
 });

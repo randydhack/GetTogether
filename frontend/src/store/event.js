@@ -141,7 +141,9 @@ export const deleteEvent = (eventId) => async dispatch => {
     method: 'DELETE'
   })
 
-  if (response.ok) dispatch(removeEvent(eventId))
+  if (response.ok) {
+    dispatch(removeEvent(eventId))
+  }
 }
 
 
@@ -155,22 +157,24 @@ const eventReducer = (state = {}, action) => {
       newState = {};
       action.events.Events.forEach((event) => (newState[event.id] = event));
       return newState;
+
     case GROUP_EVENTS:
       newState = {};
       action.events.Events.forEach((event) => (newState[event.id] = event));
       return newState;
+
     case GET_EVENT:
       return { ...state, [action.event.id]: action.event };
+
     case CREATE_EVENT:
       newState = { ...state, [action.event.id]: action.event }
       return newState
-    case ADD_IMAGE:
-      newState = { ...state}
-      return newState;
+
     case DELETE_EVENT:
       newState = { ...state }
       delete newState[action.eventId]
       return newState;
+
     default:
       return state;
   }
