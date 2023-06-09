@@ -21,7 +21,7 @@ module.exports = {
           private: true,
           city: "New York",
           state: "NY",
-          previewImage: "image url",
+          previewImage: "https://www.theclickcommunity.com/blog/wp-content/uploads/2014/05/playing-tennis-under-water-pic-by-Alix-Martinez.jpg",
         },
         {
           organizerId: 2,
@@ -32,7 +32,7 @@ module.exports = {
           private: true,
           city: "San Francisco",
           state: "CA",
-          previewImage: 'image url',
+          previewImage: 'https://www.theclickcommunity.com/blog/wp-content/uploads/2014/05/playing-tennis-under-water-pic-by-Alix-Martinez.jpg',
         },
         {
           organizerId: 3,
@@ -43,7 +43,7 @@ module.exports = {
           private: true,
           city: "Manhattan",
           state: "NY",
-          previewImage: "image url",
+          previewImage: "https://www.theclickcommunity.com/blog/wp-content/uploads/2014/05/playing-tennis-under-water-pic-by-Alix-Martinez.jpg",
         },
         {
           organizerId: 4,
@@ -53,7 +53,7 @@ module.exports = {
           private: true,
           city: "San Jose",
           state: "CA",
-          previewImage: "image url",
+          previewImage: "https://historicbridges.org/ohio/mainavenue/little_main_9000_1_2vib.jpg",
         },
         {
           organizerId: 3,
@@ -64,7 +64,7 @@ module.exports = {
           private: false,
           city: "San Francisco",
           state: "CA",
-          previewImage: "image url",
+          previewImage: "https://historicbridges.org/ohio/mainavenue/little_main_9000_1_2vib.jpg",
         },
         {
           organizerId: 1,
@@ -75,7 +75,7 @@ module.exports = {
           private: false,
           city: "New York",
           state: "NY",
-          previewImage: "image url",
+          previewImage: "https://www.theclickcommunity.com/blog/wp-content/uploads/2014/05/playing-tennis-under-water-pic-by-Alix-Martinez.jpg",
         },
       ],
       {}
