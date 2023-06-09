@@ -6,8 +6,17 @@
 }
 
 .grey-p {
-    margin: 10px 0px;
     color: grey;
+    font-weight: 300;
+    font-size: medium;
+}
+
+
+.grey-p span {
+    margin-left: 10px;
+}
+.group-location-events-org {
+    margin: 10px 0px;
 }
 
 .back-button:hover {
@@ -44,15 +53,15 @@
 }
 
 .join-group-button {
-    width: 210px;
-    height: 50px;
-    font-size: 20px;
+    width: 150px;
+    height: 45px;
+    font-size: medium;
+    font-weight: bold;
     color: white;
-    border: 2px solid black;
-    background-color: rgb(198, 0, 0);
-    box-shadow: 3px 3px 2px black;
-    border-radius: 3%;
+    background-color: rgb(222, 37, 37);
+    border-radius: 5px;
     margin-top: 105px;
+    border: none;
 }
 .join-group-button:hover {
     cursor: pointer;
@@ -70,6 +79,7 @@
     display: flex;
     flex-direction: column;
     text-align: left;
+    max-width: 752px;
 }
 /* event section */
 
@@ -106,9 +116,11 @@ flex-direction: row;
     margin-right: 20px;
     font-size: 10px;
     max-height: 50px;
-    overflow: scroll;
+    overflow: hidden;
+    white-space: nowrap;
     text-overflow: ellipsis;
     color: black;
+    font-weight: 300;
 }
 
 .create-event-button {
@@ -148,4 +160,6 @@ flex-direction: row;
 
 .group-detail-col {
     flex-direction: column;
+    display: flex;
+    align-items: center;
 }

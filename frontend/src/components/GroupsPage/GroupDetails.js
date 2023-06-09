@@ -23,7 +23,7 @@ function GroupDetails() {
       await dispatch(getEventByGroup(groupId));
       setIsLoaded(true);
     })();
-  }, [dispatch]);
+  }, [dispatch, groupId]);
 
   const handleJoinGroup = (e) => {
     e.preventDefault();
@@ -46,20 +46,47 @@ function GroupDetails() {
   });
 
   const fullDate = (data) => {
+    const days = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ];
+    const monthNames = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
     const eventDate = new Date(data);
     const year = eventDate.getFullYear();
     const month = eventDate.getMonth();
     const date = eventDate.getDate();
+    const dayIndex = eventDate.getDay();
 
     let hours = eventDate.getHours();
     let minutes = eventDate.getMinutes();
 
-    const ampm = hours >= 12 ? "pm" : "am";
+    const ampm = hours >= 12 ? "AM" : "PM";
     hours = hours % 12;
     hours = hours ? hours : 12; // the hour '0' should be '12'
     minutes = minutes < 10 ? "0" + minutes : minutes;
 
-    return `${month}/${date}/${year} · ${hours}:${minutes} ${ampm}`;
+    return `${days[dayIndex].slice(0, 3)}, ${monthNames[month].slice(
+      0,
+      3
+    )} ${date}, ${year} · ${hours}:${minutes} ${ampm}`;
   };
 
   return (
@@ -75,6 +102,7 @@ function GroupDetails() {
             </div>
             <div className="group-details">
               <img
+                alt="main-group"
                 style={{
                   height: "350px",
                   borderRadius: "15px",
@@ -84,18 +112,33 @@ function GroupDetails() {
               />
               <div className="group-detail-info">
                 <div>
-                  <h1>{group.name}</h1>
-                  <p className="grey-p">
-                    {group.city}, {group.state}
-                  </p>
-                  <p className="grey-p">
-                    {upcomingEvent.length} events ·{" "}
-                    {group.private ? "Private" : "Public"}
-                  </p>
-                  <p className="grey-p">
-                    Organized by: {group.Organizer?.firstName}{" "}
-                    {group.Organizer?.lastName}
-                  </p>
+                  <h1 style={{ marginBottom: "20px" }}>{group.name}</h1>
+                  <div className="group-location-events-org">
+                    <span className="grey-p">
+                      <i class="fa-solid fa-location-dot"></i>
+                      <span>
+                        {group.city}, {group.state}
+                      </span>
+                    </span>
+                  </div>
+                  <div className="group-location-events-org">
+                    <span className="grey-p">
+                      <i class="fa-solid fa-calendar-days"></i>
+                      <span>
+                        {upcomingEvent.length} events ·{" "}
+                        {group.private ? "Private" : "Public"}
+                      </span>
+                    </span>
+                  </div>
+                  <div className="group-location-events-org">
+                    <span className="grey-p">
+                      <i class="fa-regular fa-user"></i>
+                      <span>
+                        Organized by: {group.Organizer?.firstName}{" "}
+                        {group.Organizer?.lastName}
+                      </span>
+                    </span>
+                  </div>
                 </div>
 
                 {user && user.id !== group.organizerId && (
@@ -146,8 +189,12 @@ function GroupDetails() {
               </div>
 
               <div>
-                <h2 style={{ width: "fit=content" }}>What we're about</h2>
-                <p style={{ width: "fit-content" }}>{group.about}</p>
+                <h2 style={{ width: "fit=content", marginBottom: "5px" }}>
+                  What we're about
+                </h2>
+                <p style={{ width: "fit-content", marginTop: "0px" }}>
+                  {group.about}
+                </p>
               </div>
 
               {!upcomingEvent.length && !pastEvent.length && (
@@ -157,7 +204,9 @@ function GroupDetails() {
               {/* --------- --------- --------- --------- UPCOMING EVENTS --------- --------- --------- ---------  */}
               {upcomingEvent.length !== 0 && (
                 <div className="past-event-container">
-                  <h2>Upcoming Events ({upcomingEvent.length})</h2>
+                  <h2 style={{ marginBottom: "0px" }}>
+                    Upcoming Events ({upcomingEvent.length})
+                  </h2>
                   {upcomingEvent.map((event) => {
                     return (
                       <div key={event.id} className="past-events">
@@ -167,13 +216,9 @@ function GroupDetails() {
                         >
                           <div className="event-container">
                             <img
+                              alt="event-img"
                               src={event.previewImage}
-                              className="cursor-pointer"
-                              style={{
-                                width: "200px",
-                                height: "150px",
-                                borderRadius: "5px",
-                              }}
+                              className="cursor-pointer past-upcoming-event-photo"
                             />
 
                             <div className="location-info">
@@ -213,7 +258,9 @@ function GroupDetails() {
 
               {pastEvent.length !== 0 && (
                 <div className="past-event-container">
-                  <h2>Past Events ({pastEvent.length})</h2>
+                  <h2 style={{ marginBottom: "0px" }}>
+                    Past Events ({pastEvent.length})
+                  </h2>
                   {pastEvent.map((event) => {
                     return (
                       <div key={event.id} className="past-events">
@@ -223,6 +270,7 @@ function GroupDetails() {
                         >
                           <div className="event-container">
                             <img
+                              alt="event-img"
                               src={event.previewImage}
                               className="cursor-pointer past-upcoming-event-photo"
                             />

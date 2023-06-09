@@ -16,20 +16,47 @@ function EventsPage() {
   }, [dispatch]);
 
   const fullDate = (data) => {
+    const days = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ];
+    const monthNames = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
     const eventDate = new Date(data);
     const year = eventDate.getFullYear();
     const month = eventDate.getMonth();
     const date = eventDate.getDate();
+    const dayIndex = eventDate.getDay();
 
     let hours = eventDate.getHours();
     let minutes = eventDate.getMinutes();
 
-    const ampm = hours >= 12 ? "pm" : "am";
+    const ampm = hours >= 12 ? "PM" : "AM";
     hours = hours % 12;
     hours = hours ? hours : 12; // the hour '0' should be '12'
     minutes = minutes < 10 ? "0" + minutes : minutes;
 
-    return `${month}/${date}/${year} · ${hours}:${minutes} ${ampm}`;
+    return `${days[dayIndex].slice(0, 3)}, ${monthNames[month].slice(
+      0,
+      3
+    )} ${date}, ${year} · ${hours}:${minutes} ${ampm}`;
   };
 
   const sortEventByDate = events.sort((a, b) => {
@@ -78,15 +105,19 @@ function EventsPage() {
                     src={event.previewImage}
                     alt="event"
                     style={{
-                      width: "142px",
-                      height: "95px",
+                      width: "170px",
+                      height: "90px",
                       borderRadius: "3px",
                     }}
                   />
                   <div className="event-details">
-                    <p className="event-date">{fullDate(event.endDate)}</p>
-                    <h2 className="event-title">{event.name}</h2>
-                    <p className="event-location">
+                    <p className="event-date font-size-md font-uppercase">
+                      {fullDate(event.endDate)}
+                    </p>
+                    <h2 className="event-title font-size-md font-uppercase">
+                      {event.name}
+                    </h2>
+                    <p className="event-location font-size-md font-uppercase">
                       {event.Venue.city}, {event.Venue.state}
                     </p>
                   </div>

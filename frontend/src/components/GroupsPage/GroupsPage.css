@@ -6,8 +6,7 @@
 }
 
 .event-group-heading {
-    display: block;
-    margin-right: 515px
+    margin-right: 510px
 }
 .event-group-heading a {
     text-decoration: none;
@@ -41,23 +40,32 @@
 
 .group-name {
     margin: 0px;
+    font-size: medium;
+    text-transform: uppercase;
 }
 
 .group-location {
     font-size: 14px;
-    margin: 8px 0px;
+    margin: 0px;
+    font-size: medium;
+    text-transform: uppercase;
+    color: rgb(124 111 80);
 }
 
 .group-about {
-    margin: 8px 0px;
+    margin: 18px 0px 0px 0px;
     overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
   max-width: 450px;
+  font-weight:300;
+  color: gray;
+
 }
 
-.group-event {
-    margin: 8px 0px;
+.group-members {
+    margin: 20px 0px 0px 0px;
+    font-size: small;
 }
 
 .group-link {

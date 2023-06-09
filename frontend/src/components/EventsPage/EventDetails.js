@@ -22,20 +22,25 @@ function EventDetails() {
   }, [dispatch, eventId]);
 
   const fullDate = (data) => {
+    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+    const monthNames = ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"
+];
     const eventDate = new Date(data);
     const year = eventDate.getFullYear();
     const month = eventDate.getMonth();
-    const date = eventDate.getDate();
+    const date = eventDate.getDate()
+    const dayIndex = eventDate.getDay();
 
     let hours = eventDate.getHours();
     let minutes = eventDate.getMinutes();
 
-    const ampm = hours >= 12 ? "pm" : "am";
+    const ampm = hours >= 12 ? "PM" : "AM";
     hours = hours % 12;
     hours = hours ? hours : 12; // the hour '0' should be '12'
     minutes = minutes < 10 ? "0" + minutes : minutes;
 
-    return `${month}/${date}/${year} · ${hours}:${minutes} ${ampm}`;
+    return `${days[dayIndex].slice(0,3)}, ${monthNames[month].slice(0,3)} ${date}, ${year} · ${hours}:${minutes} ${ampm}`;
   };
 
   return (

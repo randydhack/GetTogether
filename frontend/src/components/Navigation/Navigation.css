@@ -41,8 +41,9 @@
 
 .home-button {
     font-weight: 700;
-    color: rgb(253, 74, 74);
+    color: rgb(253, 90, 90);
     font-size: 34px;
+    font-family: 'Pacifico', cursive;
 }
 
 .start-group-profile-button {
