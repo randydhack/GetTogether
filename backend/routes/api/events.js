@@ -73,7 +73,7 @@ router.get("/", paginationValidation, async (req, res, next) => {
     attributes: {
       exclude: ["price", "capacity"],
     },
-    group: ["Event.id", 'EventImages.id'],
+    group: ["Event.id"],
     ...pagination,
   });
 
@@ -145,7 +145,7 @@ router.get("/:eventId", async (req, res, next) => {
         [sequelize.fn("COUNT", sequelize.col("Attendees.id")), "numAttendees"],
       ],
     },
-    group: ["Event.id", "Group.id", "Venue.id", 'GroupImages.id'],
+    group: ["Event.id", "Group.id", "Venue.id", 'GroupImages.id', "EventImages.id"],
   });
 
   const eventJSON = event.toJSON();
