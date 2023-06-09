@@ -115,14 +115,14 @@ function EventDetails() {
                 </div>
                 <div className="flex-column">
                   <i className="fa-solid fa-map-pin fa-2xl event-type-icon"></i>
-                  <p className="event-type">
+                  <div className="event-type">
                     <p>{event.type}{" "}</p>
                     {user && user.id === event.Group?.Organizer?.id && (
                       <p>
                         <DeleteEventModal event={event}/>
                       </p>
                     )}
-                  </p>
+                  </div>
                 </div>
               </div>
             </div>

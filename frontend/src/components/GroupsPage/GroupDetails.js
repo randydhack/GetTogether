@@ -115,7 +115,7 @@ function GroupDetails() {
                   <h1 style={{ marginBottom: "20px" }}>{group.name}</h1>
                   <div className="group-location-events-org">
                     <span className="grey-p">
-                      <i class="fa-solid fa-location-dot"></i>
+                      <i className="fa-solid fa-location-dot"></i>
                       <span>
                         {group.city}, {group.state}
                       </span>
@@ -123,7 +123,7 @@ function GroupDetails() {
                   </div>
                   <div className="group-location-events-org">
                     <span className="grey-p">
-                      <i class="fa-solid fa-calendar-days"></i>
+                      <i className="fa-solid fa-calendar-days"></i>
                       <span>
                         {upcomingEvent.length} events ·{" "}
                         {group.private ? "Private" : "Public"}
@@ -132,7 +132,7 @@ function GroupDetails() {
                   </div>
                   <div className="group-location-events-org">
                     <span className="grey-p">
-                      <i class="fa-regular fa-user"></i>
+                      <i className="fa-regular fa-user"></i>
                       <span>
                         Organized by: {group.Organizer?.firstName}{" "}
                         {group.Organizer?.lastName}
