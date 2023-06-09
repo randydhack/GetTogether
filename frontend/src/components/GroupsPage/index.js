@@ -55,7 +55,7 @@ function GroupsPage() {
                   }}
                 />
                 <div className="group-info">
-                  <h2 className="group-name">{group.name}</h2>
+                  <h2 className="group-detail-name">{group.name}</h2>
                   <p className="group-location">
                     {group.city}, {group.state}
                   </p>
