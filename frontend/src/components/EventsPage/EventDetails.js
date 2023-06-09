@@ -4,33 +4,58 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { getEventDetail } from "../../store/event";
 import DeleteEventModal from "./DeleteEventModal";
+import { getGroup } from "../../store/group";
 
 function EventDetails() {
   const dispatch = useDispatch();
   const { eventId } = useParams();
 
-  const event = useSelector((state) => state.eventState[eventId]);
+  const events = useSelector((state) => state.eventState);
+  const groups = useSelector((state) => state.groupState);
   const user = useSelector((state) => state.session.user);
 
+  const event = events[eventId];
+  const group = groups[event?.groupId];
+
   const [isLoaded, setIsLoaded] = useState(false);
+  console.log(event);
+  console.log(group)
 
   useEffect(() => {
     (async () => {
-      await dispatch(getEventDetail(eventId))
-      setIsLoaded(true)
+      await dispatch(getEventDetail(eventId)).then(data => dispatch(getGroup(data.groupId)));
+      setIsLoaded(true);
     })();
   }, [dispatch, eventId]);
 
-  console.log(event)
   const fullDate = (data) => {
-    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-    const monthNames = ["January", "February", "March", "April", "May", "June",
-  "July", "August", "September", "October", "November", "December"
-];
+    const days = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ];
+    const monthNames = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
     const eventDate = new Date(data);
     const year = eventDate.getFullYear();
     const month = eventDate.getMonth();
-    const date = eventDate.getDate()
+    const date = eventDate.getDate();
     const dayIndex = eventDate.getDay();
 
     let hours = eventDate.getHours();
@@ -41,7 +66,10 @@ function EventDetails() {
     hours = hours ? hours : 12; // the hour '0' should be '12'
     minutes = minutes < 10 ? "0" + minutes : minutes;
 
-    return `${days[dayIndex].slice(0,3)}, ${monthNames[month].slice(0,3)} ${date}, ${year} · ${hours}:${minutes} ${ampm}`;
+    return `${days[dayIndex].slice(0, 3)}, ${monthNames[month].slice(
+      0,
+      3
+    )} ${date}, ${year} · ${hours}:${minutes} ${ampm}`;
   };
 
   return (
@@ -56,8 +84,8 @@ function EventDetails() {
           <div>
             <h1 className="event-name">{event?.name}</h1>
             <p className="organizer-name">
-              Hosted by {event.Group?.Organizer?.firstName}{" "}
-              {event.Group?.Organizer?.lastName}
+              Hosted by {group.Organizer?.firstName}{" "}
+              {group.Organizer?.lastName}
             </p>
           </div>
         </div>
@@ -66,7 +94,7 @@ function EventDetails() {
         <div className="event-details-section-2">
           {/* image */}
           <div className="main-event-container">
-            <img className="event-image" src={event.previewImage} alt="event"/>
+            <img className="event-image" src={event.previewImage} alt="event" />
 
             {/* Side bar informaton event */}
             <div className="event-side-details">
@@ -75,15 +103,15 @@ function EventDetails() {
                 to={`/groups/${event.groupId}`}
               >
                 <div className="group-info-section">
-                    <img
-                      className="group-image"
-                      src={event.Group?.previewImage}
-                      alt="group"
-                    />
+                  <img
+                    className="group-image"
+                    src={group.previewImage}
+                    alt="group"
+                  />
                   <div className="group-name-privacy">
-                    <p className="group-name">{event.Group?.name}</p>
+                    <p className="group-name">{group.name}</p>
                     <p className="group-privacy">
-                      {event.Group?.private ? "Private" : "In Person"}
+                      {group.private ? "Private" : "In Person"}
                     </p>
                   </div>
                 </div>
@@ -117,10 +145,10 @@ function EventDetails() {
                 <div className="flex-column">
                   <i className="fa-solid fa-map-pin fa-2xl event-type-icon"></i>
                   <div className="event-type">
-                    <p>{event.type}{" "}</p>
-                    {user && user.id === event.Group?.Organizer?.id && (
+                    <p>{event.type} </p>
+                    {user && user.id === group.Organizer?.id && (
                       <p>
-                        <DeleteEventModal event={event}/>
+                        <DeleteEventModal event={event} />
                       </p>
                     )}
                   </div>
@@ -131,7 +159,7 @@ function EventDetails() {
         </div>
         <div className="event-description">
           <h2>Description</h2>
-          <p style={{width: '95%'}}>{event.description}</p>
+          <p style={{ width: "95%" }}>{event.description}</p>
         </div>
       </div>
     )
