@@ -44,7 +44,7 @@ router.get("/", async (req, res, next) => {
         ],
       ],
     },
-    group: "Group.id",
+    group: ["Group.id", 'GroupImages.id'],
   });
 
   const groupArr = [];
@@ -92,7 +92,7 @@ router.get("/currentUser", requireAuth, async (req, res, next) => {
           ],
         ],
       },
-      group: "Group.id",
+      group: ["Group.id", "GroupImages.id"],
     });
 
     // find all groups joined
@@ -122,7 +122,7 @@ router.get("/currentUser", requireAuth, async (req, res, next) => {
           ],
         ],
       },
-      group: "Group.id",
+      group: ["Group.id", "GroupImages.id"],
     });
 
     return res.json({
@@ -266,7 +266,7 @@ router.get("/:groupId/events", async (req, res, next) => {
       ],
       exclude: ["price", "capacity"],
     },
-    group: ["Group.id", "Event.id", "Venue.id"],
+    group: ["Group.id", "Event.id", "Venue.id", 'EventImages.id'],
   });
 
   event.map(el => {
