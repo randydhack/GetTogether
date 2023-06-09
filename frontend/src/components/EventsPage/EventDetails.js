@@ -4,25 +4,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { getEventDetail } from "../../store/event";
 import DeleteEventModal from "./DeleteEventModal";
-import { getGroup } from "../../store/group";
 
 function EventDetails() {
   const dispatch = useDispatch();
   const { eventId } = useParams();
 
-  const events = useSelector((state) => state.eventState);
-  const groups = useSelector((state) => state.groupState);
+  const event = useSelector((state) => state.eventState[eventId]);
   const user = useSelector((state) => state.session.user);
   const [isLoaded, setIsLoaded] = useState(false);
 
-  const event = events[eventId];
-  const group = groups[event?.groupId];
-
   useEffect(() => {
     (async () => {
-      const event = await dispatch(getEventDetail(eventId))
-      console.log(event.groupId)
-      await dispatch(getGroup(event?.groupId))
+      await dispatch(getEventDetail(eventId))
       setIsLoaded(true);
     })();
   }, [dispatch, eventId]);
@@ -83,7 +76,7 @@ function EventDetails() {
           <div>
             <h1 className="event-name">{event?.name}</h1>
             <p className="organizer-name">
-              Hosted by {group.Organizer?.firstName} {group.Organizer?.lastName}
+              Hosted by {event.Group.Organizer?.firstName} {event.Group.Organizer?.lastName}
             </p>
           </div>
         </div>
@@ -103,13 +96,13 @@ function EventDetails() {
                 <div className="group-info-section">
                   <img
                     className="group-image"
-                    src={group.previewImage}
+                    src={event.Group.previewImage}
                     alt="group"
                   />
                   <div className="group-name-privacy">
-                    <p className="group-name">{group.name}</p>
+                    <p className="group-name">{event.Group.name}</p>
                     <p className="group-privacy">
-                      {group.private ? "Private" : "In Person"}
+                      {event.Group.private ? "Private" : "In Person"}
                     </p>
                   </div>
                 </div>
@@ -144,7 +137,7 @@ function EventDetails() {
                   <i className="fa-solid fa-map-pin fa-2xl event-type-icon"></i>
                   <div className="event-type">
                     <p>{event.type} </p>
-                    {user && user.id === group.Organizer?.id && (
+                    {user && user.id === event.Group.Organizer?.id && (
                       <p>
                         <DeleteEventModal event={event} />
                       </p>
