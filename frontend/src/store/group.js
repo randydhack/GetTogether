@@ -118,7 +118,7 @@ export const addGroupImage = (url, groupId) => async dispatch => {
       url: url,
       preview: true
     }),
-  });
+  })
 
   if (response.ok) {
     const image = await response.json()
@@ -154,7 +154,7 @@ const groupReducer = (state = {}, action) => {
   switch (action.type) {
     case ALL_GROUPS:
       newState = {};
-      action.groups.Groups.forEach((group) => (newState[group.id] = group));
+      action.groups?.Groups?.forEach((group) => (newState[group.id] = group));
       return newState;
 
     case GET_GROUP:
