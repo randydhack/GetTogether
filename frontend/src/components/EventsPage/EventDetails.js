@@ -55,8 +55,8 @@ function EventDetails() {
           <div>
             <h1 className="event-name">{event?.name}</h1>
             <p className="organizer-name">
-              Hosted by {event.Group?.Organizer.firstName}{" "}
-              {event.Group?.Organizer.lastName}
+              Hosted by {event.Group?.Organizer?.firstName}{" "}
+              {event.Group?.Organizer?.lastName}
             </p>
           </div>
         </div>
