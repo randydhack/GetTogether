@@ -20,9 +20,11 @@ module.exports = {
           capacity: 10,
           price: 1.0,
           description:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Congue quisque egestas diam in arcu cursus euismod quis. Ac placerat vestibulum lectus mauris.'          startDate: "2023-11-19 16:00:00",
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Congue quisque egestas diam in arcu cursus euismod quis. Ac placerat vestibulum lectus mauris.",
+          startDate: "2023-11-19 16:00:00",
           endDate: "2023-11-19 19:00:00",
-          previewImage: "https://historicbridges.org/ohio/mainavenue/little_main_9000_1_2vib.jpg",
+          previewImage:
+            "https://historicbridges.org/ohio/mainavenue/little_main_9000_1_2vib.jpg",
         },
         {
           groupId: 2,
@@ -32,9 +34,11 @@ module.exports = {
           capacity: 25,
           price: 0.0,
           description:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Congue quisque egestas diam in arcu cursus euismod quis. Ac placerat vestibulum lectus mauris.'          startDate: "2021-11-19 12:00:00",
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Congue quisque egestas diam in arcu cursus euismod quis. Ac placerat vestibulum lectus mauris.",
+          startDate: "2021-11-19 12:00:00",
           endDate: "2021-11-19 16:00:00",
-          previewImage: "https://historicbridges.org/ohio/mainavenue/little_main_9000_1_2vib.jpg",
+          previewImage:
+            "https://historicbridges.org/ohio/mainavenue/little_main_9000_1_2vib.jpg",
         },
         {
           groupId: 3,
@@ -44,7 +48,8 @@ module.exports = {
           capacity: 10,
           price: 20.99,
           description:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Congue quisque egestas diam in arcu cursus euismod quis. Ac placerat vestibulum lectus mauris.'          startDate: "2024-04-07 12:00:00",
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Congue quisque egestas diam in arcu cursus euismod quis. Ac placerat vestibulum lectus mauris.",
+          startDate: "2024-04-07 12:00:00",
           endDate: "2024-04-07 18:00:00",
           previewImage:
             "https://historicbridges.org/ohio/mainavenue/little_main_9000_1_2vib.jpg",
@@ -56,7 +61,8 @@ module.exports = {
           type: "Online",
           capacity: 80,
           price: 0.0,
-          description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Congue quisque egestas diam in arcu cursus euismod quis. Ac placerat vestibulum lectus mauris.',
+          description:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Congue quisque egestas diam in arcu cursus euismod quis. Ac placerat vestibulum lectus mauris.",
           startDate: "2024-11-19 08:00:00",
           endDate: "2024-11-19 12:00:00",
           previewImage:
