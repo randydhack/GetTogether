@@ -111,7 +111,7 @@ router.get("/:eventId", async (req, res, next) => {
     include: [
       {
         model: Group,
-        attributes: ["id", "name", "private", "city", "state"],
+        attributes: ["id", "name", "private", "city", "state", 'previewImage'],
         include: [{
           model: User,
           as: "Organizer",
@@ -145,7 +145,7 @@ router.get("/:eventId", async (req, res, next) => {
         [sequelize.fn("COUNT", sequelize.col("Attendees.id")), "numAttendees"],
       ],
     },
-    group: ["Event.id", "Group.id", "Venue.id", "EventImages.id"],
+    group: ["Event.id", "Group.id", "Venue.id", "EventImages.id", "Group.Organizer.id"],
   });
 
   const eventJSON = event.toJSON();

@@ -21,6 +21,7 @@ function EventDetails() {
     })();
   }, [dispatch, eventId]);
 
+  console.log(event)
   const fullDate = (data) => {
     const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
     const monthNames = ["January", "February", "March", "April", "May", "June",
@@ -76,7 +77,7 @@ function EventDetails() {
                 <div className="group-info-section">
                     <img
                       className="group-image"
-                      src={event.Group?.GroupImages ? event.Group.GroupImages[0].url : null}
+                      src={event.Group?.previewImage}
                       alt="group"
                     />
                   <div className="group-name-privacy">

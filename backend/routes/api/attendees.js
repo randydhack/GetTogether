@@ -5,7 +5,7 @@ const { Op } = require("sequelize");
 
 const { requireAuth, } = require("../../utils/auth");
 const { } = require('../../utils/validation');
-const { User, Group, Membership, Venue, sequelize, Image, Event, Attendee} = require("../../db/models");
+const { User, Group, Membership, Event, Attendee} = require("../../db/models");
 
 // Get all attendees by eventId
 router.get('/:eventId', async (req, res, next) => {
