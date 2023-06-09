@@ -83,7 +83,7 @@ router.get("/", paginationValidation, async (req, res, next) => {
     const event = events[i];
     const eventJSON = event.toJSON();
 
-    eventJSON.previewImage = eventJSON.EventImages[0].url;
+    eventJSON.previewImage = eventJSON.EventImages[0] ? eventJSON.EventImages[0].url : null;
     eventJSON.numAttending = await event.countAttendees();
     eventArr.push(eventJSON);
   }
