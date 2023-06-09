@@ -61,7 +61,7 @@ export const editGroup = (group) => {
 export const fetchGroups = () => async (dispatch) => {
   const response = await fetch("/api/groups");
   const groups = await response.json();
-  await dispatch(allGroups(groups));
+  dispatch(allGroups(groups));
 };
 
 // Get a group
@@ -73,7 +73,7 @@ export const getGroup = (groupId) => async (dispatch) => {
 
   if (res.ok) {
     const group = await res.json();
-    await dispatch(singleGroup(group));
+    dispatch(singleGroup(group));
     return group;
   }
 };
@@ -94,7 +94,7 @@ export const createGroup = (group) => async (dispatch) => {
 
   if (response.ok) {
     const groupData = await response.json();
-    await dispatch(newGroup(groupData));
+    dispatch(newGroup(groupData));
     return groupData;
   }
 };
@@ -106,7 +106,7 @@ export const deleteGroup = (groupId) => async dispatch => {
   })
 
   if (response.ok) {
-    await dispatch(removeGroup(groupId))
+    dispatch(removeGroup(groupId))
   }
 }
 
@@ -122,7 +122,7 @@ export const addGroupImage = (url, groupId) => async dispatch => {
 
   if (response.ok) {
     const image = await response.json()
-    await dispatch(addImage(image, groupId))
+    dispatch(addImage(image, groupId))
     return image
   }
 }
@@ -142,7 +142,7 @@ export const updateGroup = (group, groupId) => async dispatch => {
 
   if (response.ok) {
     const groupData = await response.json();
-    await dispatch(editGroup(groupData));
+    dispatch(editGroup(groupData));
     return groupData;
   }
 }
@@ -154,7 +154,7 @@ const groupReducer = (state = {}, action) => {
   switch (action.type) {
     case ALL_GROUPS:
       newState = {};
-      action.groups?.Groups?.forEach((group) => (newState[group.id] = group));
+      action.groups.Groups.forEach((group) => (newState[group.id] = group));
       return newState;
 
     case GET_GROUP:
