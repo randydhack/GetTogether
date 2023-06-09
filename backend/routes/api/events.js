@@ -145,7 +145,7 @@ router.get("/:eventId", async (req, res, next) => {
         [sequelize.fn("COUNT", sequelize.col("Attendees.id")), "numAttendees"],
       ],
     },
-    group: ["Event.id", "Group.id", "EventImages.id", "Venue.id"],
+    group: ["Event.id", "Group.id", "Venue.id"],
   });
 
   const eventJSON = event.toJSON();
