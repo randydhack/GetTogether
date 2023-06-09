@@ -134,7 +134,7 @@ function SignupForm() {
             required
           />
         </label>
-        <button className={disableSignup || "sign-up-submit"}>Sign Up</button>
+        <button className={`${(disableSignup || "sign-up-submit")} sign-up-confirm`}>Sign Up</button>
       </form>
     </>
   );

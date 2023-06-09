@@ -30,7 +30,7 @@ function Navigation({ isLoaded }) {
     <div className="session-links">
       <div>
         <NavLink exact to="/" className="home-button">
-          GatherUp
+          gatherUp
         </NavLink>
       </div>
       {isLoaded && sessionLinks}

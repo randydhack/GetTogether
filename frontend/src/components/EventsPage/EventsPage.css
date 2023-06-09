@@ -57,16 +57,30 @@
 }
 
 .event-location {
-    color: grey;
-    margin-top: 0px;
+    margin-top: 23px;
+    color: rgb(124 111 80);
+    margin-bottom: 0px;
 }
 
 .event-title {
-    margin: 5px 0px;
+    margin: 0px;
 }
 
 .event-about {
-overflow:scroll;
-  text-overflow: ellipsis;
-  max-height: 100px;
+    white-space:nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 680px;
+    margin: 10px 0px 0px 0px;
+    color: gray;
+    font-weight: 300;
+
+}
+
+.font-size-md {
+    font-size: medium;
+}
+
+.font-uppercase {
+    text-transform:uppercase;
 }

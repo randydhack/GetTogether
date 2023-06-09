@@ -49,20 +49,20 @@ function GroupsPage() {
                   src={group.previewImage}
                   alt="group"
                   style={{
-                    width: "200px",
-                    height: "140px",
+                    width: "170px",
+                    height: "90px",
                     borderRadius: "5px",
                   }}
                 />
                 <div className="group-info">
                   <h2 className="group-name">{group.name}</h2>
-                  <p className="group-location" style={{ color: "grey" }}>
+                  <p className="group-location">
                     {group.city}, {group.state}
                   </p>
                   <p className="group-about" maxLength="25">
                     {group.about}
                   </p>
-                  <p className="group-event" style={{ color: "grey" }}>
+                  <p className="group-members" style={{ color: "grey" }}>
                     {group.numMembers} Members ·{" "}
                     {group.private ? "Private" : "Public"}
                   </p>
