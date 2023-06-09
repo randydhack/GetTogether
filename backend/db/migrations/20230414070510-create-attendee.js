@@ -17,13 +17,13 @@ module.exports = {
       eventId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: { model: 'Events' },
+        references: { model: 'Event' },
         onDelete: 'CASCADE'
       },
       userId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: {model: 'Users'},
+        references: {model: 'User'},
         onDelete: 'CASCADE'
       },
       status: {
