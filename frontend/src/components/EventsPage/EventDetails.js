@@ -18,10 +18,10 @@ function EventDetails() {
   const event = events[eventId];
   const group = groups[event?.groupId];
 
-
   useEffect(() => {
     (async () => {
-      await dispatch(getEventDetail(eventId)).then(async data => await dispatch(getGroup(data.groupId)));
+      const event = await dispatch(getEventDetail(eventId))
+      await dispatch(getGroup(event.groupId))
       setIsLoaded(true);
     })();
   }, [dispatch, eventId]);
@@ -82,8 +82,7 @@ function EventDetails() {
           <div>
             <h1 className="event-name">{event?.name}</h1>
             <p className="organizer-name">
-              Hosted by {group.Organizer?.firstName}{" "}
-              {group.Organizer?.lastName}
+              Hosted by {group.Organizer?.firstName} {group.Organizer?.lastName}
             </p>
           </div>
         </div>
