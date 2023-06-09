@@ -66,7 +66,7 @@ function GroupDetails() {
     isLoaded &&
     group.previewImage && (
       <div className="group-detail-container">
-        <div>
+        <div className="group-detail-col">
           <div className="section-1-detail">
             <div className="back-button-container">
               <Link to="/groups" className="back-button">
@@ -76,7 +76,6 @@ function GroupDetails() {
             <div className="group-details">
               <img
                 style={{
-                  width: "100%",
                   height: "350px",
                   borderRadius: "15px",
                 }}
@@ -135,22 +134,20 @@ function GroupDetails() {
               </div>
             </div>
           </div>
-        </div>
-
-        {/* Section 2 */}
-        <div style={{width: '100%'}}>
-          <div className="group-detail-section-2">
+          <div style={{ width: "100%" }} className="group-detail-section-2">
             <div className="section-2-container">
               <div>
-                <h2 style={{ marginBottom: "10px" }}>Organizer</h2>
+                <h2 style={{ marginBottom: "10px", width: "fit-content" }}>
+                  Organizer
+                </h2>
                 <p style={{ margin: "0px 0px", color: "grey" }}>
                   {group.Organizer?.firstName} {group.Organizer?.lastName}
                 </p>
               </div>
 
               <div>
-                <h2>What we're about</h2>
-                <p style={{width: '100%'}}>{group.about}</p>
+                <h2 style={{ width: "fit=content" }}>What we're about</h2>
+                <p style={{ width: "fit-content" }}>{group.about}</p>
               </div>
 
               {!upcomingEvent.length && !pastEvent.length && (
@@ -227,12 +224,7 @@ function GroupDetails() {
                           <div className="event-container">
                             <img
                               src={event.previewImage}
-                              className="cursor-pointer"
-                              style={{
-                                width: "200px",
-                                height: "150px",
-                                borderRadius: "5px",
-                              }}
+                              className="cursor-pointer past-upcoming-event-photo"
                             />
 
                             <div className="location-info">
@@ -270,6 +262,8 @@ function GroupDetails() {
             </div>
           </div>
         </div>
+
+        {/* Section 2 */}
       </div>
     )
   );
