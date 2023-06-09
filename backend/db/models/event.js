@@ -16,19 +16,19 @@ module.exports = (sequelize, DataTypes) => {
         as: 'EventImages',
         scope: {
           imageableType: 'Event'
-        }
+        },
       });
 
       Event.belongsTo(models.Venue, {
-        foreignKey: 'venueId'
+        foreignKey: 'venueId',
       })
 
       Event.belongsTo(models.Group, {
-        foreignKey: 'groupId'
+        foreignKey: 'groupId',
       })
 
       Event.hasMany(models.Attendee, {
-        foreignKey: 'eventId'
+        foreignKey: 'eventId',
       })
     }
   }

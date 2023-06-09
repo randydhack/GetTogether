@@ -1,0 +1,72 @@
+.create-group-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0px;
+    padding: 0px 20px;
+}
+
+.container-headers {
+    margin-right: 150px;
+}
+
+.container-headers h1{
+    font-size: 14px;
+    color: rgb(0, 79, 61);
+    font-weight: 400;
+    margin-bottom: 0px;
+}
+
+.container-headers h2{
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.border-line {
+    margin-top: 30px;
+    border-top: 3px solid grey;
+}
+
+.section-title {
+    margin-top: 10px;
+}
+
+.input-box {
+    width: 200px;
+}
+
+.text-area-box {
+    resize: none;
+    width: 450px;
+    height: 150px;
+}
+
+.create-group-button {
+    cursor: pointer;
+    margin-top: 20px;
+    font-size: 21px;
+    width: 200px;
+    height: 50px;
+    color: white;
+    border: 2px black solid;
+    box-shadow: 2px 2px 2px black;
+    background-color: red;
+}
+
+.state-input-box {
+    margin-left: 20px;
+}
+
+.city-state-field {
+    display: flex;
+}
+
+.error-message {
+    color: red;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.text-area-box::placeholder {
+    font-family: 'Nunito', sans-serif;
+}

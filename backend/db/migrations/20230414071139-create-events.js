@@ -12,14 +12,17 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       groupId: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: false,
+        references: { model: "Groups" },
+        onDelete: 'CASCADE'
       },
       venueId: {
         type: Sequelize.INTEGER,
+        allowNull: true,
       },
       name: {
         type: Sequelize.STRING,

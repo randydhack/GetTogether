@@ -1,19 +1,24 @@
 import { Link, useParams } from "react-router-dom";
 import "./EventDetails.css";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getEventDetail } from "../../store/event";
-import { fetchGroups, getGroup } from "../../store/group";
+import DeleteEventModal from "./DeleteEventModal";
 
 function EventDetails() {
   const dispatch = useDispatch();
   const { eventId } = useParams();
-  const event = useSelector((state) => state.eventState[eventId]);
 
-  console.log(event)
+  const event = useSelector((state) => state.eventState[eventId]);
+  const user = useSelector((state) => state.session.user);
+
+  const [isLoaded, setIsLoaded] = useState(false);
+
   useEffect(() => {
-    dispatch(getEventDetail(eventId));
-    dispatch(fetchGroups());
+    (async () => {
+      await dispatch(getEventDetail(eventId))
+      setIsLoaded(true)
+    })();
   }, [dispatch, eventId]);
 
   const fullDate = (data) => {
@@ -30,47 +35,50 @@ function EventDetails() {
     hours = hours ? hours : 12; // the hour '0' should be '12'
     minutes = minutes < 10 ? "0" + minutes : minutes;
 
-    return `${year}/${month}/${date} · ${hours}:${minutes} ${ampm}`;
+    return `${month}/${date}/${year} · ${hours}:${minutes} ${ampm}`;
   };
 
   return (
-    event && (
-      <div className="container">
+    isLoaded && (
+      <div className="events-detail-container">
         {/* Section 1 */}
-        <div className="wrapper">
-          <div className="event-details-section-1">
-            <div>
-              <Link to="/events">Back to events</Link>
-            </div>
-            <div>
-              <h1 className="event-name">{event.name}</h1>
-              <p className="organizer-name">
-                {event?.Group.name}
-              </p>
-            </div>
+
+        <div className="event-details-section-1">
+          <div>
+            <Link to="/events">Back to events</Link>
+          </div>
+          <div>
+            <h1 className="event-name">{event.name}</h1>
+            <p className="organizer-name">
+              Hosted by {event.Group?.Organizer.firstName}{" "}
+              {event.Group?.Organizer.lastName}
+            </p>
           </div>
         </div>
 
         {/* Section 2 */}
-        <div className="wrapper wrapper-details">
-          <div className="event-details-section-2">
-            <div>
-              <img className="event-image" src={event.previewImage} />
-            </div>
+        <div className="event-details-section-2">
+          {/* image */}
+          <div className="main-event-container">
+            <img className="event-image" src={event.previewImage} alt="event"/>
 
             {/* Side bar informaton event */}
             <div className="event-side-details">
-              <Link className="group-link" to={`/groups/${event.groupId}`}>
+              <Link
+                className="event-group-link"
+                to={`/groups/${event.groupId}`}
+              >
                 <div className="group-info-section">
-                  <div>
                     <img
                       className="group-image"
-                      src="https://images.pexels.com/photos/976866/pexels-photo-976866.jpeg?cs=srgb&dl=pexels-josh-sorenson-976866.jpg&fm=jpg"
+                      src={event.Group?.GroupImages[0].url}
+                      alt="group"
                     />
-                  </div>
                   <div className="group-name-privacy">
-                    <p className="group-name">{event?.Group.name}</p>
-                    <p className="group-privacy">{event?.Group.private ? 'Private' : 'In Person'}</p>
+                    <p className="group-name">{event.Group?.name}</p>
+                    <p className="group-privacy">
+                      {event.Group?.private ? "Private" : "In Person"}
+                    </p>
                   </div>
                 </div>
               </Link>
@@ -102,17 +110,22 @@ function EventDetails() {
                 </div>
                 <div className="flex-column">
                   <i className="fa-solid fa-map-pin fa-2xl event-type-icon"></i>
-                  <p className="event-type">{event.type}</p>
+                  <p className="event-type">
+                    {event.type}{" "}
+                    {user && user.id === event.Group?.Organizer?.id && (
+                      <span>
+                        <DeleteEventModal event={event}/>
+                      </span>
+                    )}
+                  </p>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div className="wrapper">
-          <div className="event-description">
-            <h2>Description</h2>
-            <p>{event.description}</p>
-          </div>
+        <div className="event-description">
+          <h2>Description</h2>
+          <p style={{width: '95%'}}>{event.description}</p>
         </div>
       </div>
     )

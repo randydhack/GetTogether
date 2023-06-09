@@ -7,10 +7,10 @@ const handleValidationErrors = (req, _res, next) => {
   const validationErrors = validationResult(req);
 
   if (!validationErrors.isEmpty()) {
-    const errors = [];
+    const errors = {};
     validationErrors
       .array()
-      .forEach(error => errors.push(error.msg));
+      .forEach((error) => (errors[error.param] = error.msg));
 
     const err = Error("Validation Error");
     err.status = 400;
@@ -28,7 +28,7 @@ const validateSignup = [
     .withMessage("Invalid email"),
    check('username')
     .isLength({min: 4})
-    .withMessage('Please provide a username with at least 4 characters.'),
+    .withMessage('Username must be 4 characters or more'),
   check('password')
     .isLength({ min: 6 })
     .withMessage('Password must be 6 characters or more.'),
@@ -55,7 +55,7 @@ const validateLogin = [
 // Validate Create Group
 const validateGroupCreate = [
   check('name')
-    .isLength({ max: 60 })
+    .isLength({ min: 3 ,max: 60 })
     .withMessage('Name must be 60 characters or less'),
   check('about')
     .isLength({ min: 50 })
@@ -112,8 +112,8 @@ const validateEvent = [
     .isDecimal()
     .withMessage('Price is invalid'),
   check('description')
-    .exists({checkFalsy: true})
-    .withMessage('Description is required'),
+    .isLength({ min: 30 })
+    .withMessage('Description must be at least 30 characters long'),
   check('startDate')
     .custom((value, {req})=> {
       const date = new Date()

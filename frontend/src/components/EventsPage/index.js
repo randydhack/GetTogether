@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { fetchEvent } from "../../store/event";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -9,20 +9,11 @@ function EventsPage() {
   const dispatch = useDispatch();
 
   const events = useSelector((state) => Object.values(state.eventState));
-
-  const sortEventByDate = events.sort((a, b) => {
-    const timeA = a.startDate
-    const timeB = b.startDate
-
-    const convertTimeA = new Date(timeA).getTime()
-    const convertTimeB= new Date(timeB).getTime()
-
-    return convertTimeB - convertTimeA
-  })
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    dispatch(fetchEvent());
-  }, [dispatch, fetchEvent]);
+    dispatch(fetchEvent()).then(() => setIsLoaded(true));
+  }, [dispatch]);
 
   const fullDate = (data) => {
     const eventDate = new Date(data);
@@ -38,14 +29,27 @@ function EventsPage() {
     hours = hours ? hours : 12; // the hour '0' should be '12'
     minutes = minutes < 10 ? "0" + minutes : minutes;
 
-    return `${year}/${month}/${date} · ${hours}:${minutes} ${ampm}`;
+    return `${month}/${date}/${year} · ${hours}:${minutes} ${ampm}`;
   };
 
+  const sortEventByDate = events.sort((a, b) => {
+    const timeA = a.startDate;
+    const timeB = b.startDate;
+
+    const convertTimeA = new Date(timeA).getTime();
+    const convertTimeB = new Date(timeB).getTime();
+
+    return convertTimeB - convertTimeA;
+  });
+
+  const shortenDescription = (description) => {
+    return description.split(".").slice(0, 5).join(".");
+  };
   return (
-    events && (
-      <div className="container">
+    isLoaded && (
+      <div className="all-events-container">
         <div className="events-nav">
-          <Link>Events</Link>
+          <span>Events</span>
           <Link to="/groups" className="groups-link">
             Groups
           </Link>
@@ -72,6 +76,7 @@ function EventsPage() {
                 <div className="flex-row">
                   <img
                     src={event.previewImage}
+                    alt="event"
                     style={{
                       width: "200px",
                       height: "120px",
@@ -87,7 +92,9 @@ function EventsPage() {
                   </div>
                 </div>
                 <div>
-                  <p>{event.description.split('.').slice(0,5).join()}.</p>
+                  <p className="event-about">
+                    {event.description && shortenDescription(event.description)}
+                  </p>
                 </div>
               </div>
             </Link>

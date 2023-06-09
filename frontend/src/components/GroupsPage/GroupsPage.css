@@ -1,4 +1,4 @@
-.container {
+.all-group-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -15,11 +15,12 @@
     font-size: 26px;
 }
 
-.event-group-heading a:last-child {
+.event-group-heading span {
     margin-left: 20px;
     text-decoration: underline;
     color: rgb(9, 77, 77);
     pointer-events: none;
+    font-size: 26px;
 }
 
 .group-container {
@@ -30,8 +31,12 @@
     width: 700px;
 }
 
+.group-container:hover {
+    background-color: rgb(235, 235, 235);
+}
 .group-info {
     margin-left: 20px;
+    word-break: break-word;
 }
 
 .group-name {
@@ -45,6 +50,10 @@
 
 .group-about {
     margin: 8px 0px;
+    overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 450px;
 }
 
 .group-event {

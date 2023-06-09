@@ -12,12 +12,12 @@ module.exports = (sequelize, DataTypes) => {
         as: 'GroupImages',
         scope: {
           imageableType: 'Group'
-        }
+        },
       });
 
       Group.belongsTo(models.User, {
         foreignKey: 'organizerId',
-        as: 'Organizer'
+        as: 'Organizer',
       })
 
       Group.hasMany(models.Membership, {
@@ -25,11 +25,11 @@ module.exports = (sequelize, DataTypes) => {
       })
 
       Group.hasMany(models.Event, {
-        foreignKey: 'groupId'
+        foreignKey: 'groupId',
       })
 
       Group.hasMany(models.Venue, {
-        foreignKey: 'groupId'
+        foreignKey: 'groupId',
       })
 
     }

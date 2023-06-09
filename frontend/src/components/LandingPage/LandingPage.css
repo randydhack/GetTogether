@@ -41,7 +41,24 @@
     margin-bottom: 10px;
 }
 
-.landing-page-section-3 a {
+.disabled-start-group {
+    cursor: default;
+    font-size: 20px;
+    color: gray;
+    margin: 0px;
+}
+
+.all-groups-link, .all-events-link {
+    text-decoration: none;
+    font-size: 20px;
+    color: rgb(9, 77, 77)
+}
+
+.all-groups-link:hover, .all-events-link:hover, .start-group-link:hover {
+    text-decoration: underline;
+}
+
+.start-group-link {
     text-decoration: none;
     font-size: 20px;
     color: rgb(9, 77, 77)
@@ -78,7 +95,7 @@
     text-align: center;
 }
 
-.section-4-button a {
+.section-4-button button {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -91,4 +108,6 @@
     box-shadow: 5px 5px 10px #000000e1;
     margin-bottom: 20px;
     border-radius: 8px;
+    border: 1px black solid;
+    cursor: pointer;
 }
