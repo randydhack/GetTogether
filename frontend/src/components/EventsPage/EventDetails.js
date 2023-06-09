@@ -13,13 +13,11 @@ function EventDetails() {
   const events = useSelector((state) => state.eventState);
   const groups = useSelector((state) => state.groupState);
   const user = useSelector((state) => state.session.user);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   const event = events[eventId];
   const group = groups[event?.groupId];
 
-  const [isLoaded, setIsLoaded] = useState(false);
-  console.log(event);
-  console.log(group)
 
   useEffect(() => {
     (async () => {
