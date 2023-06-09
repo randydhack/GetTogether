@@ -162,7 +162,7 @@ router.get("/:groupId", async (req, res, next) => {
         attributes: [],
       },
     ],
-    group: ["GroupImages.id", "Group.id", "Organizer.id", "Venues.id"],
+    group: ["Group.id", "Organizer.id", "Venues.id"],
   });
 
   if (!group) {
