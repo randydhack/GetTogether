@@ -53,7 +53,7 @@ function EventDetails() {
             <Link to="/events">Back to events</Link>
           </div>
           <div>
-            <h1 className="event-name">{event.name}</h1>
+            <h1 className="event-name">{event?.name}</h1>
             <p className="organizer-name">
               Hosted by {event.Group?.Organizer.firstName}{" "}
               {event.Group?.Organizer.lastName}
