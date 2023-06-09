@@ -22,7 +22,6 @@
 .group-details {
     display: flex;
     margin-bottom: 30px;
-    width: 100%;
 }
 
 .group-detail-info {
@@ -30,7 +29,6 @@
     justify-content: space-between;
     flex-direction: column;
     margin-left: 30px;
-    width: 100%;
 }
 
 .group-detail-info h1 {
@@ -39,6 +37,10 @@
     inline-size: 425px;
     overflow-wrap: break-word;
     width: fit-content;
+}
+
+.past-upcoming-event-photo {
+    width: 140px;
 }
 
 .join-group-button {
@@ -61,21 +63,18 @@
 .group-detail-section-2 {
     display: flex;
     flex-direction: column;
-    background-color: rgb(234, 234, 234);
-    box-shadow: 0px -2px 10px rgba(50, 50, 50, 0.25);
-    border-top: 1px solid lightgray;
-    align-items: center;
+    border-top: 1px solid gray;
 }
 
 .section-2-container {
     display: flex;
     flex-direction: column;
-    margin-left: 50px;
+    text-align: left;
 }
 /* event section */
 
 .past-events, .upcoming-events {
-    background-color: white;
+    background-color: #f9f9f9;
     border-radius: 15px;
     height: fit-content;
     margin: 20px 0px;
@@ -145,4 +144,8 @@ flex-direction: row;
 .event-link-container {
     text-decoration: none;
     color: black;
+}
+
+.group-detail-col {
+    flex-direction: column;
 }

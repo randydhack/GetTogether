@@ -111,11 +111,11 @@ function EventDetails() {
                 <div className="flex-column">
                   <i className="fa-solid fa-map-pin fa-2xl event-type-icon"></i>
                   <p className="event-type">
-                    {event.type}{" "}
+                    <p>{event.type}{" "}</p>
                     {user && user.id === event.Group?.Organizer?.id && (
-                      <span>
+                      <p>
                         <DeleteEventModal event={event}/>
-                      </span>
+                      </p>
                     )}
                   </p>
                 </div>

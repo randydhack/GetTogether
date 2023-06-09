@@ -78,9 +78,9 @@ function EventsPage() {
                     src={event.previewImage}
                     alt="event"
                     style={{
-                      width: "200px",
-                      height: "120px",
-                      borderRadius: "5px",
+                      width: "142px",
+                      height: "95px",
+                      borderRadius: "3px",
                     }}
                   />
                   <div className="event-details">
