@@ -76,7 +76,7 @@ function EventDetails() {
           <div>
             <h1 className="event-name">{event?.name}</h1>
             <p className="organizer-name">
-              Hosted by {event.Group.Organizer?.firstName} {event.Group.Organizer?.lastName}
+              Hosted by {event.Group?.Organizer?.firstName} {event.Group.Organizer?.lastName}
             </p>
           </div>
         </div>
@@ -96,13 +96,13 @@ function EventDetails() {
                 <div className="group-info-section">
                   <img
                     className="group-image"
-                    src={event.Group.previewImage}
+                    src={event.Group?.previewImage}
                     alt="group"
                   />
                   <div className="group-name-privacy">
-                    <p className="group-name">{event.Group.name}</p>
+                    <p className="group-name">{event.Group?.name}</p>
                     <p className="group-privacy">
-                      {event.Group.private ? "Private" : "In Person"}
+                      {event.Group?.private ? "Private" : "In Person"}
                     </p>
                   </div>
                 </div>
@@ -137,7 +137,7 @@ function EventDetails() {
                   <i className="fa-solid fa-map-pin fa-2xl event-type-icon"></i>
                   <div className="event-type">
                     <p>{event.type} </p>
-                    {user && user.id === event.Group.Organizer?.id && (
+                    {user && user.id === event.Group?.Organizer?.id && (
                       <p>
                         <DeleteEventModal event={event} />
                       </p>
