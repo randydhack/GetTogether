@@ -21,7 +21,7 @@ function EventDetails() {
 
   useEffect(() => {
     (async () => {
-      await dispatch(getEventDetail(eventId)).then(data => dispatch(getGroup(data.groupId)));
+      await dispatch(getEventDetail(eventId)).then(async data => await dispatch(getGroup(data.groupId)));
       setIsLoaded(true);
     })();
   }, [dispatch, eventId]);
