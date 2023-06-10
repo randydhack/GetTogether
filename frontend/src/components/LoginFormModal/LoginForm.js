@@ -74,7 +74,7 @@ function LoginForm() {
             Log In
           </button>}
           <button className="demo-user-button" onClick={demoUser}>
-            Demo User
+            Sign in as Demo User
           </button>
         </div>
       </form>
