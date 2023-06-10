@@ -91,7 +91,7 @@ function CreateGroupForm() {
                   className="state-select"
                   required
                 >
-                  <option value="DEFAULT">(Select One)</option>
+                  <option value='' disabled>(Select One)</option>
                   <option value="AL">AL</option>
                   <option value="AK">AK</option>
                   <option value="AR">AR</option>
