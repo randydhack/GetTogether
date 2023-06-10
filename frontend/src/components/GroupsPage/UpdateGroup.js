@@ -38,7 +38,7 @@ function UpdateGroup() {
       if (data && data.errors) setErrors(data.errors);
     });
 
-    return history.push(`/groups/${groupId}`)
+    return history.push(`/groups/${groupId}`);
   };
 
   return (
@@ -65,7 +65,9 @@ function UpdateGroup() {
               </p>
               <div className="city-state-field">
                 <div>
+                <p style={{margin: '0px'}}>City:</p>
                   <input
+                    required
                     placeholder="City"
                     type="input"
                     className="input-box"
@@ -76,14 +78,70 @@ function UpdateGroup() {
                     <p className="error-message">City is required</p>
                   )}
                 </div>
-                <div>
-                  <input
-                    placeholder="STATE"
-                    type="input"
-                    className="input-box state-input-box"
-                    value={state}
+                <div style={{marginLeft: '20px'}}>
+                  <p style={{margin: '0px'}}>State:</p>
+                  <select
+                    defaultValue="DEFAULT"
                     onChange={(e) => setState(e.target.value)}
-                  ></input>
+                    className="state-select"
+                    value={state}
+                    required
+                  >
+                    <option value="" disabled>
+                      (Select One)
+                    </option>
+                    <option value="AL">AL</option>
+                    <option value="AK">AK</option>
+                    <option value="AR">AR</option>
+                    <option value="AZ">AZ</option>
+                    <option value="CA">CA</option>
+                    <option value="CO">CO</option>
+                    <option value="CT">CT</option>
+                    <option value="DC">DC</option>
+                    <option value="DE">DE</option>
+                    <option value="FL">FL</option>
+                    <option value="GA">GA</option>
+                    <option value="HI">HI</option>
+                    <option value="IA">IA</option>
+                    <option value="ID">ID</option>
+                    <option value="IL">IL</option>
+                    <option value="IN">IN</option>
+                    <option value="KS">KS</option>
+                    <option value="KY">KY</option>
+                    <option value="LA">LA</option>
+                    <option value="MA">MA</option>
+                    <option value="MD">MD</option>
+                    <option value="ME">ME</option>
+                    <option value="MI">MI</option>
+                    <option value="MN">MN</option>
+                    <option value="MO">MO</option>
+                    <option value="MS">MS</option>
+                    <option value="MT">MT</option>
+                    <option value="NC">NC</option>
+                    <option value="NE">NE</option>
+                    <option value="NH">NH</option>
+                    <option value="NJ">NJ</option>
+                    <option value="NM">NM</option>
+                    <option value="NV">NV</option>
+                    <option value="NY">NY</option>
+                    <option value="ND">ND</option>
+                    <option value="OH">OH</option>
+                    <option value="OK">OK</option>
+                    <option value="OR">OR</option>
+                    <option value="PA">PA</option>
+                    <option value="RI">RI</option>
+                    <option value="SC">SC</option>
+                    <option value="SD">SD</option>
+                    <option value="TN">TN</option>
+                    <option value="TX">TX</option>
+                    <option value="UT">UT</option>
+                    <option value="VT">VT</option>
+                    <option value="VA">VA</option>
+                    <option value="WA">WA</option>
+                    <option value="WI">WI</option>
+                    <option value="WV">WV</option>
+                    <option value="WY">WY</option>
+                  </select>
                   {errors.state && (
                     <p className="error-message state-input-box">
                       State is required
@@ -105,6 +163,7 @@ function UpdateGroup() {
                 later if you change your mind.
               </p>
               <input
+                required
                 placeholder="What is your group's name?"
                 type="input"
                 className="input-box"
@@ -132,6 +191,7 @@ function UpdateGroup() {
                 <li>What will you do at your events?</li>
               </ol>
               <textarea
+                required
                 placeholder="Please write at least 50 characters"
                 type="input"
                 className="text-area-box"
@@ -153,6 +213,7 @@ function UpdateGroup() {
               <select
                 onChange={(e) => setType(e.target.value)}
                 defaultValue={type}
+                required
               >
                 <option value="" disabled>
                   (Select One)
@@ -166,6 +227,7 @@ function UpdateGroup() {
 
               <p>Is this group public or private?</p>
               <select
+                required
                 onChange={(e) => setPrivated(e.target.value)}
                 defaultValue={privated}
               >
