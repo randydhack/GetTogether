@@ -160,12 +160,12 @@ function GroupDetails() {
                       </Link>
                     </button>
                     <button
-                      style={{ margin: "0px 10px" }}
+                      style={{ margin: "0px 10px"}}
                       className="organizer-buttons edit-delete-button"
                     >
                       <Link
                         to={`/group/${group.id}/edit`}
-                        style={{ color: "black", textDecoration: "none" }}
+                        style={{ color: "whitesmoke", textDecoration: "none" }}
                       >
                         Edit
                       </Link>
