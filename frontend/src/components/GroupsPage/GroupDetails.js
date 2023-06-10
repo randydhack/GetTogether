@@ -96,7 +96,7 @@ function GroupDetails() {
           <div className="section-1-detail">
             <div className="back-button-container">
               <Link to="/groups" className="back-button">
-                {"Back to groups"}
+              <i className="fa-solid fa-arrow-left"></i><span className="back-to-group">Back to groups</span>
               </Link>
             </div>
             <div className="group-details">
