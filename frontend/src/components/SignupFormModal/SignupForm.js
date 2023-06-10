@@ -75,6 +75,26 @@ function SignupForm() {
           <p className="sign-up-errors">{errors.confirmPassword}</p>
         )}
         <label>
+          <p className="sign-up-input-title">First Name</p>
+          <input
+            className="input-field"
+            type="text"
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+            required
+          />
+        </label>
+        <label>
+          <p className="sign-up-input-title">Last Name</p>
+          <input
+            className="input-field"
+            type="text"
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+            required
+          />
+        </label>
+        <label>
           <p className="sign-up-input-title">Email</p>
           <input
             className="input-field"
@@ -96,26 +116,6 @@ function SignupForm() {
           />
         </label>
         <label>
-          <p className="sign-up-input-title">First Name</p>
-          <input
-            className="input-field"
-            type="text"
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          <p className="sign-up-input-title">Last Name</p>
-          <input
-            className="input-field"
-            type="text"
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
-            required
-          />
-        </label>
-        <label>
           <p className="sign-up-input-title">Password</p>
           <input
           placeholder="Must be 6 characters long"
@@ -129,7 +129,7 @@ function SignupForm() {
         <label>
           <p className="sign-up-input-title">Confirm Password</p>
           <input
-
+          placeholder="Must match password"
             className="input-field"
             type="password"
             value={confirmPassword}
