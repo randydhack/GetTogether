@@ -24,7 +24,6 @@ function DeleteEvent() {
         e.preventDefault()
 
         const groupId = event.Group.id
-        console.log(groupId)
         await dispatch(deleteEvent(eventId))
         return history.push(`/groups/${groupId}`)
     }
