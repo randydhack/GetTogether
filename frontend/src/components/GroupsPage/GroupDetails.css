@@ -163,3 +163,7 @@ flex-direction: row;
     display: flex;
     align-items: center;
 }
+
+.group-detail-about {
+    word-break: break-word;
+}
