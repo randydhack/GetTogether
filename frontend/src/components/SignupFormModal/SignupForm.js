@@ -87,6 +87,7 @@ function SignupForm() {
         <label>
           <p className="sign-up-input-title">Username</p>
           <input
+          placeholder="Must be 4 characters long"
             className="input-field"
             type="text"
             value={username}
@@ -117,6 +118,7 @@ function SignupForm() {
         <label>
           <p className="sign-up-input-title">Password</p>
           <input
+          placeholder="Must be 6 characters long"
             className="input-field"
             type="password"
             value={password}
@@ -127,6 +129,7 @@ function SignupForm() {
         <label>
           <p className="sign-up-input-title">Confirm Password</p>
           <input
+
             className="input-field"
             type="password"
             value={confirmPassword}
@@ -134,7 +137,7 @@ function SignupForm() {
             required
           />
         </label>
-        <button className={`${(disableSignup || "sign-up-submit")} sign-up-confirm`}>Sign Up</button>
+        {disableSignup ? <button className={`${disableSignup} sign-up-confirm`} disabled>Sign Up</button> : <button className="sign-up-submit sign-up-confirm">Sign Up</button>}
       </form>
     </>
   );
