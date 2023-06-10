@@ -68,9 +68,11 @@ function LoginForm() {
           />
         </label>
         <div className="login-box-button">
-          <button type="submit" className={disableLogin || 'login-button'}>
+          {disableLogin ? <button type="submit" className={disableLogin} disabled>
             Log In
-          </button>
+          </button> : <button type="submit" className={'login-button'}>
+            Log In
+          </button>}
           <button className="demo-user-button" onClick={demoUser}>
             Demo User
           </button>
