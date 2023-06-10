@@ -191,7 +191,7 @@ function GroupDetails() {
                 <h2 style={{ width: "fit=content", marginBottom: "5px" }}>
                   What we're about
                 </h2>
-                <p style={{ width: "fit-content", marginTop: "0px" }}>
+                <p style={{ width: "fit-content", marginTop: "0px" }} className="group-detail-about">
                   {group.about}
                 </p>
               </div>

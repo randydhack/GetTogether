@@ -256,9 +256,7 @@ function CreateGroupForm() {
         </div>
         <button
           type="submit"
-          className={`create-group-button ${
-            errors || imageError ? "scroll-to-top-error" : ""
-          }`}
+          className='create-group-button'
         >
           Create Group
         </button>
