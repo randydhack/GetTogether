@@ -86,7 +86,7 @@ function CreateGroupForm() {
               <div style={{ marginLeft: "20px" }}>
                 <p style={{ margin: "0px" }}>State:</p>
                 <select
-                  defaultValue="DEFAULT"
+                  defaultValue=""
                   onChange={(e) => setState(e.target.value)}
                   className="state-select"
                   required

@@ -69,9 +69,21 @@ function EventsPage() {
     return convertTimeB - convertTimeA;
   });
 
+  const recentEvents = []
+  const pastEvents = []
+
+  sortEventByDate.forEach(el => {
+    const todayYear = new Date().getFullYear()
+    const eventYear = new Date(el.startDate).getFullYear()
+
+    if (todayYear <= eventYear) recentEvents.unshift(el)
+    else pastEvents.unshift(el)
+  })
+
   const shortenDescription = (description) => {
     return description.split(".").slice(0, 5).join(".");
   };
+
   return (
     isLoaded && (
       <div className="all-events-container">
@@ -92,7 +104,46 @@ function EventsPage() {
         >
           Events in GatherUp
         </p>
-        {sortEventByDate.map((event) => {
+        {recentEvents.map((event) => {
+          return (
+            <Link
+              key={event.id}
+              to={`/events/${event.id}`}
+              className="event-link"
+            >
+              <div key={event.id} className="events-container">
+                <div className="flex-row">
+                  <img
+                    src={event.previewImage}
+                    alt="event"
+                    style={{
+                      width: "170px",
+                      height: "90px",
+                      borderRadius: "3px",
+                    }}
+                  />
+                  <div className="event-details">
+                    <p className="event-date font-size-md font-uppercase">
+                      {fullDate(event.endDate)}
+                    </p>
+                    <h2 className="event-title font-size-md font-uppercase">
+                      {event.name}
+                    </h2>
+                    <p className="event-location font-size-md font-uppercase">
+                      {event.Venue.city}, {event.Venue.state}
+                    </p>
+                  </div>
+                </div>
+                <div>
+                  <p className="event-about">
+                    {event.description && shortenDescription(event.description)}
+                  </p>
+                </div>
+              </div>
+            </Link>
+          );
+        })}
+        {pastEvents.map((event) => {
           return (
             <Link
               key={event.id}
