@@ -90,8 +90,7 @@ function GroupDetails() {
   };
 
   return (
-    isLoaded &&
-    group.previewImage && (
+    isLoaded && (
       <div className="group-detail-container">
         <div className="group-detail-col">
           <div className="section-1-detail">
