@@ -43,6 +43,15 @@
     margin-left: 5px;
 }
 
+.back-to-events-container {
+    color: black;
+    text-decoration: none;
+}
+
+.back-button-events {
+    margin-left: 5px;
+}
+
 .event-name {
     margin: 10px 0px 0px 0px;
 }

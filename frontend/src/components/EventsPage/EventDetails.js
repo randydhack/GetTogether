@@ -71,7 +71,7 @@ function EventDetails() {
 
         <div className="event-details-section-1">
           <div>
-            <Link to="/events">Back to events</Link>
+          <Link to="/events" className="back-to-events-container"><i className="fa-solid fa-arrow-left"></i><span className="back-button-events">Back to events</span></Link>
           </div>
           <div>
             <h1 className="event-name">{event?.name}</h1>

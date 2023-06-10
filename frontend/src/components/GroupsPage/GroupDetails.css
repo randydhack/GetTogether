@@ -19,8 +19,13 @@
     margin: 10px 0px;
 }
 
-.back-button:hover {
-    text-decoration: underline;
+.back-button {
+    text-decoration: none;
+    color: black;
+}
+
+.back-to-group {
+    margin-left: 5px;
 }
 
 .section-1-detail {
@@ -84,7 +89,7 @@
 /* event section */
 
 .past-events, .upcoming-events {
-    background-color: #f9f9f9;
+    background-color: #f0f0f0;
     border-radius: 15px;
     height: fit-content;
     margin: 20px 0px;
@@ -147,6 +152,10 @@ flex-direction: row;
 
 .past-event-links {
     text-decoration: none;
+}
+
+.past-events:hover {
+    background-color: lightgray;
 }
 
 .upcoming-event-links {
