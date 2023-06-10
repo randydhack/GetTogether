@@ -42,6 +42,7 @@
 
 .event-image-input {
     width: 70%;
+    min-width: 70px;
 }
 
 .event-date-input {
@@ -53,7 +54,7 @@
 }
 
 .event-price-input {
-    width: 10%;
+    width: 60px;
 }
 
 .error-message {

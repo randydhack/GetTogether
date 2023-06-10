@@ -23,9 +23,15 @@ function CreateGroupForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    setErrors({});
+    setImageError({});
+
     const splitImage = image.split(".");
     const verifiedImage =
       splitImage[splitImage.length - 1].match(/jpg|png|jpeg/g);
+
+    if (!verifiedImage || verifiedImage === null)
+      setImageError({ image: "Image URL must end in .png, .jpg, or .jpeg" });
 
     const group = await dispatch(
       createGroup({ name, about, city, state, privated, type })
@@ -35,8 +41,8 @@ function CreateGroupForm() {
     });
 
     if (!group) return;
+
     if (group && verifiedImage === null) {
-      setImageError({ image: "Image URL must end in .png, .jpg, or .jpeg" });
       return dispatch(deleteGroup(group.id));
     } else {
       dispatch(addGroupImage(image, group.id));
@@ -63,7 +69,7 @@ function CreateGroupForm() {
             </p>
             <div className="city-state-field">
               <div>
-                <p style={{margin: '0px'}}>City:</p>
+                <p style={{ margin: "0px" }}>City:</p>
                 <input
                   placeholder="City"
                   type="input"
@@ -71,17 +77,19 @@ function CreateGroupForm() {
                   value={city}
                   onChange={(e) => setCity(e.target.value)}
                   maxLength="25"
+                  required
                 ></input>
                 {errors.city && (
                   <p className="error-message">City is required</p>
                 )}
               </div>
-              <div style={{marginLeft: '20px'}}>
-                <p style={{margin: '0px'}}>State:</p>
+              <div style={{ marginLeft: "20px" }}>
+                <p style={{ margin: "0px" }}>State:</p>
                 <select
                   defaultValue="DEFAULT"
                   onChange={(e) => setState(e.target.value)}
                   className="state-select"
+                  required
                 >
                   <option value="DEFAULT">(Select One)</option>
                   <option value="AL">AL</option>
@@ -157,10 +165,12 @@ function CreateGroupForm() {
               you change your mind.
             </p>
             <input
+            required
               placeholder="What is your group's name?"
               type="input"
               className="input-box"
               value={name}
+              maxLength='60'
               onChange={(e) => setName(e.target.value)}
             ></input>
             {errors.name && <p className="error-message">Name is required</p>}
@@ -184,6 +194,7 @@ function CreateGroupForm() {
               <li>What will you do at your events?</li>
             </ol>
             <textarea
+            required
               placeholder="Please write at least 50 characters"
               type="input"
               className="text-area-box"
@@ -202,7 +213,7 @@ function CreateGroupForm() {
             <p className="section-caption">
               Is this an in person or online group?
             </p>
-            <select onChange={(e) => setType(e.target.value)} defaultValue={""}>
+            <select onChange={(e) => setType(e.target.value)} defaultValue={""} required>
               <option value="" disabled>
                 (Select One)
               </option>
@@ -217,6 +228,7 @@ function CreateGroupForm() {
             <select
               onChange={(e) => setPrivated(e.target.value)}
               defaultValue={""}
+              required
             >
               <option value="" disabled>
                 (Select One)
@@ -230,6 +242,7 @@ function CreateGroupForm() {
 
             <p>Please add in image url for your group below:</p>
             <input
+            required
               type="text"
               placeholder="Image Url"
               value={image}
@@ -241,7 +254,12 @@ function CreateGroupForm() {
             <p className="error-message">{imageError.image}</p>
           )}
         </div>
-        <button type="submit" className="create-group-button">
+        <button
+          type="submit"
+          className={`create-group-button ${
+            errors || imageError ? "scroll-to-top-error" : ""
+          }`}
+        >
           Create Group
         </button>
       </form>

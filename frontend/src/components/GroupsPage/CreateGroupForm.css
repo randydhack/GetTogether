@@ -57,10 +57,13 @@
     background-color: red;
 }
 
-.state-select {}
+.scroll-to-top-error {
+    top: 0px;
+    scroll-behavior: smooth;
+}
 
 .state-input-box {
-    margin-left: 20px;
+    margin-left: 0px;
 }
 
 .city-state-field {
