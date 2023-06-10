@@ -96,7 +96,7 @@ function EventDetails() {
                 <div className="group-info-section">
                   <img
                     className="group-image"
-                    src={event.Group?.previewImage}
+                    src={event.Group?.GroupImages[0].url}
                     alt="group"
                   />
                   <div className="group-name-privacy">

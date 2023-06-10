@@ -31,10 +31,14 @@ function CreateEventForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setErrors({})
+    setImageError({})
 
     const splitImage = imageUrl.split(".");
     const verifiedImage =
       splitImage[splitImage.length - 1].match(/jpg|png|jpeg/g);
+
+    if (!verifiedImage || verifiedImage === null)  return setImageError({ image: "Image URL must end in .png, .jpg, or .jpeg" });
 
     const event = await dispatch(
       createEvent(
@@ -57,14 +61,13 @@ function CreateEventForm() {
 
     if (!event) return;
 
-    if (verifiedImage === null) {
-      setImageError({ image: "Image URL must end in .png, .jpg, or .jpeg" });
-      return dispatch(deleteEvent(event.id));
-    } else {
-        await dispatch(addEventImage(imageUrl, event.id));
-        history.push(`/events/${event.id}`);
-        return
-    }
+    // if (verifiedImage === null || !verifiedImage) {
+    //   setImageError({ image: "Image URL must end in .png, .jpg, or .jpeg" });
+    //   return dispatch(deleteEvent(event.id));
+    // } else {
+    await dispatch(addEventImage(imageUrl, event.id));
+    return history.push(`/events/${event.id}`);
+    // }
   };
 
   return (
