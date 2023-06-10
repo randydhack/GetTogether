@@ -61,12 +61,12 @@ function CreateEventForm() {
 
     if (!event) return;
 
+    await dispatch(addEventImage(imageUrl, event.id));
+    return history.push(`/events/${event.id}`);
     // if (verifiedImage === null || !verifiedImage) {
     //   setImageError({ image: "Image URL must end in .png, .jpg, or .jpeg" });
     //   return dispatch(deleteEvent(event.id));
     // } else {
-    await dispatch(addEventImage(imageUrl, event.id));
-    return history.push(`/events/${event.id}`);
     // }
   };
 
