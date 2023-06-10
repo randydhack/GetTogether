@@ -38,7 +38,7 @@ function CreateEventForm() {
     const verifiedImage =
       splitImage[splitImage.length - 1].match(/jpg|png|jpeg/g);
 
-    if (!verifiedImage || verifiedImage === null)  return setImageError({ image: "Image URL must end in .png, .jpg, or .jpeg" });
+    if (!verifiedImage || verifiedImage === null) setImageError({ image: "Image URL must end in .png, .jpg, or .jpeg" });
 
     const event = await dispatch(
       createEvent(
@@ -61,13 +61,12 @@ function CreateEventForm() {
 
     if (!event) return;
 
-    await dispatch(addEventImage(imageUrl, event.id));
-    return history.push(`/events/${event.id}`);
-    // if (verifiedImage === null || !verifiedImage) {
-    //   setImageError({ image: "Image URL must end in .png, .jpg, or .jpeg" });
-    //   return dispatch(deleteEvent(event.id));
-    // } else {
-    // }
+    if (verifiedImage === null || !verifiedImage) {
+      return dispatch(deleteEvent(event.id));
+    } else {
+      await dispatch(addEventImage(imageUrl, event.id));
+      return history.push(`/events/${event.id}`);
+    }
   };
 
   return (
@@ -88,6 +87,7 @@ function CreateEventForm() {
               required
               placeholder="Event Name"
               value={name}
+              maxLength={60}
               onChange={(e) => setName(e.target.value)}
             ></input>
             {errors.name && <p className="error-message">{errors.name}</p>}
