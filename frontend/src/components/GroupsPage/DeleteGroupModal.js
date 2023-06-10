@@ -5,6 +5,7 @@ import DeleteGroup from './DeleteGroup';
 import './DeleteGroup.css'
 
 function DeleteGroupModal() {
+
     const [showModal, setShowModal] = useState(false);
 
     return (
@@ -12,7 +13,7 @@ function DeleteGroupModal() {
         <button onClick={() => setShowModal(true)} className='delete-group-button'>Delete</button>
         {showModal && (
           <Modal onClose={() => setShowModal(false)}>
-            <DeleteGroup />
+            <DeleteGroup setShowModal={setShowModal}/>
           </Modal>
         )}
       </>

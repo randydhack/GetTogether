@@ -16,7 +16,7 @@ function DeleteEventModal() {
       </button>
       {showModal && (
         <Modal onClose={() => setShowModal(false)}>
-          <DeleteEvent />
+          <DeleteEvent setShowModal={setShowModal}/>
         </Modal>
       )}
     </>
