@@ -2,20 +2,22 @@ import React, { useState } from "react";
 import { useDispatch, } from "react-redux";
 import { useHistory,  useParams } from "react-router-dom";
 import { deleteGroup } from "../../store/group";
-import { Modal } from '../../context/Modal';
 
-function DeleteGroup() {
+function DeleteGroup({ setShowModal }) {
     const dispatch = useDispatch()
     const history = useHistory()
     const { groupId } = useParams()
 
-    const [showModal, setShowModal] = useState(false);
-
-    const handleDeleteGroup = (e) => {
+    const handleDeleteGroup = async (e) => {
         e.preventDefault()
 
-        dispatch(deleteGroup(groupId))
+        await dispatch(deleteGroup(groupId))
         return history.push('/groups')
+    }
+
+    const handleCancelDelete = (e) => {
+      e.preventDefault()
+      setShowModal(false)
     }
 
   return (
@@ -26,10 +28,7 @@ function DeleteGroup() {
         <button className="delete-group-delete-button delete-group-yes" onClick={handleDeleteGroup}>
             Yes (Delete Group)
         </button>
-        <button className="delete-group-delete-button delete-group-no">{showModal && (
-          <Modal onClose={() => setShowModal(false)}>
-          </Modal>
-        )}
+        <button className="delete-group-delete-button delete-group-no" onClick={handleCancelDelete}>
         No (Keep Group)</button>
     </form>
     </>

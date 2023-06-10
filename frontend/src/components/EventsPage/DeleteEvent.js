@@ -4,7 +4,7 @@ import { useHistory,  useParams } from "react-router-dom";
 import { deleteEvent, getEventDetail } from "../../store/event";
 import { Modal } from '../../context/Modal';
 
-function DeleteEvent() {
+function DeleteEvent({ setShowModal}) {
     const dispatch = useDispatch()
     const history = useHistory()
     const { eventId } = useParams();
@@ -18,14 +18,18 @@ function DeleteEvent() {
       (async () => dispatch(getEventDetail(eventId)).then(() => setIsLoaded(true)))()
     }, [dispatch, eventId])
 
-    const [showModal, setShowModal] = useState(false);
-
     const handleDeleteEvent = async (e) => {
         e.preventDefault()
 
         const groupId = event.Group.id
         await dispatch(deleteEvent(eventId))
         return history.push(`/groups/${groupId}`)
+    }
+
+    const handleCancelEvent = (e) => {
+      e.preventDefault()
+
+      setShowModal(false)
     }
 
   return isLoaded && (
@@ -36,10 +40,7 @@ function DeleteEvent() {
         <button className="delete-event-delete-button delete-event-yes" onClick={handleDeleteEvent}>
             Yes (Delete Event)
         </button>
-        <button className="delete-event-delete-button delete-event-no">{showModal && (
-          <Modal onClose={() => setShowModal(false)}>
-          </Modal>
-        )}
+        <button className="delete-event-delete-button delete-event-no" onClick={handleCancelEvent}>
         No (Keep Event)</button>
     </form>
     </>
