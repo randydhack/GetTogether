@@ -217,6 +217,7 @@ function CreateEventForm() {
               className="event-description-input"
               placeholder="Please include at least 30 characters"
               value={description}
+              maxLength={255}
               onChange={(e) => setDescription(e.target.value)}
             />
             {errors.description && (
