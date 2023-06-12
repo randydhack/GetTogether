@@ -124,7 +124,7 @@ function EventsPage() {
                   />
                   <div className="event-details">
                     <p className="event-date font-size-md font-uppercase">
-                      {fullDate(event.endDate)}
+                      {fullDate(event.startDate)}
                     </p>
                     <h2 className="event-title font-size-md font-uppercase">
                       {event.name}
