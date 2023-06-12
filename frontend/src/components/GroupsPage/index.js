@@ -37,7 +37,7 @@ function GroupsPage() {
         >
           Groups in GatherUp
         </p>
-        {groups.map((group) => {
+        {groups.reverse().map((group, i) => {
           return (
             <Link
               key={group.id}
@@ -49,13 +49,13 @@ function GroupsPage() {
                   src={group.previewImage}
                   alt="group"
                   style={{
-                    width: "170px",
+                    width: "235px",
                     height: "90px",
                     borderRadius: "5px",
                   }}
                 />
-                <div className="group-info">
-                  <h2 className="group-detail-name">{group.name}</h2>
+                <div className="group-info w100">
+                  <h2 className="group-detail-name" style={{display: 'flex', justifyContent: 'space-between'}}>{group.name} {i === 0 ? <span style={{margin: '0px', color: 'rgb(0, 121, 138)'}}>NEW GROUP</span> : null}</h2>
                   <p className="group-location">
                     {group.city}, {group.state}
                   </p>
