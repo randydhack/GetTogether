@@ -34,11 +34,10 @@ function CreateEventForm() {
     setErrors({})
     setImageError({})
 
-    const splitImage = imageUrl.split(".");
-    const verifiedImage =
-      splitImage[splitImage.length - 1].match(/jpg|png|jpeg/g);
+    const imageURL = imageUrl.slice(-4)
+    const verifiedImage = imageURL.match(/jpg|png|jpeg/g);
 
-    if (!verifiedImage || verifiedImage === null) setImageError({ image: "Image URL must end in .png, .jpg, or .jpeg" });
+    if (!verifiedImage) setImageError({ image: "Image URL must end in .png, .jpg, or .jpeg" });
 
     const event = await dispatch(
       createEvent(
@@ -61,7 +60,7 @@ function CreateEventForm() {
 
     if (!event) return;
 
-    if (verifiedImage === null || !verifiedImage) {
+    if (event && (verifiedImage === null || !verifiedImage)) {
       return dispatch(deleteEvent(event.id));
     } else {
       await dispatch(addEventImage(imageUrl, event.id));
