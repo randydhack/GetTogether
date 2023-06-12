@@ -65,6 +65,20 @@
     margin: 0px;
 }
 
+.ended-events {
+    font-size: 14px;
+    color: rgb(255, 100, 100);
+    font-weight: bold;
+}
+
+.w100 {
+    width: 100%;
+}
+
+.past-event-details-row {
+    display: flex;
+    justify-content: space-between;
+}
 .event-about {
     white-space:nowrap;
     overflow: hidden;
