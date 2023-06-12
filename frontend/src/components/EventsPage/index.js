@@ -104,7 +104,7 @@ function EventsPage() {
         >
           Events in GatherUp
         </p>
-        {recentEvents.map((event) => {
+        {recentEvents.map((event, i) => {
           return (
             <Link
               key={event.id}
