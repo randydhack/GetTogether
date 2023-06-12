@@ -15,7 +15,12 @@
 }
 
 .logout-button {
-    border-top: 2px solid black;
+    border-top: 1px solid black;
+}
+
+.users-email {
+    border-bottom: 1px solid black;
+    padding-bottom: 15px;
 }
 
 .logout-button button {
