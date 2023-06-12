@@ -26,11 +26,10 @@ function CreateGroupForm() {
     setErrors({});
     setImageError({});
 
-    const splitImage = image.split(".");
-    const verifiedImage =
-      splitImage[splitImage.length - 1].match(/jpg|png|jpeg/g);
+    const imageURL = image.slice(-4)
+    const verifiedImage = imageURL.match(/jpg|png|jpeg/g);
 
-    if (!verifiedImage || verifiedImage === null)
+    if(!verifiedImage)
       setImageError({ image: "Image URL must end in .png, .jpg, or .jpeg" });
 
     const group = await dispatch(
@@ -42,7 +41,7 @@ function CreateGroupForm() {
 
     if (!group) return;
 
-    if (group && verifiedImage === null) {
+    if (group && !verifiedImage) {
       return dispatch(deleteGroup(group.id));
     } else {
       dispatch(addGroupImage(image, group.id));
