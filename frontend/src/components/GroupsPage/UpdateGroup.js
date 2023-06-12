@@ -243,7 +243,7 @@ function UpdateGroup() {
             </label>
           </div>
           <button type="submit" className="create-group-button">
-            Create Group
+            Update Group
           </button>
         </form>
       </div>

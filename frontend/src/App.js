@@ -31,15 +31,15 @@ function App() {
           <Route exact path='/'>
             <LandingPage />
           </Route>
-            <Route path="/login" component={LoginFormPage}></Route>
-            <Route path="/signup" component={SignupFormPage}></Route>
-            <Route path='/group/new' component={CreateGroupForm}></Route>
-            <Route exact path="/groups/:groupId" component={GroupDetails}></Route>
-            <Route path="/groups" component={GroupsPage}></Route>
-            <Route path="/group/:groupId/edit" component={UpdateGroup}></Route>
-            <Route path='/group/:groupId/events/new' component={CreateEventForm}></Route>
-            <Route exact path="/events/:eventId" component={EventDetails}></Route>
-            <Route path="/events" component={EventsPage}></Route>
+            <Route path="/login" component={LoginFormPage}/>
+            <Route path="/signup" component={SignupFormPage}/>
+            <Route path='/group/new' component={CreateGroupForm}/>
+            <Route exact path="/groups/:groupId" component={GroupDetails}/>
+            <Route path="/groups" component={GroupsPage}/>
+            <Route path="/group/:groupId/edit" component={UpdateGroup}/>
+            <Route path='/group/:groupId/events/new' component={CreateEventForm}/>
+            <Route exact path="/events/:eventId" component={EventDetails}/>
+            <Route path="/events" component={EventsPage}/>
           </Switch>
       )}
     </>

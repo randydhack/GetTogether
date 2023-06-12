@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, } from "react-redux";
-import { useHistory,  useParams } from "react-router-dom";
+import { Redirect, useHistory,  useParams } from "react-router-dom";
 import { deleteGroup } from "../../store/group";
 
 function DeleteGroup({ setShowModal }) {
@@ -11,13 +11,14 @@ function DeleteGroup({ setShowModal }) {
     const handleDeleteGroup = async (e) => {
         e.preventDefault()
 
-        await dispatch(deleteGroup(groupId))
-        return history.push('/groups')
+        dispatch(deleteGroup(groupId))
+        return history.push(`/groups`);
     }
 
     const handleCancelDelete = (e) => {
       e.preventDefault()
       setShowModal(false)
+      return;
     }
 
   return (
