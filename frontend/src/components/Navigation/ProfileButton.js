@@ -64,7 +64,7 @@ function ProfileButton({ user }) {
       <div className="profile-options-container">
         <div className={ulClassName} ref={ulRef}>
           <p>Hello, {user.username}</p>
-          <p>{user.email}</p>
+          <p className="users-email">{user.email}</p>
           <p>
             <Link to="/groups">View Groups</Link>
           </p>
