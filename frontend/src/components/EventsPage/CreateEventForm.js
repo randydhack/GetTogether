@@ -198,7 +198,7 @@ function CreateEventForm() {
             <input
               required
               placeholder="Image Url"
-              type="input"
+              type="url"
               className="event-image-input"
               value={imageUrl}
               onChange={(e) => setImageUrl(e.target.value)}
