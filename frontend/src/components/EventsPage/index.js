@@ -151,19 +151,19 @@ function EventsPage() {
               className="event-link"
             >
               <div key={event.id} className="events-container">
-                <div className="flex-row">
+                <div className="flex-row w100">
                   <img
                     src={event.previewImage}
                     alt="event"
                     style={{
-                      width: "170px",
+                      width: "235px",
                       height: "90px",
                       borderRadius: "3px",
                     }}
                   />
-                  <div className="event-details">
-                    <p className="event-date font-size-md font-uppercase">
-                      {fullDate(event.endDate)}
+                  <div className="event-details w100">
+                    <p className="event-date font-size-md font-uppercase past-event-details-row">
+                      {fullDate(event.endDate)} <span className="ended-events">[Ended]</span>
                     </p>
                     <h2 className="event-title font-size-md font-uppercase">
                       {event.name}

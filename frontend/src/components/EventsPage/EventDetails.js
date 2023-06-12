@@ -150,7 +150,7 @@ function EventDetails() {
         </div>
         <div className="event-description">
           <h2>Description</h2>
-          <p style={{ width: "95%" }}>{event.description}</p>
+          <p style={{ width: "95%", wordBreak: 'break-word'}}>{event.description}</p>
         </div>
       </div>
     )
