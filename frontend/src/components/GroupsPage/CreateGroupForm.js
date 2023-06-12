@@ -243,7 +243,7 @@ function CreateGroupForm() {
             <p>Please add in image url for your group below:</p>
             <input
             required
-              type="text"
+              type="url"
               placeholder="Image Url"
               value={image}
               onChange={(e) => setImage(e.target.value)}
