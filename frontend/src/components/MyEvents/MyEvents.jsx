@@ -132,6 +132,7 @@ function MyEvents() {
                       <p className="event-date font-size-md font-uppercase">
                         {fullDate(event.startDate)}
                       </p>
+
                       <Link to={`/events/${event.id}`}>
                         <h2 className="event-title font-size-md font-uppercase">
                           {event.name}
@@ -141,8 +142,7 @@ function MyEvents() {
                         <p className="event-location font-size-md font-uppercase">
                           {event.Venue.city}, {event.Venue.state}
                         </p>
-
-                        {user && user.id === event.Group?.Organizer?.id ? (
+                        {user && user.id === event.Group.organizerId ? (
                           <div className="manage-event-buttons">
                             <button className="manage-buttons">Update</button>
                             <button className="manage-button-red">
@@ -169,35 +169,51 @@ function MyEvents() {
               </div>
             );
           })}
-          {pastEvents.map((event) => {
+          {pastEvents.map((event, i) => {
             return (
-              <Link
-                key={event.id}
-                to={`/events/${event.id}`}
-                className="event-link"
-              >
+              <div key={event.id} className="event-link">
                 <div key={event.id} className="events-container">
-                  <div className="flex-row w100">
-                    <img
-                      src={event.previewImage}
-                      alt="event"
-                      style={{
-                        width: "235px",
-                        height: "90px",
-                        borderRadius: "3px",
-                      }}
-                    />
-                    <div className="event-details w100">
-                      <p className="event-date font-size-md font-uppercase past-event-details-row">
-                        {fullDate(event.endDate)}{" "}
-                        <span className="ended-events">[Ended]</span>
+                  <div className="flex-row">
+                    <Link to={`/events/${event.id}`}>
+                      <img
+                        src={event.previewImage}
+                        alt="event"
+                        style={{
+                          width: "170px",
+                          height: "90px",
+                          borderRadius: "3px",
+                        }}
+                      />
+                    </Link>
+                    <div className="event-details">
+                      <p className="event-date font-size-md font-uppercase">
+                        {fullDate(event.startDate)}
                       </p>
-                      <h2 className="event-title font-size-md font-uppercase">
-                        {event.name}
-                      </h2>
-                      <p className="event-location font-size-md font-uppercase">
-                        {event.Venue.city}, {event.Venue.state}
-                      </p>
+
+                      <Link to={`/events/${event.id}`}>
+                        <h2 className="event-title font-size-md font-uppercase">
+                          {event.name}
+                        </h2>
+                      </Link>
+                      <div className="manage-event-bottom">
+                        <p className="event-location font-size-md font-uppercase">
+                          {event.Venue.city}, {event.Venue.state}
+                        </p>
+                        {user && user.id === event.Group.organizerId ? (
+                          <div className="manage-event-buttons">
+                            <button className="manage-buttons">Update</button>
+                            <button className="manage-button-red">
+                              Delete
+                            </button>
+                          </div>
+                        ) : (
+                          <div className="manage-event-buttons">
+                            <button className="manage-button-red">
+                              Unattend Event
+                            </button>
+                          </div>
+                        )}
+                      </div>
                     </div>
                   </div>
                   <div>
@@ -207,7 +223,7 @@ function MyEvents() {
                     </p>
                   </div>
                 </div>
-              </Link>
+              </div>
             );
           })}
         </div>

@@ -54,7 +54,7 @@ router.get("/", paginationValidation, async (req, res, next) => {
     include: [
       {
         model: Group,
-        attributes: ["id", "name", "city", "state"],
+        attributes: ["id", "name", "city", "state", 'organizerId'],
       },
       {
         model: Attendee,
