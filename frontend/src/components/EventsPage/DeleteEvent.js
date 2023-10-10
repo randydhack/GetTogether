@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector, } from "react-redux";
 import { useHistory,  useParams } from "react-router-dom";
 import { deleteEvent, getEventDetail } from "../../store/event";
-import { Modal } from '../../context/Modal';
 
 function DeleteEvent({ setShowModal}) {
     const dispatch = useDispatch()

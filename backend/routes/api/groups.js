@@ -101,7 +101,7 @@ router.get("/currentUser", requireAuth, async (req, res, next) => {
       include: [
         {
           model: Membership,
-          attributes: [],
+          attributes: ['memberId', 'status'],
           where: {
             memberId: currentUser.id,
             status: {
