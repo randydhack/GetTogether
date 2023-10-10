@@ -17,7 +17,6 @@ function MyGroups() {
   const user = useSelector((state) => state.session.user);
 
   const [isLoaded, setIsLoaded] = useState(false);
-  const [groupId, setGroupId] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
@@ -31,94 +30,96 @@ function MyGroups() {
     isLoaded && (
       <div className="my-group-container">
         <div>
-          <div className="my-event-group-heading">
-            <span>Manage Groups</span>
-          </div>
-          <p
-            style={{
-              color: "grey",
-              fontSize: "14px",
-              marginRight: "570px",
-              marginTop: "20px",
-              marginBottom: "20px",
-            }}
-          >
-            Groups in GatherUp
-          </p>
-          {groups.reverse().map((group, i) => {
-            return (
-              <div key={group.id} className="group-div">
-                <div key={group.id} className="group-container">
-                  <Link to={`/groups/${group.id}`}>
-                    <img
-                      src={group.previewImage}
-                      alt="group"
-                      style={{
-                        width: "170px",
-                        height: "90px",
-                        borderRadius: "5px",
-                      }}
-                    />
-                  </Link>
-                  <div className="group-info">
+          <div>
+            <div className="my-event-group-heading">
+              <span>Manage Groups</span>
+            </div>
+            <p
+              style={{
+                display: 'flex',
+                color: "grey",
+                fontSize: "14px",
+                margin: '20px 0px',
+                justifyContent: 'flex-start'
+              }}
+            >
+              Groups in GatherUp
+            </p>
+            {groups.reverse().map((group, i) => {
+              return (
+                <div key={group.id} className="group-div">
+                  <div key={group.id} className="group-container">
                     <Link to={`/groups/${group.id}`}>
-                      <h2 className="group-detail-name">{group.name}</h2>
+                      <img
+                        src={group.previewImage}
+                        alt="group"
+                        style={{
+                          width: "170px",
+                          height: "90px",
+                          borderRadius: "5px",
+                        }}
+                      />
                     </Link>
-                    <p className="group-location">
-                      {group.city}, {group.state}
-                    </p>
-                    <p className="group-about" maxLength="25">
-                      {group.about}
-                    </p>
-                    <div className="bottom-group-card">
-                      <p
-                        className="group-members"
-                        style={{ color: "grey", width: "100%" }}
-                      >
-                        {group.numMembers} Members ·{" "}
-                        {group.private ? "Private" : "Public"}
+                    <div className="group-info">
+                      <Link to={`/groups/${group.id}`}>
+                        <h2 className="group-detail-name">{group.name}</h2>
+                      </Link>
+                      <p className="group-location">
+                        {group.city}, {group.state}
                       </p>
-                      {user.id === group.organizerId ? (
-                        <div className="manage-groups-owner-button">
-                          <Link
-                            to={`/group/${group.id}/edit`}
-                            style={{ height: "20px" }}
-                          >
-                            <button className="manage-buttons">Update</button>
-                          </Link>
-                          <div style={{ height: "20px" }}>
-                            <button
-                              className="manage-button-red"
-                              onClick={(e) => setShowModal(true)}
+                      <p className="group-about" maxLength="25">
+                        {group.about}
+                      </p>
+                      <div className="bottom-group-card">
+                        <p
+                          className="group-members"
+                          style={{ color: "grey", width: "100%" }}
+                        >
+                          {group.numMembers} Members ·{" "}
+                          {group.private ? "Private" : "Public"}
+                        </p>
+                        {user.id === group.organizerId ? (
+                          <div className="manage-groups-owner-button">
+                            <Link
+                              to={`/group/${group.id}/edit`}
+                              style={{ height: "20px" }}
                             >
-                              Delete
-                            </button>
-                          </div>
+                              <button className="manage-buttons">Update</button>
+                            </Link>
+                            <div style={{ height: "20px" }}>
+                              <button
+                                className="manage-button-red"
+                                onClick={(e) => setShowModal(true)}
+                              >
+                                Delete
+                              </button>
+                            </div>
 
-                          {showModal && (
-                            <Modal onClose={() => setShowModal(false)}>
-                              <DeleteGroup
-                                setShowModal={setShowModal}
-                                id={group.id}
-                              />
-                            </Modal>
-                          )}
-                        </div>
-                      ) : (
-                        <div className="manage-groups-owner-button">
-                          <div>
-                            <button className="manage-button-red">
-                              Leave Group
-                            </button>
+                            {showModal && (
+                              <Modal onClose={() => setShowModal(false)}>
+                                <DeleteGroup
+                                  setShowModal={setShowModal}
+                                  id={group.id}
+                                />
+                              </Modal>
+                            )}
                           </div>
-                        </div>
-                      )}
+                        ) : (
+                          <div className="manage-groups-owner-button">
+                            <div>
+                              <button className="manage-button-red">
+                                Leave Group
+                              </button>
+                            </div>
+                          </div>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
       </div>
     )

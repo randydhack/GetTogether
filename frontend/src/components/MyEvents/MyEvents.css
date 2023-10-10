@@ -1,0 +1,19 @@
+.my-event-group-heading {
+    color: black;
+    font-size: 26px;
+    cursor: default;
+}
+
+.manage-event-bottom {
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
+
+.manage-event-buttons {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    gap: 10px;
+    margin-top: 20px;
+}
