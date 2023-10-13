@@ -1,12 +1,13 @@
-<h1 align="center">Phoebe <a href="https://accord-ajr.onrender.com/"></a></h1
+<h1 align="center">GetTogether<a href="https://randy-get-together.onrender.com/"></a></h1
 
-[Phoebe](https://phoebe.onrender.com/) is a solo project created by Randy Hac, crafted as part of AppAcademy's project. Modeled after Asana, Phoebe offers users a platform to manage productivity that allows users to create projects, add team members, and organize the processes of tasks.
+[GetTogether](https://randy-get-together.onrender.com/) is a solo project created by Randy Hac, crafted as part of AppAcademy's project. Modeled after MeetUp, GetTogether allows users to create and join groups and create events or attend events, which brings people together who have similar interests and hobbies!
 
-<img width="1413" alt="image" src="https://github.com/randydhack/phoebe/assets/113399691/dd12870e-b515-4dfd-91a5-990485b69bef">
+<img width="1421" alt="image" src="https://github.com/randydhack/GetTogether/assets/113399691/54901598-b2a0-4e8c-acdc-cbc36eb87c95">
+
 
 
 ## Technologies Used
-Phoebe was built using the following technologies:
+GetTogether was built using the following technologies:
 
 ### Backend:
 - **Javascript**
@@ -88,24 +89,16 @@ For subsequent sessions, ensure you have two terminal windows:
     npm start
     ```
 
-Enjoy Phoebe!
+Enjoy GetTogether!
 
 ## GetTogether Showcase!
 
-<img width="1280" alt="image" src="https://github.com/randydhack/phoebe/assets/113399691/6c6bccf8-5a84-46aa-8bcb-05125a873cae">
-<img width="1280" alt="image" src="https://github.com/randydhack/phoebe/assets/113399691/6056b527-5a56-49d8-a0b2-4e4a7dfa1168">
+<img width="1421" alt="image" src="https://github.com/randydhack/GetTogether/assets/113399691/3f46b100-f1b5-430a-b772-554dab9dcd3f">
+
+<img width="1421" alt="image" src="https://github.com/randydhack/GetTogether/assets/113399691/1bd3958a-0276-4fd3-8c5b-10f35ff20c8e">
 
 
-<img width="1280" alt="image" src="https://github.com/randydhack/phoebe/assets/113399691/89d301ff-2078-4762-8cc2-beadc8f58297">
-<img width="1280" alt="image" src="https://github.com/randydhack/phoebe/assets/113399691/153c4f4b-8d58-4f3f-996a-c33d3c284c0a">
-<img width="1280" alt="image" src="https://github.com/randydhack/phoebe/assets/113399691/0f2741c5-cd11-459b-addd-fdee10cd3232"> 
-<img width="1280" alt="image" src="https://github.com/randydhack/phoebe/assets/113399691/2540e521-4044-4edd-b93b-0bd1458e989c">
-
-
-
-
-
-## [Wiki Documents](https://github.com/abramfelix1/Accord/wiki)
+## [Wiki Documents](https://github.com/randydhack/GetTogether/wiki)
 - [Database Schema](https://github.com/randydhack/GetTogether/wiki/Database-Schema-Design)
 - [Features](https://github.com/randydhack/GetTogether/wiki/Features)
 - [API Documentations](https://github.com/randydhack/GetTogether/wiki/API-Documentation)
@@ -113,13 +106,10 @@ Enjoy Phoebe!
 
 ## Future Features
 
-- **AWS**: Allow users to add images from computer.
-- **Invitation Notice** Owners will have an inbox for invitations to accept or decline users to join their group.
+- **AWS**: Allow users to add images from their computer.
+- **Invitation Notice**: Owners will have an inbox for invitations to accept or decline users to join their group.
 
 ## Technical Implementation Details
-
-
-
 
 ## Authors
 * Randy's [Github](https://github.com/randydhack) and [LinkedIn](https://www.linkedin.com/in/randy-hac-4577a71b0/)
