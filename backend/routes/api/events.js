@@ -54,7 +54,80 @@ router.get("/", paginationValidation, async (req, res, next) => {
     include: [
       {
         model: Group,
-        attributes: ["id", "name", "city", "state"],
+        attributes: ["id", "name", "city", "state", 'organizerId'],
+      },
+      {
+        model: Attendee,
+        attributes: [],
+      },
+      {
+        model: Venue,
+        attributes: ["id", "city", "state"],
+      },
+      {
+        model: Image,
+        as: "EventImages",
+        attributes: ["id", "url", "preview"],
+      },
+    ],
+    attributes: {
+      exclude: ["price", "capacity"],
+    },
+    group: ["Event.id"],
+    ...pagination,
+  });
+
+  const eventArr = [];
+
+  for (let i = 0; i < events.length; i++) {
+    const event = events[i];
+    const eventJSON = event.toJSON();
+
+    eventJSON.previewImage = eventJSON.EventImages[0] ? eventJSON.EventImages[0].url : null;
+    eventJSON.numAttending = await event.countAttendees();
+    eventArr.push(eventJSON);
+  }
+
+  res
+    .status(200)
+    .json({ Events: eventArr, page: page, size: pagination.limit });
+});
+
+// Get User Events
+
+router.get("/user", paginationValidation, async (req, res, next) => {
+  const where = {};
+  const pagination = {};
+
+  let { name, type, startDate, page, size } = req.query;
+  page = parseInt(page);
+  size = parseInt(size);
+
+  if (!page) page = 0;
+  if (!size) size = 20;
+  if (page > 10) page = 10;
+  if (size > 20) size = 20;
+
+  pagination.limit = size;
+  pagination.offset = size * page;
+
+  // name, type, startDate
+  if (name) {
+    if (name.includes("-")) name = name.split("-").join(" ");
+    where.name = { [Op.like]: `%${name}%` };
+  }
+  if (type) {
+    if (type.includes("-")) type = type.split("-").join(" ");
+    where.type = type;
+  }
+  if (startDate) where.startDate = { [Op.gte]: new Date(startDate) };
+
+  const events = await Event.findAll({
+    include: [
+      {
+        model: Group,
+        attributes: ["id", "name", "city", "state", 'organizerId'],
+        where: {organizerId: req.user.id},
       },
       {
         model: Attendee,
@@ -163,7 +236,7 @@ router.post("/:eventId/images", requireAuth, async (req, res, next) => {
   const { eventId } = req.params;
   const { url, preview } = req.body;
   const event = await Event.findOne({ where: { id: eventId } });
-  const user = await Attendee.findOne({ where: { userId: req.user.id } });
+  // const user = await Attendee.findOne({ where: { userId: req.user.id } });
   const group = await Group.findOne({ where: { organizerId: req.user.id } });
 
   if (!event) {
@@ -172,7 +245,8 @@ router.post("/:eventId/images", requireAuth, async (req, res, next) => {
     return next(err);
   }
 
-  if ((user && user.eventId === event.id) || group.organizerId === user.id) {
+  if (group.organizerId === req.user.id) {
+
     const image = await Image.create({
       url,
       imageableType: "Event",

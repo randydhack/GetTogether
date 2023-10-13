@@ -14,7 +14,6 @@ module.exports = (sequelize, DataTypes) => {
       Attendee.belongsTo(models.Event, {
         foreignKey: 'eventId'
       });
-
     }
   }
   Attendee.init({

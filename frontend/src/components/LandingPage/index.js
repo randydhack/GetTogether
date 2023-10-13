@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import SignupForm from "../SignupFormModal/SignupForm";
 import { Modal } from "../../context/Modal";
 import { useState } from "react";
+import { BsLinkedin, BsGithub } from "react-icons/bs";
 
 function LandingPage() {
   const user = useSelector((state) => state.session.user);
@@ -26,7 +27,7 @@ function LandingPage() {
           </p>
         </div>
         <img
-          style={{ width: "600px" }}
+          style={{ maxWidth: "600px", minWidth: "100px" }}
           src="https://secure.meetupstatic.com/next/images/shared/online_events.svg?w=1080"
         />
       </section>
@@ -77,15 +78,12 @@ function LandingPage() {
             src="https://secure.meetupstatic.com/next/images/shared/joinGroup.svg?w=384"
           />
           <div>
-
-            {user &&
-            <Link to="/group/new" className='start-group-link'>
-              Start a new group
-            </Link>}
-            {!user &&
-            <p className="disabled-start-group">
-              Start a new group
-            </p>}
+            {user && (
+              <Link to="/group/new" className="start-group-link">
+                Start a new group
+              </Link>
+            )}
+            {!user && <p className="disabled-start-group">Start a new group</p>}
             <p className="caption">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit.
             </p>
@@ -97,11 +95,7 @@ function LandingPage() {
       {!user && (
         <section className="landing-page-section-4">
           <div className="section-4-button">
-            <button
-              onClick={() => setShowModal(true)}
-            >
-              Join GatherUp
-            </button>
+            <button onClick={() => setShowModal(true)}>Join GatherUp</button>
             {showModal && (
               <Modal onClose={() => setShowModal(false)}>
                 <SignupForm />
@@ -110,6 +104,21 @@ function LandingPage() {
           </div>
         </section>
       )}
+
+      <footer className="footer">
+        <div className="footer-contents">
+          <div>GatherUp by Randy Hac</div>
+          <div className="footer-link-container">
+            <a href="https://www.linkedin.com/in/randy-hac-4577a71b0/" target="_blank" style={{ display: "flex", alignItems: "center", gap: "5px", color: "white"}}>
+              <BsLinkedin /> <span>LinkedIn</span>
+            </a>
+            <a href="https://github.com/randydhack" target="_blank" style={{ display: "flex", alignItems: "center", gap: "5px", color: "white" }}>
+              <BsGithub />
+              <span>GitHub</span>
+            </a>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

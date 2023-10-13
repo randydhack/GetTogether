@@ -101,6 +101,22 @@ router.post("/:groupId", requireAuth, async (req, res, next) => {
     where: { memberId: req.user.id, groupId: group.id },
   });
 
+  if (!group.private && !checkMembership) {
+    const requestMembership = await Membership.create({
+      groupId: group.id,
+      memberId: req.user.id,
+      status: "pending",
+    });
+
+    const safeRequest = {
+      groupId: requestMembership.groupId,
+      memberId: requestMembership.memberId,
+      status: requestMembership.status,
+    };
+
+    res.status(200).json(safeRequest);
+  }
+
   if (!checkMembership || checkMembership.groupId !== group.id || checkMembership.memberId === null) {
 
       const requestMembership = await Membership.create({
@@ -134,6 +150,55 @@ router.post("/:groupId", requireAuth, async (req, res, next) => {
     }
   }
 });
+
+// // Request to join a group by Event
+// router.post("/:eventId", requireAuth, async (req, res, next) => {
+//   const { eventId } = req.params;
+//   const event = await Event.findOne({ where: { id: eventId } });
+
+//   if (!event) {
+//     const err = new Error("Event couldn't be found");
+//     err.status = 404;
+//     return next(err);
+//   }
+
+//   const checkMembership = await Membership.findOne({
+//     where: { memberId: req.user.id, groupId: group.id },
+//   });
+
+//   if (!checkMembership || checkMembership.groupId !== group.id || checkMembership.memberId === null) {
+
+//       const requestMembership = await Membership.create({
+//         groupId: group.id,
+//         memberId: req.user.id,
+//         status: "pending",
+//       });
+
+//       const safeRequest = {
+//         groupId: requestMembership.groupId,
+//         memberId: requestMembership.memberId,
+//         status: requestMembership.status,
+//       };
+
+//       res.status(200).json(safeRequest);
+
+//   } else {
+//     if (checkMembership.status === "pending") {
+//       const err = new Error("Membership has already been requested");
+//       err.status = 400;
+//       return next(err);
+//     }
+//     if (
+//       checkMembership.status === "co-host" ||
+//       checkMembership.status === "member" ||
+//       req.user.id === group.organizerId
+//     ) {
+//       const err = new Error("User is already a member of the group");
+//       err.status = 400;
+//       return next(err);
+//     }
+//   }
+// });
 
 // ---------------- UPDATE ENDPOINTS -------------------------
 

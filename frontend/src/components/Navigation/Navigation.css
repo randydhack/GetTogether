@@ -14,17 +14,9 @@
     align-items: center;
 }
 
-.logout-button {
-    border-top: 1px solid black;
-}
-
-.users-email {
-    border-bottom: 1px solid black;
-    padding-bottom: 15px;
-}
-
 .logout-button button {
     margin-top: 20px;
+    cursor: pointer;
 
 }
 
@@ -78,4 +70,12 @@
 
 .arrow-icon {
     margin-left: 10px;
+}
+
+.profile-dropdown-gap {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    border-bottom: 1px solid black;
+    padding: 15px 0px;
 }
