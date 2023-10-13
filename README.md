@@ -94,8 +94,13 @@ Enjoy GetTogether!
 ## GetTogether Showcase!
 
 <img width="1421" alt="image" src="https://github.com/randydhack/GetTogether/assets/113399691/3f46b100-f1b5-430a-b772-554dab9dcd3f">
+<img width="1417" alt="image" src="https://github.com/randydhack/GetTogether/assets/113399691/d9025f0b-4a34-41c2-ab26-85ee0ee53adb">
 
 <img width="1421" alt="image" src="https://github.com/randydhack/GetTogether/assets/113399691/1bd3958a-0276-4fd3-8c5b-10f35ff20c8e">
+<img width="1418" alt="image" src="https://github.com/randydhack/GetTogether/assets/113399691/f602bf3b-e4b0-4d58-9d75-7f7ceae25628">
+
+
+
 
 
 ## [Wiki Documents](https://github.com/randydhack/GetTogether/wiki)
