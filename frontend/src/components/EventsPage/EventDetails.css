@@ -23,12 +23,14 @@
     margin: 0px;
     width: 100%;
     padding-left: 50px;
+    height: 390px;
 }
 
 .main-event-container {
     display: flex;
     width: 100%;
     max-width: 1080px;
+    margin: 0px 25px;
 }
 
 .event-description {
@@ -66,10 +68,11 @@
 .event-image {
     width: 50%;
     border-radius: 10px;
+    height: 390px;
 }
 
 .group-image {
-    width: 40%;
+    height: 100px;
     border-radius: 5px;
 }
 
@@ -82,7 +85,6 @@
     border-radius: 25px;
     display: flex;
     flex-direction: row;
-    width: 80%;
     padding: 20px 20px;
 }
 
@@ -111,7 +113,6 @@
     flex-direction: column;
     justify-content: space-evenly;
     margin-top: 15px;
-    width: 80%;
     padding: 20px 20px;
 }
 
@@ -162,5 +163,4 @@
 .event-group-link {
     color: black;
     text-decoration: none;
-    background-color: lightgray;
 }

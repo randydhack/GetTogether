@@ -29,23 +29,22 @@ function MyGroups() {
   return (
     isLoaded && (
       <div className="my-group-container">
-        <div>
           <div>
             <div className="my-event-group-heading">
               <span>Manage Groups</span>
             </div>
             <p
               style={{
-                display: 'flex',
                 color: "grey",
                 fontSize: "14px",
-                margin: '20px 0px',
+                margin: '20px 570px 20px 0',
                 justifyContent: 'flex-start'
               }}
             >
-              Groups in GatherUp
+              {groups.length ? 'Groups in GatherUp' : 'No Groups found'}
             </p>
-            {groups.reverse().map((group, i) => {
+            {groups.length ?
+            groups.reverse().map((group, i) => {
               return (
                 <div key={group.id} className="group-div">
                   <div key={group.id} className="group-container">
@@ -118,10 +117,9 @@ function MyGroups() {
                   </div>
                 </div>
               );
-            })}
+            }) : null}
           </div>
         </div>
-      </div>
     )
   );
 }

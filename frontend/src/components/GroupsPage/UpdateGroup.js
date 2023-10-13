@@ -41,6 +41,8 @@ function UpdateGroup() {
     return history.push(`/groups/${groupId}`);
   };
 
+  console.log(name, city)
+
   return (
     user &&
     user.id === group.organizerId && (
@@ -71,6 +73,7 @@ function UpdateGroup() {
                     placeholder="City"
                     type="input"
                     className="input-box"
+                    defaultValue={group.city}
                     value={city}
                     onChange={(e) => setCity(e.target.value)}
                   ></input>

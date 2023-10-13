@@ -1,11 +1,13 @@
 import { csrfFetch } from "./csrf";
 
 const ALL_EVENTS = "event/ALL_EVENTS";
+const USER_EVENTS = "event/USER_EVENTS";
 const GROUP_EVENTS = "event/GROUP_EVENTS";
 const GET_EVENT = "event/GET_EVENT";
 const ADD_IMAGE = "event/ADD_IMAGE";
 const CREATE_EVENT = "event/CREATE_EVENT";
 const DELETE_EVENT = 'event/DELETE_EVENT'
+const UPDATE_EVENT = 'event/UPDATE_EVENT'
 
 // ----------------------------------------------------------------------------------------------------
 
@@ -13,6 +15,20 @@ const DELETE_EVENT = 'event/DELETE_EVENT'
 export const allEvents = (events) => {
   return {
     type: ALL_EVENTS,
+    events,
+  };
+};
+
+export const updateEventAction = (event) => {
+  return {
+    type: UPDATE_EVENT,
+    event,
+  };
+}
+
+export const allUserEvents = (events) => {
+  return {
+    type: USER_EVENTS,
     events,
   };
 };
@@ -63,6 +79,13 @@ export const addImage = (image, eventId) => {
 // Get All Event
 export const fetchEvent = () => async (dispatch) => {
   const response = await fetch("/api/events");
+  const events = await response.json();
+  dispatch(allEvents(events));
+};
+
+// Get All User Event
+export const fetchUserEvent = () => async (dispatch) => {
+  const response = await fetch("/api/events/user");
   const events = await response.json();
   dispatch(allEvents(events));
 };
@@ -143,6 +166,29 @@ export const deleteEvent = (eventId) => async dispatch => {
 
   if (response.ok) {
     dispatch(removeEvent(eventId))
+    dispatch(fetchUserEvent())
+  }
+}
+
+export const updateEvent = (event, eventId) => async dispatch => {
+  const response = await csrfFetch(`/api/events/${eventId}`, {
+    method: 'PUT',
+    body: JSON.stringify({
+      venueId: event.venueId,
+      name: event.name,
+          type: event.type,
+          capacity: event.capacity,
+          price: event.price,
+          description: event.description,
+          startDate: event.startDate,
+          endDate: event.endDate,
+    })
+  })
+
+  if (response.ok) {
+    const data = await response.json()
+    await dispatch(updateEventAction(data))
+    return data;
   }
 }
 
@@ -155,6 +201,11 @@ const eventReducer = (state = {}, action) => {
   switch (action.type) {
     case ALL_EVENTS:
       newState = {};
+      action.events.Events.forEach((event) => (newState[event.id] = event));
+      return newState;
+
+    case USER_EVENTS:
+      newState = {}
       action.events.Events.forEach((event) => (newState[event.id] = event));
       return newState;
 
@@ -175,6 +226,10 @@ const eventReducer = (state = {}, action) => {
       delete newState[action.eventId]
       return newState;
 
+    case UPDATE_EVENT:
+      newState = {...state}
+      newState[action.event.id] = action.event
+      return newState
     default:
       return state;
   }

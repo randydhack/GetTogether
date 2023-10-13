@@ -136,6 +136,7 @@ export const addGroupImage = (url, groupId) => async dispatch => {
 }
 
 export const updateGroup = (group, groupId) => async dispatch => {
+  console.log(group)
   const response = await csrfFetch(`/api/groups/${groupId}`, {
     method: "PUT",
     body: JSON.stringify({
@@ -149,8 +150,10 @@ export const updateGroup = (group, groupId) => async dispatch => {
   });
 
   if (response.ok) {
+    console.log(groupId, group)
     const groupData = await response.json();
-    dispatch(editGroup(groupData));
+    console.log(groupData)
+    await dispatch(editGroup(groupData));
     return groupData;
   }
 }
@@ -189,6 +192,7 @@ const groupReducer = (state = {}, action) => {
 
     case UPDATE_GROUP:
       newState = { ...state }
+      console.log(action.group)
       newState[action.group.id] = action.group
       return newState
 

@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
-import { fetchEvent } from "../../store/event";
+import { deleteEvent, fetchUserEvent } from "../../store/event";
+import { Modal } from "../../context/Modal";
+import DeleteEvent from "../EventsPage/DeleteEvent";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
@@ -13,9 +15,10 @@ function MyEvents() {
   const events = useSelector((state) => Object.values(state.eventState));
   const user = useSelector((state) => state.session.user);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    dispatch(fetchEvent()).then(() => setIsLoaded(true));
+    dispatch(fetchUserEvent()).then(() => setIsLoaded(true));
   }, [dispatch]);
 
   const fullDate = (data) => {
@@ -110,7 +113,7 @@ function MyEvents() {
               marginBottom: "20px",
             }}
           >
-            Events in GatherUp
+            {events.length ? "Events in GatherUp" : "No events found"}
           </p>
           {recentEvents.map((event, i) => {
             return (
@@ -144,10 +147,27 @@ function MyEvents() {
                         </p>
                         {user && user.id === event.Group.organizerId ? (
                           <div className="manage-event-buttons">
-                            <button className="manage-buttons">Update</button>
-                            <button className="manage-button-red">
-                              Delete
-                            </button>
+                            <Link to={`/event/${event.id}/edit`}>
+                              <button className="manage-buttons">Update</button>
+                            </Link>
+                            <div>
+                            <div style={{ height: "20px" }}>
+                              <button
+                                className="manage-button-red"
+                                onClick={(e) => setShowModal(true)}
+                              >
+                                Delete
+                              </button>
+                            </div>
+                            {showModal && (
+                              <Modal onClose={() => setShowModal(false)}>
+                                <DeleteEvent
+                                  setShowModal={setShowModal}
+                                  id={event.id}
+                                />
+                              </Modal>
+                            )}
+                              </div>
                           </div>
                         ) : (
                           <div className="manage-event-buttons">
@@ -169,6 +189,8 @@ function MyEvents() {
               </div>
             );
           })}
+
+
           {pastEvents.map((event, i) => {
             return (
               <div key={event.id} className="event-link">
@@ -201,10 +223,27 @@ function MyEvents() {
                         </p>
                         {user && user.id === event.Group.organizerId ? (
                           <div className="manage-event-buttons">
-                            <button className="manage-buttons">Update</button>
-                            <button className="manage-button-red">
-                              Delete
-                            </button>
+                            <Link to={`/event/${event.id}/edit`}>
+                              <button className="manage-buttons">Update</button>
+                            </Link>
+                            <div>
+                            <div style={{ height: "20px" }}>
+                              <button
+                                className="manage-button-red"
+                                onClick={(e) => setShowModal(true)}
+                              >
+                                Delete
+                              </button>
+                            </div>
+                            {showModal && (
+                              <Modal onClose={() => setShowModal(false)}>
+                                <DeleteEvent
+                                  setShowModal={setShowModal}
+                                  id={event.id}
+                                />
+                              </Modal>
+                            )}
+                              </div>
                           </div>
                         ) : (
                           <div className="manage-event-buttons">
