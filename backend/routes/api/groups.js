@@ -123,7 +123,7 @@ router.get("/currentUser", requireAuth, async (req, res, next) => {
           ],
         ],
       },
-      group: ["Group.id", "GroupImages.id"],
+      group: ["Group.id", "GroupImages.id", 'Memberships.id'],
     });
 
     const groupArr = [];
