@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { getGroup } from "../../store/group";
 import { getEventByGroup } from "../../store/event";
+import { joinGroup, getMember } from "../../store/membership";
 import DeleteGroupModal from "./DeleteGroupModal";
 
 import "./GroupDetails.css";
@@ -15,19 +16,22 @@ function GroupDetails() {
   const group = useSelector((state) => state.groupState[groupId]);
   const event = useSelector((state) => Object.values(state.eventState));
   const user = useSelector((state) => state.session.user);
+  const members = useSelector((state) => state.memberState);
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     (async () => {
       await dispatch(getGroup(groupId));
       await dispatch(getEventByGroup(groupId));
+      await dispatch(getMember(groupId));
       setIsLoaded(true);
     })();
   }, [dispatch, groupId]);
 
-  const handleJoinGroup = (e) => {
+  const handleJoinGroup = async (e) => {
     e.preventDefault();
-    return alert("Feature coming soon");
+    // await dispatch(joinGroup(groupId));
+    window.alert('Feature coming soon!')
   };
 
   const pastEvent = [];
@@ -96,7 +100,8 @@ function GroupDetails() {
           <div className="section-1-detail">
             <div className="back-button-container">
               <Link to="/groups" className="back-button">
-              <i className="fa-solid fa-arrow-left"></i><span className="back-to-group">Back to groups</span>
+                <i className="fa-solid fa-arrow-left"></i>
+                <span className="back-to-group">Back to groups</span>
               </Link>
             </div>
             <div className="group-details">
@@ -140,16 +145,30 @@ function GroupDetails() {
                   </div>
                 </div>
 
-                {user && user.id !== group.organizerId && (
-                  <button
-                    onClick={handleJoinGroup}
-                    className="join-group-button"
-                  >
-                    Join this group
-                  </button>
-                )}
+                {user &&
+                  user.id !== group.Organizer.id &&
+                  !members[user.id] && (
+                    <button
+                      onClick={handleJoinGroup}
+                      className="join-group-button"
+                    >
+                      Join this group
+                    </button>
+                  )}
+                  {console.log(group.Organizer.id, user.id)}
 
-                {user && user.id === group.organizerId && (
+                {user &&
+                  user.id !== group.Organizer.id &&
+                  members[user.id] && (
+                    <button
+                      // onClick={handleJoinGroup}
+                      className="join-group-button"
+                    >
+                      Leave Group
+                    </button>
+                  )}
+
+                {user && user.id === group.Organizer.id && (
                   <div>
                     <button className="create-event-button organizer-buttons">
                       <Link
@@ -160,7 +179,7 @@ function GroupDetails() {
                       </Link>
                     </button>
                     <button
-                      style={{ margin: "0px 10px"}}
+                      style={{ margin: "0px 10px" }}
                       className="organizer-buttons edit-delete-button"
                     >
                       <Link
@@ -191,7 +210,10 @@ function GroupDetails() {
                 <h2 style={{ width: "fit=content", marginBottom: "5px" }}>
                   What we're about
                 </h2>
-                <p style={{ width: "fit-content", marginTop: "0px" }} className="group-detail-about">
+                <p
+                  style={{ width: "fit-content", marginTop: "0px" }}
+                  className="group-detail-about"
+                >
                   {group.about}
                 </p>
               </div>

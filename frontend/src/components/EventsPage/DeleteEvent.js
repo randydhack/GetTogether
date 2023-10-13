@@ -2,37 +2,29 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector, } from "react-redux";
 import { useHistory,  useParams } from "react-router-dom";
 import { deleteEvent, getEventDetail } from "../../store/event";
-import { Modal } from '../../context/Modal';
 
-function DeleteEvent({ setShowModal}) {
+function DeleteEvent({ setShowModal, id}) {
     const dispatch = useDispatch()
     const history = useHistory()
     const { eventId } = useParams();
 
-    const [isLoaded, setIsLoaded] = useState(false)
-
-
-    const event = useSelector(state => state.eventState[eventId])
-
-    useEffect(() => {
-      (async () => dispatch(getEventDetail(eventId)).then(() => setIsLoaded(true)))()
-    }, [dispatch, eventId])
-
     const handleDeleteEvent = async (e) => {
         e.preventDefault()
 
-        const groupId = event.Group.id
-        await dispatch(deleteEvent(eventId))
-        return history.push(`/groups/${groupId}`)
+        await dispatch(deleteEvent(eventId || id))
+
+        if (eventId) {
+          return history.push(`/events`);
+        }
+        setShowModal(false)
     }
 
     const handleCancelEvent = (e) => {
       e.preventDefault()
-
       setShowModal(false)
     }
 
-  return isLoaded && (
+  return (
     <>
     <form className="delete-form-container">
         <h1>Confirm Delete</h1>

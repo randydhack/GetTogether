@@ -2,7 +2,7 @@
     display: flex;
     align-items: center;
     flex-direction: column;
-    margin-top: 60px;
+    margin: 60px 100px 0px 100px;
 }
 
 .grey-p {
@@ -29,13 +29,16 @@
 }
 
 .section-1-detail {
-    width: fit-content;
+    width: 100%;
 }
 
 
 .group-details {
     display: flex;
     margin-bottom: 30px;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
 }
 
 .group-detail-info {
@@ -84,7 +87,8 @@
     display: flex;
     flex-direction: column;
     text-align: left;
-    max-width: 752px;
+    width: 100%;
+    margin: 0px 10px;
 }
 /* event section */
 

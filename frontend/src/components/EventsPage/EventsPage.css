@@ -36,7 +36,7 @@
 }
 
 .events-container {
-    padding: 15px 0px 15px 0px;
+    padding: 15px 0px;
     border-top: 2px solid lightgrey;
     width: 700px;
 }
@@ -53,12 +53,14 @@
 .event-details {
     margin-left: 20px;
     word-wrap: break-word;
+    width: 100%;
 }
 
 .event-location {
     margin-top: 23px;
     color: rgb(124 111 80);
     margin-bottom: 0px;
+    width: 100%;
 }
 
 .event-title {

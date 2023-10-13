@@ -15,6 +15,9 @@ import EventDetails from "./components/EventsPage/EventDetails";
 import CreateGroupForm from "./components/GroupsPage/CreateGroupForm";
 import CreateEventForm from "./components/EventsPage/CreateEventForm";
 import UpdateGroup from "./components/GroupsPage/UpdateGroup";
+import MyGroups from "./components/MyGroups/MyGroups";
+import MyEvents from "./components/MyEvents/MyEvents";
+import UpdateEventForm from "./components/EventsPage/UpdateEvent";
 
 function App() {
   const dispatch = useDispatch();
@@ -34,10 +37,13 @@ function App() {
             <Route path="/login" component={LoginFormPage}/>
             <Route path="/signup" component={SignupFormPage}/>
             <Route path='/group/new' component={CreateGroupForm}/>
+            <Route path='/groups/manage' component={MyGroups}/>
             <Route exact path="/groups/:groupId" component={GroupDetails}/>
             <Route path="/groups" component={GroupsPage}/>
-            <Route path="/group/:groupId/edit" component={UpdateGroup}/>
-            <Route path='/group/:groupId/events/new' component={CreateEventForm}/>
+            <Route exact path="/group/:groupId/edit" component={UpdateGroup}/>
+            <Route exact path='/group/:groupId/events/new' component={CreateEventForm}/>
+            <Route path='/events/manage' component={MyEvents}/>
+            <Route exact path="/event/:eventId/edit" component={UpdateEventForm}/>
             <Route exact path="/events/:eventId" component={EventDetails}/>
             <Route path="/events" component={EventsPage}/>
           </Switch>

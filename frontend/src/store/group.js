@@ -6,6 +6,7 @@ const CREATE_GROUP = 'group/CREATE_GROUP'
 const DELETE_GROUP = 'group/DELETE_GROUP'
 const UPDATE_GROUP = 'group/UPDATE_GROUP'
 const ADD_IMAGE = 'group/ADD_IMAGE'
+const USER_GROUPS = "group/USER_GROUPS";
 
 // --------------------------- Action Creator ------------------------------------
 
@@ -13,6 +14,13 @@ export const allGroups = (groups) => {
   return {
     type: ALL_GROUPS,
     groups,
+  };
+};
+
+export const userGroupsAction = (groups) => {
+  return {
+    type: USER_GROUPS,
+    payload: groups,
   };
 };
 
@@ -128,6 +136,7 @@ export const addGroupImage = (url, groupId) => async dispatch => {
 }
 
 export const updateGroup = (group, groupId) => async dispatch => {
+  console.log(group)
   const response = await csrfFetch(`/api/groups/${groupId}`, {
     method: "PUT",
     body: JSON.stringify({
@@ -141,9 +150,22 @@ export const updateGroup = (group, groupId) => async dispatch => {
   });
 
   if (response.ok) {
+    console.log(groupId, group)
     const groupData = await response.json();
-    dispatch(editGroup(groupData));
+    console.log(groupData)
+    await dispatch(editGroup(groupData));
     return groupData;
+  }
+}
+
+export const userGroups = () => async dispatch => {
+  const response = await csrfFetch('/api/groups/currentUser')
+
+  if (response.ok) {
+    const data = await response.json()
+    console.log(data)
+    dispatch(userGroupsAction(data.Group))
+    return data
   }
 }
 
@@ -170,9 +192,14 @@ const groupReducer = (state = {}, action) => {
 
     case UPDATE_GROUP:
       newState = { ...state }
+      console.log(action.group)
       newState[action.group.id] = action.group
       return newState
 
+    case USER_GROUPS:
+      newState = {};
+      action.payload.forEach((group) => (newState[group.id] = group));
+      return newState;
     default:
       return state;
   }

@@ -5,7 +5,7 @@ import * as sessionActions from "../../store/session";
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
-  const history = useHistory()
+  const history = useHistory();
   const [showMenu, setShowMenu] = useState(false);
   const [arrow, setArrow] = useState(false);
   const ulRef = useRef();
@@ -26,9 +26,7 @@ function ProfileButton({ user }) {
         setArrow(false);
       }
     };
-
     document.addEventListener("click", closeMenu);
-
     return () => document.removeEventListener("click", closeMenu);
   }, [showMenu]);
 
@@ -36,8 +34,13 @@ function ProfileButton({ user }) {
     e.preventDefault();
 
     dispatch(sessionActions.logout());
-    history.push('/')
+    history.push("/");
   };
+
+  const closeDropdown = () => {
+    setShowMenu(false);
+    setArrow(false);
+  }
 
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
 
@@ -63,14 +66,18 @@ function ProfileButton({ user }) {
 
       <div className="profile-options-container">
         <div className={ulClassName} ref={ulRef}>
-          <p>Hello, {user.username}</p>
-          <p className="users-email">{user.email}</p>
-          <p>
-            <Link to="/groups">View Groups</Link>
-          </p>
-          <p>
-            <Link to="/events">View Events</Link>
-          </p>
+          <div className="profile-dropdown-gap">
+            <div>Hello, {user.username}</div>
+            <div className="users-email">{user.email}</div>
+          </div>
+          <div className="profile-dropdown-gap">
+            <Link to="/groups" onClick={closeDropdown}>View Groups</Link>
+            <Link to="/events" onClick={closeDropdown}>View Events</Link>
+          </div>
+          <div className="profile-dropdown-gap">
+            <Link to="/groups/manage" onClick={closeDropdown}>My Groups</Link>
+            <Link to="/events/manage" onClick={closeDropdown}>My Events</Link>
+          </div>
           <div className="logout-button">
             <button onClick={logout}>Log Out</button>
           </div>

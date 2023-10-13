@@ -13,6 +13,7 @@ import { restoreCSRF, csrfFetch } from "./store/csrf";
 import * as sessionActions from "./store/session";
 import * as groupActions from "./store/group";
 import * as eventActions from './store/event'
+import * as memberActions from './store/membership'
 
 import configureStore from "./store";
 
@@ -26,6 +27,7 @@ if (process.env.NODE_ENV !== "production") {
   window.sessionActions = sessionActions;
   window.groupActions = groupActions;
   window.eventActions = eventActions;
+  window.memberActions = memberActions
 }
 
 const Root = () => {

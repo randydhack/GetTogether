@@ -20,6 +20,9 @@ function GroupsPage() {
   return (
     isLoaded && (
       <div className="all-group-container">
+        <div>
+
+
         <div className="event-group-heading">
           <Link style={{ color: "grey" }} to="/events">
             Events
@@ -30,9 +33,6 @@ function GroupsPage() {
           style={{
             color: "grey",
             fontSize: "14px",
-            marginRight: "570px",
-            marginTop: "20px",
-            marginBottom: "20px",
           }}
         >
           Groups in GatherUp
@@ -71,6 +71,7 @@ function GroupsPage() {
             </Link>
           );
         })}
+        </div>
       </div>
     )
   );

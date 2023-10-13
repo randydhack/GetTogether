@@ -87,6 +87,9 @@ function EventsPage() {
   return (
     isLoaded && (
       <div className="all-events-container">
+        <div>
+
+
         <div className="events-nav">
           <span>Events</span>
           <Link to="/groups" className="groups-link">
@@ -97,9 +100,6 @@ function EventsPage() {
           style={{
             color: "grey",
             fontSize: "14px",
-            marginRight: "570px",
-            marginTop: "20px",
-            marginBottom: "20px",
           }}
         >
           Events in GatherUp
@@ -182,6 +182,7 @@ function EventsPage() {
             </Link>
           );
         })}
+         </div>
       </div>
     )
   );

@@ -61,6 +61,7 @@ router.get("/", async (req, res, next) => {
 // Get all groups or organized by currentUser
 router.get("/currentUser", requireAuth, async (req, res, next) => {
   const { user } = req;
+
   if (user) {
     const currentUser = await User.findOne({
       where: {
@@ -81,7 +82,7 @@ router.get("/currentUser", requireAuth, async (req, res, next) => {
         {
           model: Image,
           as: "GroupImages",
-          attributes: [],
+          attributes: ["id", "url", "preview"],
         },
       ],
       attributes: {
@@ -100,7 +101,7 @@ router.get("/currentUser", requireAuth, async (req, res, next) => {
       include: [
         {
           model: Membership,
-          attributes: [],
+          attributes: ['memberId', 'status'],
           where: {
             memberId: currentUser.id,
             status: {
@@ -111,7 +112,7 @@ router.get("/currentUser", requireAuth, async (req, res, next) => {
         {
           model: Image,
           as: "GroupImages",
-          attributes: [],
+          attributes: ["id", "url", "preview"],
         },
       ],
       attributes: {
@@ -125,8 +126,24 @@ router.get("/currentUser", requireAuth, async (req, res, next) => {
       group: ["Group.id", "GroupImages.id"],
     });
 
+    const groupArr = [];
+
+    ownedGroups.forEach(el => {
+      const groupJSON = el.toJSON()
+      groupJSON.previewImage = groupJSON.GroupImages[0]?.url
+      groupArr.push(groupJSON)
+    })
+
+    joinedGroups.forEach(el => {
+      const groupJSON = el.toJSON()
+      groupJSON.previewImage = groupJSON.GroupImages[0]?.url
+      groupArr.push(groupJSON)
+    })
+
+    console.log(groupArr)
+
     return res.json({
-      Group: [...ownedGroups, ...joinedGroups],
+      Group: [...groupArr],
     });
   }
 
