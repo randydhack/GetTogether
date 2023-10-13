@@ -146,7 +146,7 @@ router.get("/user", paginationValidation, async (req, res, next) => {
     attributes: {
       exclude: ["price", "capacity"],
     },
-    group: ["Event.id"],
+    group: ["Event.id", 'Group.id'],
     ...pagination,
   });
 

@@ -106,7 +106,7 @@ function MyGroups() {
                         ) : (
                           <div className="manage-groups-owner-button">
                             <div>
-                              <button className="manage-button-red">
+                              <button className="manage-button-red" onClick={() => window.alert('Feature coming soon!')}>
                                 Leave Group
                               </button>
                             </div>
